@@ -1,10 +1,10 @@
 {
   "/api/wishlist/route": "app/api/wishlist/route.js",
   "/(main)/feed/page": "app/(main)/feed/page.js",
-  "/(main)/settings/page": "app/(main)/settings/page.js",
-  "/(main)/trends/page": "app/(main)/trends/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
+  "/(main)/wishlist/page": "app/(main)/wishlist/page.js",
   "/(main)/profile/page": "app/(main)/profile/page.js",
   "/api/profile/route": "app/api/profile/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(main)/trends/page": "app/(main)/trends/page.js",
   "/page": "app/page.js"
 }

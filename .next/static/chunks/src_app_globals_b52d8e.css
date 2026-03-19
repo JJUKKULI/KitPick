@@ -8,6 +8,8 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --color-blue-400: oklch(70.7% .165 254.624);
     --color-purple-400: oklch(71.4% .203 305.504);
+    --color-rose-400: oklch(71.2% .194 13.428);
+    --color-rose-500: oklch(64.5% .246 16.439);
     --color-zinc-100: oklch(96.7% .001 286.375);
     --color-zinc-200: oklch(92% .004 286.32);
     --color-zinc-300: oklch(87.1% .006 286.286);
@@ -279,6 +281,10 @@
     pointer-events: none;
   }
 
+  .visible {
+    visibility: visible;
+  }
+
   .absolute {
     position: absolute;
   }
@@ -369,6 +375,10 @@
 
   .left-4 {
     left: calc(var(--spacing) * 4);
+  }
+
+  .isolate {
+    isolation: isolate;
   }
 
   .z-10 {
@@ -1103,6 +1113,16 @@
     }
   }
 
+  .border-rose-500\/40 {
+    border-color: #ff235766;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .border-rose-500\/40 {
+      border-color: color-mix(in oklab, var(--color-rose-500) 40%, transparent);
+    }
+  }
+
   .border-surface-border {
     border-color: var(--color-surface-border);
   }
@@ -1113,26 +1133,6 @@
 
   .border-transparent {
     border-color: #0000;
-  }
-
-  .border-white\/10 {
-    border-color: #ffffff1a;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .border-white\/10 {
-      border-color: color-mix(in oklab, var(--color-white) 10%, transparent);
-    }
-  }
-
-  .bg-black\/50 {
-    background-color: #00000080;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-black\/50 {
-      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
-    }
   }
 
   .bg-black\/60 {
@@ -1166,6 +1166,16 @@
   @supports (color: color-mix(in lab, red, red)) {
     .bg-brand-500\/10 {
       background-color: color-mix(in oklab, var(--color-brand-500) 10%, transparent);
+    }
+  }
+
+  .bg-brand-500\/15 {
+    background-color: #be1f3526;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-brand-500\/15 {
+      background-color: color-mix(in oklab, var(--color-brand-500) 15%, transparent);
     }
   }
 
@@ -1232,6 +1242,16 @@
   @supports (color: color-mix(in lab, red, red)) {
     .bg-decision-watch\/10 {
       background-color: color-mix(in oklab, var(--color-decision-watch) 10%, transparent);
+    }
+  }
+
+  .bg-rose-500\/20 {
+    background-color: #ff235733;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-rose-500\/20 {
+      background-color: color-mix(in oklab, var(--color-rose-500) 20%, transparent);
     }
   }
 
@@ -1652,6 +1672,10 @@
     color: var(--color-purple-400);
   }
 
+  .text-rose-400 {
+    color: var(--color-rose-400);
+  }
+
   .text-white {
     color: var(--color-white);
   }
@@ -1729,16 +1753,6 @@
   @supports (color: color-mix(in lab, red, red)) {
     .shadow-black\/30 {
       --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-black) 30%, transparent) var(--tw-shadow-alpha), transparent);
-    }
-  }
-
-  .shadow-black\/40 {
-    --tw-shadow-color: #0006;
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .shadow-black\/40 {
-      --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-black) 40%, transparent) var(--tw-shadow-alpha), transparent);
     }
   }
 
@@ -1906,6 +1920,18 @@
   }
 
   @media (hover: hover) {
+    .hover\:border-rose-500\/30:hover {
+      border-color: #ff23574d;
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:border-rose-500\/30:hover {
+        border-color: color-mix(in oklab, var(--color-rose-500) 30%, transparent);
+      }
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:border-surface-border:hover {
       border-color: var(--color-surface-border);
     }
@@ -2010,6 +2036,12 @@
   @media (hover: hover) {
     .hover\:text-brand-400:hover {
       color: var(--color-brand-400);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-rose-400:hover {
+      color: var(--color-rose-400);
     }
   }
 
@@ -2136,6 +2168,13 @@
     }
   }
 
+  @media (width >= 40rem) {
+    .sm\:text-3xl {
+      font-size: var(--text-3xl);
+      line-height: var(--tw-leading, var(--text-3xl--line-height));
+    }
+  }
+
   @media (width >= 48rem) {
     .md\:right-8 {
       right: calc(var(--spacing) * 8);
@@ -2145,6 +2184,12 @@
   @media (width >= 48rem) {
     .md\:bottom-8 {
       bottom: calc(var(--spacing) * 8);
+    }
+  }
+
+  @media (width >= 48rem) {
+    .md\:col-span-1 {
+      grid-column: span 1 / span 1;
     }
   }
 
@@ -2169,12 +2214,6 @@
   @media (width >= 48rem) {
     .md\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:grid-cols-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 

@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import type { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
-import { useWishlistStore } from './wishlistStore';
 
 interface AuthStore {
   user: User | null;
@@ -19,20 +18,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     const { data: { user } } = await supabase.auth.getUser();
     set({ user, loading: false });
 
-    // 로그인 상태면 찜 목록 불러오기
-    if (user) {
-      useWishlistStore.getState().fetch();
-    }
-
     supabase.auth.onAuthStateChange((_event, session) => {
-      const newUser = session?.user ?? null;
-      set({ user: newUser });
-
-      if (newUser) {
-        useWishlistStore.getState().fetch();
-      } else {
-        useWishlistStore.getState().clear();
-      }
+      set({ user: session?.user ?? null });
     });
   },
 
@@ -40,6 +27,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     const supabase = createClient();
     await supabase.auth.signOut();
     set({ user: null });
-    useWishlistStore.getState().clear();
+    // 로그아웃 시 찜 목록은 localStorage에 유지 (선택사항)
+    // useWishlistStore.getState().clear();
   },
 }));
