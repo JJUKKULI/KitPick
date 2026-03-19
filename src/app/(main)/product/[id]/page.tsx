@@ -1,25 +1,54 @@
+'use client';
+
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Sparkles, MessageSquare, TrendingUp, Calendar } from 'lucide-react';
+import {
+  ArrowLeft, Sparkles, MessageSquare,
+  TrendingUp, Calendar, Bookmark
+} from 'lucide-react';
 import { mockProducts } from '@/data/mockData';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
 import { PriceTrendChart } from '@/components/ui/PriceTrendChart';
 import { SentimentBar } from '@/components/ui/SentimentBar';
 import { HypeScore } from '@/components/ui/HypeScore';
+import { useWishlistStore } from '@/store/wishlistStore';
 
-interface Props {
-  params: { id: string };
-}
+export default function ProductDetailPage() {
+  const params = useParams();
+  const { toggle, isWished } = useWishlistStore();
 
-export default function ProductDetailPage({ params }: Props) {
   const product = mockProducts.find((p) => p.id === params.id) ?? mockProducts[0];
+  const wished = isWished(product.id);
   const priceDiff = product.price - product.previousPrice;
   const priceDiffPercent = ((priceDiff / product.previousPrice) * 100).toFixed(1);
 
+  function handleWish() {
+    toggle(product.id);
+  }
+
   return (
     <div className="p-6 lg:p-10 max-w-6xl mx-auto w-full">
-      <Link href="/feed" className="inline-flex items-center text-sm text-zinc-400 hover:text-white mb-8 transition-colors">
-        <ArrowLeft className="w-4 h-4 mr-2" /> 피드로 돌아가기
-      </Link>
+
+      {/* 상단 네비 */}
+      <div className="flex items-center justify-between mb-8">
+        <Link href="/feed" className="inline-flex items-center text-sm text-zinc-400 hover:text-white transition-colors">
+          <ArrowLeft className="w-4 h-4 mr-2" /> 피드로 돌아가기
+        </Link>
+
+        {/* 북마크 버튼 — 좌측 상단 (헤더 우측) */}
+        <button
+          onClick={handleWish}
+          className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-sm font-medium transition-all ${
+            wished
+              ? 'bg-brand-500/15 border-brand-500/40 text-brand-400'
+              : 'bg-surface-raised border-surface-border text-zinc-400 hover:text-brand-400 hover:border-brand-500/30'
+          }`}
+          aria-label={wished ? '관심 목록 해제' : '관심 목록 추가'}
+        >
+          <Bookmark className={`w-4 h-4 ${wished ? 'fill-current' : ''}`} />
+          {wished ? '관심 목록 해제' : '관심 목록 추가'}
+        </button>
+      </div>
 
       <div className="grid lg:grid-cols-[1fr_2fr] gap-10">
         {/* 왼쪽: 이미지 & 커뮤니티 */}
@@ -28,7 +57,7 @@ export default function ProductDetailPage({ params }: Props) {
           <div className="aspect-[3/4] w-full bg-gradient-to-br from-surface-raised to-surface-overlay rounded-2xl border border-surface-border flex flex-col items-center justify-center p-6 relative overflow-hidden">
             <div className="w-24 h-24 text-zinc-700 mb-4" />
             <div className="text-zinc-600 font-medium tracking-widest uppercase text-sm">제품 이미지</div>
-            <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold text-white border border-white/10">
+            <div className="absolute top-4 left-4 bg-surface-overlay/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold text-white border border-surface-border">
               {product.grade}
             </div>
           </div>
@@ -58,7 +87,7 @@ export default function ProductDetailPage({ params }: Props) {
 
         {/* 오른쪽: 데이터 & 인사이트 */}
         <div className="space-y-8">
-          {/* 헤더 정보 */}
+          {/* 헤더 */}
           <div>
             <div className="flex items-center gap-3 mb-3">
               <span className="text-sm font-medium text-brand-400 uppercase tracking-wider">{product.series}</span>
@@ -72,7 +101,7 @@ export default function ProductDetailPage({ params }: Props) {
           </div>
 
           {/* 핵심 통계 */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="bg-surface border border-surface-border rounded-xl p-4">
               <div className="text-xs text-zinc-500 mb-1 font-medium">현재 가격</div>
               <div className="text-2xl font-bold text-white mb-1">${product.price.toFixed(2)}</div>
@@ -86,7 +115,7 @@ export default function ProductDetailPage({ params }: Props) {
                 <HypeScore score={product.popularity} label="" />
               </div>
             </div>
-            <div className="bg-surface border border-surface-border rounded-xl p-4 col-span-2">
+            <div className="bg-surface border border-surface-border rounded-xl p-4 col-span-2 md:col-span-1">
               <div className="text-xs text-zinc-500 mb-3 font-medium">여론 분포</div>
               <SentimentBar
                 positive={product.sentiment.positive}
@@ -96,7 +125,7 @@ export default function ProductDetailPage({ params }: Props) {
             </div>
           </div>
 
-          {/* AI 인사이트 박스 */}
+          {/* AI 인사이트 */}
           <div className="bg-brand-500/5 border border-brand-500/20 rounded-xl p-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-brand-500" />
             <h3 className="text-sm font-semibold text-brand-400 mb-3 flex items-center gap-2">
@@ -105,7 +134,7 @@ export default function ProductDetailPage({ params }: Props) {
             <p className="text-zinc-300 leading-relaxed">{product.aiInsight}</p>
           </div>
 
-          {/* 가격 추이 차트 */}
+          {/* 가격 추이 */}
           <div className="bg-surface border border-surface-border rounded-xl p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">

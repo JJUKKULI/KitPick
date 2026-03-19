@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Zap, TrendingUp, Heart, LogIn, User } from 'lucide-react';
+import { Zap, TrendingUp, Bookmark, LogIn, User } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 
 export function BottomNav() {
@@ -12,7 +12,7 @@ export function BottomNav() {
   const navItems = [
     { icon: Zap,        label: '피드',   path: '/feed' },
     { icon: TrendingUp, label: '트렌드', path: '/trends' },
-    { icon: Heart,      label: '찜',     path: '/profile?tab=wishlist' },
+    { icon: Bookmark,   label: '관심',   path: '/wishlist' },
     user
       ? { icon: User,  label: '프로필', path: '/profile' }
       : { icon: LogIn, label: '로그인', path: '/login' },

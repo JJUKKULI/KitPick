@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  Zap, TrendingUp, Heart, Settings,
+  Zap, TrendingUp, Bookmark, Settings,
   Hexagon, PanelLeftClose, PanelLeftOpen,
   LogIn, LogOut, BookOpen, LayoutDashboard
 } from 'lucide-react';
@@ -14,7 +14,7 @@ const navItems = [
   { icon: Zap,           label: '결정 피드',  path: '/feed' },
   { icon: TrendingUp,    label: '트렌드',     path: '/trends' },
   { icon: BookOpen,      label: '저널',       path: '/journal' },
-  { icon: Heart,         label: '찜한 목록',  path: '/profile?tab=wishlist' },
+  { icon: Bookmark,      label: '관심 목록',  path: '/wishlist' },
 ];
 
 const bottomItems = [

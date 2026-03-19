@@ -32,8 +32,10 @@ __turbopack_esm__({
     "useWishlistStore": (()=>useWishlistStore)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/zustand/esm/react.mjs [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/zustand/esm/middleware.mjs [app-ssr] (ecmascript)");
 ;
-const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["create"])((set, get)=>({
+;
+const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["create"])()((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["persist"])((set, get)=>({
         wishlist: [],
         loading: false,
         fetch: async ()=>{
@@ -44,11 +46,16 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
                 const res = await fetch('/api/wishlist');
                 if (!res.ok) throw new Error();
                 const { wishlist } = await res.json();
+                // 로컬 + 서버 합집합으로 머지
+                const merged = Array.from(new Set([
+                    ...get().wishlist,
+                    ...wishlist
+                ]));
                 set({
-                    wishlist
+                    wishlist: merged
                 });
             } catch  {
-            // 비로그인이면 무시
+            // 비로그인 or 오류 시 로컬 유지
             } finally{
                 set({
                     loading: false
@@ -58,14 +65,14 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
         toggle: async (productId, isLoggedIn)=>{
             const { wishlist } = get();
             const wished = wishlist.includes(productId);
-            // 낙관적 업데이트 (UI 즉시 반영)
+            // 낙관적 업데이트 (즉시 UI 반영)
             set({
                 wishlist: wished ? wishlist.filter((id)=>id !== productId) : [
                     ...wishlist,
                     productId
                 ]
             });
-            if (!isLoggedIn) return;
+            if (!isLoggedIn) return; // 비로그인은 로컬만
             try {
                 const res = await fetch('/api/wishlist', {
                     method: wished ? 'DELETE' : 'POST',
@@ -85,19 +92,12 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
             }
         },
         isWished: (id)=>get().wishlist.includes(id),
-        _localToggle: (id)=>{
-            const { wishlist } = get();
-            set({
-                wishlist: wishlist.includes(id) ? wishlist.filter((wid)=>wid !== id) : [
-                    ...wishlist,
-                    id
-                ]
-            });
-        },
         clear: ()=>set({
                 wishlist: []
             })
-    }));
+    }), {
+    name: 'kitpick-wishlist'
+}));
 }}),
 "[project]/src/store/authStore.ts [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";

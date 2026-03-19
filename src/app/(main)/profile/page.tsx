@@ -68,7 +68,7 @@ export default function ProfilePage() {
   const memberYear = profile?.created_at ? new Date(profile.created_at).getFullYear() : new Date().getFullYear();
 
   const tabs = [
-    { id: 'wishlist', label: '찜한 목록', icon: Heart, count: wishedProducts.length },
+    { id: 'wishlist', label: '관심 목록', icon: Bookmark, count: wishedProducts.length },
     { id: 'settings', label: '설정', icon: Settings, count: null },
   ];
 
