@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+@theme {
+  /* 브랜드 */
+  --color-brand-400: #D63B50;
+  --color-brand-500: #BE1F35;
+  --color-brand-600: #A1182B;
+
+  /* 서피스 (다크 기본) */
+  --color-surface-base:         #09090B;
+  --color-surface:              #111113;
+  --color-surface-raised:       #16161A;
+  --color-surface-overlay:      #1C1C21;
+  --color-surface-border:       rgba(255,255,255,0.06);
+  --color-surface-border-light: rgba(255,255,255,0.1);
+
+  /* 텍스트 (다크 기본) */
+  --color-text-primary:   #F4F4F5;   /* zinc-100 */
+  --color-text-secondary: #A1A1AA;   /* zinc-400 */
+  --color-text-muted:     #71717A;   /* zinc-500 */
+  --color-text-faint:     #52525B;   /* zinc-600 */
+
+  /* 결정 상태 */
+  --color-decision-buy:      #22C55E;
+  --color-decision-wait:     #F59E0B;
+  --color-decision-watch:    #3B82F6;
+  --color-decision-trending: #BE1F35;
+
+  --font-sans: 'Inter', sans-serif;
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+}
+
+/* ─── Light Mode Override ────────────────────────────────────── */
+:root.light {
+  /* 서피스 */
+  --color-surface-base:         #F4F4F6;
+  --color-surface:              #FFFFFF;
+  --color-surface-raised:       #EBEBEF;
+  --color-surface-overlay:      #E0E0E8;
+  --color-surface-border:       rgba(0,0,0,0.08);
+  --color-surface-border-light: rgba(0,0,0,0.14);
+
+  /* 텍스트 */
+  --color-text-primary:   #111113;   /* 거의 검정 */
+  --color-text-secondary: #52525B;   /* zinc-600 */
+  --color-text-muted:     #71717A;   /* zinc-500 */
+  --color-text-faint:     #A1A1AA;   /* zinc-400 */
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+@layer base {
+  body {
+    @apply bg-surface-base font-sans antialiased
+           selection:bg-brand-500/30 selection:text-brand-400;
+    color: var(--color-text-primary);
+  }
+
+  /* 라이트모드 zinc 계열 오버라이드 */
+  :root.light .text-white        { color: var(--color-text-primary) !important; }
+  :root.light .text-zinc-100     { color: var(--color-text-primary) !important; }
+  :root.light .text-zinc-200     { color: #3F3F46 !important; }
+  :root.light .text-zinc-300     { color: #52525B !important; }
+  :root.light .text-zinc-400     { color: var(--color-text-secondary) !important; }
+  :root.light .text-zinc-500     { color: var(--color-text-muted) !important; }
+  :root.light .text-zinc-600     { color: var(--color-text-faint) !important; }
+  :root.light .text-zinc-700     { color: #A1A1AA !important; }
+
+  /* 라이트모드 bg-black 계열 오버라이드 */
+  :root.light .bg-black\/60      { background-color: rgba(255,255,255,0.85) !important; }
+  :root.light .bg-black\/40      { background-color: rgba(255,255,255,0.7) !important; }
+
+  /* 라이트모드 그라디언트 텍스트 */
+  :root.light .text-gradient {
+    background-image: linear-gradient(to right, #111113, #52525B) !important;
+  }
+
+  ::-webkit-scrollbar       { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--color-surface-base); }
+  ::-webkit-scrollbar-thumb { background: var(--color-surface-raised); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-surface-overlay); }
+}
+
+/* ─── Utilities ──────────────────────────────────────────────── */
+@layer utilities {
+  .glass-panel {
+    @apply bg-surface/80 backdrop-blur-md border border-surface-border shadow-lg shadow-black/20;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-500;
+  }
+}
