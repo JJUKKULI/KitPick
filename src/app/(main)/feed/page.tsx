@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import {
-  Search, SlidersHorizontal, BookOpen,
+  Search, SlidersHorizontal, BookOpen, Zap,
   ChevronDown, ChevronUp, Sparkles, Calendar,
   ShoppingCart, Clock, Eye, Flame,
   TrendingUp, TrendingDown, Minus,
@@ -219,7 +219,10 @@ export default function FeedPage() {
 
       {/* ── 헤더 ── */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">구매 결정 피드</h1>
+        <div className="flex items-center gap-3 mb-2">
+          <Zap className="w-6 h-6 text-brand-500" />
+          <h1 className="text-3xl font-bold text-white">구매 결정 피드</h1>
+        </div>
         <p className="text-zinc-400">실시간 시장 분석과 구매 추천.</p>
       </div>
 
