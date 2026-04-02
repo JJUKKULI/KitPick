@@ -15,7 +15,10 @@ export default function TrendsPage() {
   return (
     <div className="p-6 lg:p-10 max-w-7xl mx-auto w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">트렌드 대시보드</h1>
+        <div className="flex items-center gap-3 mb-2">
+          <TrendingUp className="w-6 h-6 text-brand-500" />
+          <h1 className="text-3xl font-bold text-white">트렌드 대시보드</h1>
+        </div>
         <p className="text-zinc-400">시장 전체 흐름과 출시 예정 신호.</p>
       </div>
 

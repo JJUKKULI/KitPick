@@ -3,16 +3,27 @@
 import { useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
+import { useWishlistStore } from '@/store/wishlistStore';
+import { ToastContainer } from '@/components/ui/Toast';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const init = useAuthStore((s) => s.init);
+  const user = useAuthStore((s) => s.user);
   const { isDark } = useThemeStore();
+  const { fetch: fetchWishlist, clear: clearWishlist } = useWishlistStore();
 
+  useEffect(() => { init(); }, [init]);
+
+  // 로그인/로그아웃 시 Supabase wishlist 동기화
   useEffect(() => {
-    init();
-  }, [init]);
+    if (user) {
+      fetchWishlist(user.id);
+    } else {
+      clearWishlist();
+    }
+  }, [user, fetchWishlist, clearWishlist]);
 
-  // 마운트 시 저장된 테마 적용
+  // 테마 적용
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
@@ -23,5 +34,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isDark]);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <ToastContainer />
+    </>
+  );
 }

@@ -2,13 +2,13 @@
   "pages": {
     "/(auth)/signup/page": [
       "static/chunks/[root of the server]__9a168d._.css",
-      "static/chunks/node_modules_3c341d._.js",
-      "static/chunks/src_0393b8._.js",
+      "static/chunks/node_modules_334070._.js",
+      "static/chunks/src_17b29c._.js",
       "static/chunks/src_app_layout_tsx_61af54._.js",
       "static/chunks/_9f8764._.js",
-      "static/chunks/src_app_(auth)_layout_tsx_abfbce._.js",
-      "static/chunks/_7d90e1._.js",
-      "static/chunks/src_app_(auth)_signup_page_tsx_da91e7._.js",
+      "static/chunks/src_app_(auth)_layout_tsx_8e2f33._.js",
+      "static/chunks/_9b2f69._.js",
+      "static/chunks/src_app_(auth)_signup_page_tsx_b969ec._.js",
       "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
       "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
       "static/chunks/node_modules_next_dist_client_523921._.js",
