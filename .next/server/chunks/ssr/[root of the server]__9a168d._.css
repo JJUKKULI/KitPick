@@ -86,6 +86,7 @@
   :root, :host {
     --font-sans: "Inter", sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --color-red-400: oklch(70.4% .191 22.216);
     --color-blue-400: oklch(70.7% .165 254.624);
     --color-purple-400: oklch(71.4% .203 305.504);
     --color-rose-400: oklch(71.2% .194 13.428);
@@ -1315,6 +1316,16 @@
     border-top-color: #0000;
   }
 
+  .bg-black\/50 {
+    background-color: #00000080;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-black\/50 {
+      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+    }
+  }
+
   .bg-black\/60 {
     background-color: #0009;
   }
@@ -1568,6 +1579,10 @@
 
   .stroke-\[2\.5\] {
     stroke-width: 2.5px;
+  }
+
+  .object-cover {
+    object-fit: cover;
   }
 
   .p-1 {
@@ -1919,6 +1934,10 @@
     font-style: italic;
   }
 
+  .opacity-0 {
+    opacity: 0;
+  }
+
   .opacity-50 {
     opacity: .5;
   }
@@ -2080,6 +2099,12 @@
   @media (hover: hover) {
     .group-hover\:text-brand-400:is(:where(.group):hover *) {
       color: var(--color-brand-400);
+    }
+  }
+
+  @media (hover: hover) {
+    .group-hover\:opacity-100:is(:where(.group):hover *) {
+      opacity: 1;
     }
   }
 
@@ -2267,6 +2292,12 @@
   @media (hover: hover) {
     .hover\:text-brand-400:hover {
       color: var(--color-brand-400);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-red-400:hover {
+      color: var(--color-red-400);
     }
   }
 

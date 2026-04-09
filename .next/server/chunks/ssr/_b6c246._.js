@@ -194,14 +194,14 @@ const alertTypeMap = {
 function SettingsPage() {
     const { isDark, setDark } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$themeStore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useThemeStore"])();
     const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAuthStore"])();
-    const { settings, loading, saving, dirty, lastError, fetch, update, save } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$settingsStore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSettingsStore"])();
+    const { settings, loading, saving, dirty, lastError, fetch: fetchSettings, update, save } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$settingsStore$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSettingsStore"])();
     const [testingKey, setTestingKey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     // 페이지 진입 시 Supabase에서 설정 로드
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (user) fetch(user.id);
+        if (user) fetchSettings(user.id);
     }, [
         user,
-        fetch
+        fetchSettings
     ]);
     // 저장 에러 토스트
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
@@ -237,7 +237,7 @@ function SettingsPage() {
         }
         setTestingKey(key);
         try {
-            const res = await fetch(`/api/notify`, {
+            const res = await window.fetch(`/api/notify`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Hexagon, Activity, BrainCircuit, Target, ArrowRight } from 'lucide-react';
 import { mockProducts } from '@/data/mockData';
@@ -5,6 +7,8 @@ import { DecisionCard } from '@/components/product/DecisionCard';
 import { LandingSearch } from '@/components/ui/LandingSearch';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
+import { ProfileButton } from '@/components/layout/ProfileButton';
+import { useAuthStore } from '@/store/authStore';
 
 const features = [
   {
@@ -25,6 +29,7 @@ const features = [
 ];
 
 export default function HomePage() {
+  const { user } = useAuthStore();
   const featuredProducts = mockProducts.slice(0, 3);
 
   return (
@@ -39,9 +44,13 @@ export default function HomePage() {
           <Link href="/trends"  className="hover:text-white transition-colors">트렌드</Link>
           <Link href="#pricing" className="hover:text-white transition-colors">요금제</Link>
         </nav>
-        <Link href="/feed" className="bg-brand-500 hover:bg-brand-400 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-          시작하기
-        </Link>
+        {user ? (
+          <ProfileButton />
+        ) : (
+          <Link href="/feed" className="bg-brand-500 hover:bg-brand-400 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            시작하기
+          </Link>
+        )}
       </header>
 
       <main className="flex-grow">
