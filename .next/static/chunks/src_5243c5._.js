@@ -122,69 +122,67 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$e
 const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["create"])()((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["persist"])((set, get)=>({
         wishlist: [],
         loading: false,
-        hydrated: false,
         fetch: async (userId)=>{
             set({
                 loading: true
             });
-            const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
-            const { data, error } = await supabase.from('wishlists').select('product_id').eq('user_id', userId);
-            if (!error && data) {
+            try {
+                const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
+                const { data, error } = await supabase.from('wishlists').select('product_id').eq('user_id', userId);
+                if (!error && data) {
+                    set({
+                        wishlist: data.map((w)=>w.product_id)
+                    });
+                }
+            } catch (e) {
+                console.error('[wishlist fetch]', e);
+            } finally{
                 set({
-                    wishlist: data.map((w)=>w.product_id),
-                    loading: false,
-                    hydrated: true
-                });
-            } else {
-                // Supabase 실패 시 localStorage 유지 (error 무시 안 함)
-                console.error('[wishlist fetch]', error?.message);
-                set({
-                    loading: false,
-                    hydrated: true
+                    loading: false
                 });
             }
         },
         toggle: async (productId, userId)=>{
             const { wishlist } = get();
-            const isCurrentlyWished = wishlist.includes(productId);
-            // 1) 낙관적 UI 업데이트 (localStorage persist 포함)
+            const isWished = wishlist.includes(productId);
+            // 낙관적 업데이트
             set({
-                wishlist: isCurrentlyWished ? wishlist.filter((id)=>id !== productId) : [
+                wishlist: isWished ? wishlist.filter((id)=>id !== productId) : [
                     ...wishlist,
                     productId
                 ]
             });
-            // 2) 로그인 상태면 Supabase 동기화
+            // 로그인 상태면 Supabase 동기화
             if (userId) {
-                const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
-                if (isCurrentlyWished) {
-                    const { error } = await supabase.from('wishlists').delete().eq('user_id', userId).eq('product_id', productId);
-                    if (error) console.error('[wishlist delete]', error.message);
-                } else {
-                    const { error } = await supabase.from('wishlists').insert({
-                        user_id: userId,
-                        product_id: productId
-                    });
-                    if (error) {
-                        console.error('[wishlist insert]', error.message);
-                        // insert 실패 시 낙관적 업데이트 롤백
-                        set({
-                            wishlist: get().wishlist.filter((id)=>id !== productId)
+                try {
+                    const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
+                    if (isWished) {
+                        await supabase.from('wishlists').delete().eq('user_id', userId).eq('product_id', productId);
+                    } else {
+                        const { error } = await supabase.from('wishlists').insert({
+                            user_id: userId,
+                            product_id: productId
                         });
+                        if (error) {
+                            // 실패 시 롤백
+                            set({
+                                wishlist: get().wishlist.filter((id)=>id !== productId)
+                            });
+                        }
                     }
+                } catch (e) {
+                    console.error('[wishlist toggle]', e);
                 }
             }
         },
         isWished: (id)=>get().wishlist.includes(id),
-        // 로그아웃 시 — localStorage 비우기
         clear: ()=>set({
-                wishlist: [],
-                hydrated: false
+                wishlist: []
             })
     }), {
     name: 'kitpick-wishlist',
-    partialize: (state)=>({
-            wishlist: state.wishlist
+    partialize: (s)=>({
+            wishlist: s.wishlist
         })
 }));
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -262,16 +260,15 @@ function toast(type, title, desc) {
     };
     listeners.forEach((fn)=>fn(msg));
 }
-// ─── 토스트 단일 아이템 ───────────────────────────────────────────────────
 const iconMap = {
     success: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"],
     error: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__XCircle$3e$__["XCircle"],
     info: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$info$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Info$3e$__["Info"]
 };
 const colorMap = {
-    success: 'border-decision-buy/30  bg-decision-buy/10  text-decision-buy',
-    error: 'border-brand-500/30     bg-brand-500/10     text-brand-400',
-    info: 'border-decision-watch/30 bg-decision-watch/10 text-decision-watch'
+    success: 'border-green-500/30 bg-green-500/10 text-green-400',
+    error: 'border-red-500/30   bg-red-500/10   text-red-400',
+    info: 'border-blue-500/30  bg-blue-500/10  text-blue-400'
 };
 function ToastItem({ msg, onRemove }) {
     _s();
@@ -290,13 +287,13 @@ function ToastItem({ msg, onRemove }) {
         onRemove
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: `flex items-start gap-3 w-80 p-4 rounded-xl border shadow-lg backdrop-blur-sm animate-slide-up ${colorMap[msg.type]}`,
+        className: `flex items-start gap-3 w-80 p-4 rounded-xl border shadow-lg backdrop-blur-sm ${colorMap[msg.type]}`,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
                 className: "w-5 h-5 shrink-0 mt-0.5"
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/Toast.tsx",
-                lineNumber: 48,
+                lineNumber: 39,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -307,7 +304,7 @@ function ToastItem({ msg, onRemove }) {
                         children: msg.title
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/Toast.tsx",
-                        lineNumber: 50,
+                        lineNumber: 41,
                         columnNumber: 9
                     }, this),
                     msg.desc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -315,13 +312,13 @@ function ToastItem({ msg, onRemove }) {
                         children: msg.desc
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/Toast.tsx",
-                        lineNumber: 51,
+                        lineNumber: 42,
                         columnNumber: 22
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ui/Toast.tsx",
-                lineNumber: 49,
+                lineNumber: 40,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -331,18 +328,18 @@ function ToastItem({ msg, onRemove }) {
                     className: "w-4 h-4"
                 }, void 0, false, {
                     fileName: "[project]/src/components/ui/Toast.tsx",
-                    lineNumber: 54,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/Toast.tsx",
-                lineNumber: 53,
+                lineNumber: 44,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ui/Toast.tsx",
-        lineNumber: 47,
+        lineNumber: 38,
         columnNumber: 5
     }, this);
 }
@@ -352,13 +349,11 @@ function ToastContainer() {
     _s1();
     const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const remove = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "ToastContainer.useCallback[remove]": (id)=>{
-            setMessages({
+        "ToastContainer.useCallback[remove]": (id)=>setMessages({
                 "ToastContainer.useCallback[remove]": (prev)=>prev.filter({
                         "ToastContainer.useCallback[remove]": (m)=>m.id !== id
                     }["ToastContainer.useCallback[remove]"])
-            }["ToastContainer.useCallback[remove]"]);
-        }
+            }["ToastContainer.useCallback[remove]"])
     }["ToastContainer.useCallback[remove]"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ToastContainer.useEffect": ()=>{
@@ -373,8 +368,8 @@ function ToastContainer() {
             listeners.push(handler);
             return ({
                 "ToastContainer.useEffect": ()=>{
-                    const idx = listeners.indexOf(handler);
-                    if (idx > -1) listeners.splice(idx, 1);
+                    const i = listeners.indexOf(handler);
+                    if (i > -1) listeners.splice(i, 1);
                 }
             })["ToastContainer.useEffect"];
         }
@@ -386,12 +381,12 @@ function ToastContainer() {
                 onRemove: remove
             }, msg.id, false, {
                 fileName: "[project]/src/components/ui/Toast.tsx",
-                lineNumber: 80,
-                columnNumber: 9
+                lineNumber: 63,
+                columnNumber: 30
             }, this))
     }, void 0, false, {
         fileName: "[project]/src/components/ui/Toast.tsx",
-        lineNumber: 78,
+        lineNumber: 62,
         columnNumber: 5
     }, this);
 }
@@ -451,7 +446,6 @@ function AuthProvider({ children }) {
         "AuthProvider.useEffect": ()=>{
             if (user) {
                 fetchWishlist(user.id);
-                // 프로필 API에서 닉네임/아바타 로드
                 fetch('/api/profile').then({
                     "AuthProvider.useEffect": (r)=>r.ok ? r.json() : null
                 }["AuthProvider.useEffect"]).then({
@@ -497,7 +491,7 @@ function AuthProvider({ children }) {
             children,
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$Toast$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ToastContainer"], {}, void 0, false, {
                 fileName: "[project]/src/components/layout/AuthProvider.tsx",
-                lineNumber: 55,
+                lineNumber: 54,
                 columnNumber: 7
             }, this)
         ]

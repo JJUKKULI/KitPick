@@ -20,7 +20,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (user) {
       fetchWishlist(user.id);
-      // 프로필 API에서 닉네임/아바타 로드
       fetch('/api/profile')
         .then((r) => r.ok ? r.json() : null)
         .then((data) => {

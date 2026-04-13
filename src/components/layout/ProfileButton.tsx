@@ -12,7 +12,6 @@ export function ProfileButton() {
   const [imgError, setImgError] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // 아바타 URL 바뀌면 imgError 리셋
   useEffect(() => { setImgError(false); }, [profile?.avatar_url]);
 
   useEffect(() => {
@@ -39,7 +38,6 @@ export function ProfileButton() {
     );
   }
 
-  // profileStore 우선, 없으면 user_metadata 폴백
   const displayName =
     profile?.username ??
     user.user_metadata?.username ??
@@ -60,7 +58,6 @@ export function ProfileButton() {
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-surface-raised transition-colors"
       >
-        {/* 아바타 — 이미지 있으면 표시, 없으면 이니셜 */}
         {avatarUrl ? (
           <img
             src={avatarUrl}
@@ -80,11 +77,7 @@ export function ProfileButton() {
       </button>
 
       {open && (
-        <div
-          className="absolute right-0 top-full mt-2 w-52 bg-surface-overlay border border-surface-border rounded-xl shadow-2xl shadow-black/50 overflow-hidden animate-fade-in"
-          style={{ zIndex: 9999 }}
-        >
-          {/* 유저 정보 */}
+        <div className="absolute right-0 top-full mt-2 w-52 bg-surface-overlay border border-surface-border rounded-xl shadow-2xl shadow-black/50 overflow-hidden animate-fade-in" style={{ zIndex: 9999 }}>
           <div className="flex items-center gap-3 px-4 py-3 border-b border-surface-border">
             {avatarUrl ? (
               <img src={avatarUrl} alt={displayName} className="w-8 h-8 rounded-full object-cover border border-brand-500/30 shrink-0" />
@@ -101,12 +94,8 @@ export function ProfileButton() {
 
           <div className="p-1.5 space-y-0.5">
             {menuItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-zinc-300 hover:text-white hover:bg-surface-raised transition-colors"
-              >
+              <a key={item.href} href={item.href} onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-zinc-300 hover:text-white hover:bg-surface-raised transition-colors">
                 <item.icon className="w-4 h-4 shrink-0" />
                 {item.label}
               </a>
@@ -114,10 +103,8 @@ export function ProfileButton() {
           </div>
 
           <div className="p-1.5 border-t border-surface-border">
-            <button
-              onClick={handleSignOut}
-              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-brand-400 hover:bg-brand-500/10 transition-colors"
-            >
+            <button onClick={handleSignOut}
+              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-brand-400 hover:bg-brand-500/10 transition-colors">
               <LogOut className="w-4 h-4 shrink-0" />
               로그아웃
             </button>

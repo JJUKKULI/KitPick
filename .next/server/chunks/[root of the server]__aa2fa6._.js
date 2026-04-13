@@ -95,74 +95,56 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$se
 async function POST(request) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createClient"])();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Unauthorized'
-        }, {
-            status: 401
-        });
-    }
+    if (authError || !user) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: 'Unauthorized'
+    }, {
+        status: 401
+    });
     const formData = await request.formData();
     const file = formData.get('avatar');
-    if (!file) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: '파일이 없습니다.'
-        }, {
-            status: 400
-        });
-    }
-    // 파일 타입 검증
+    if (!file) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: '파일이 없습니다.'
+    }, {
+        status: 400
+    });
     const allowed = [
         'image/jpeg',
         'image/png',
         'image/webp',
         'image/gif'
     ];
-    if (!allowed.includes(file.type)) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'JPG, PNG, WEBP, GIF만 업로드 가능합니다.'
-        }, {
-            status: 400
-        });
-    }
-    // 파일 크기 제한 (2MB)
-    if (file.size > 2 * 1024 * 1024) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: '파일 크기는 2MB 이하여야 합니다.'
-        }, {
-            status: 400
-        });
-    }
+    if (!allowed.includes(file.type)) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: 'JPG, PNG, WEBP, GIF만 업로드 가능합니다.'
+    }, {
+        status: 400
+    });
+    if (file.size > 2 * 1024 * 1024) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: '파일 크기는 2MB 이하여야 합니다.'
+    }, {
+        status: 400
+    });
     const ext = file.name.split('.').pop() ?? 'jpg';
     const path = `${user.id}/avatar.${ext}`;
     const arrayBuffer = await file.arrayBuffer();
-    // Supabase Storage에 업로드 (upsert로 덮어쓰기)
     const { error: uploadError } = await supabase.storage.from('avatars').upload(path, arrayBuffer, {
         contentType: file.type,
         upsert: true
     });
-    if (uploadError) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: uploadError.message
-        }, {
-            status: 500
-        });
-    }
-    // Public URL 가져오기
+    if (uploadError) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: uploadError.message
+    }, {
+        status: 500
+    });
     const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path);
-    // 캐시 버스팅을 위해 타임스탬프 추가
     const avatarUrl = `${publicUrl}?t=${Date.now()}`;
-    // profiles 테이블 업데이트
     const { error: updateError } = await supabase.from('profiles').update({
         avatar_url: avatarUrl
     }).eq('id', user.id);
-    if (updateError) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: updateError.message
-        }, {
-            status: 500
-        });
-    }
+    if (updateError) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: updateError.message
+    }, {
+        status: 500
+    });
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
         avatar_url: avatarUrl
     });
@@ -170,20 +152,17 @@ async function POST(request) {
 async function DELETE() {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createClient"])();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Unauthorized'
-        }, {
-            status: 401
-        });
-    }
-    // Storage에서 삭제 시도 (없어도 에러 무시)
+    if (authError || !user) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        error: 'Unauthorized'
+    }, {
+        status: 401
+    });
     await supabase.storage.from('avatars').remove([
         `${user.id}/avatar.jpg`,
         `${user.id}/avatar.png`,
-        `${user.id}/avatar.webp`
+        `${user.id}/avatar.webp`,
+        `${user.id}/avatar.gif`
     ]);
-    // profiles 테이블 avatar_url null로
     await supabase.from('profiles').update({
         avatar_url: null
     }).eq('id', user.id);

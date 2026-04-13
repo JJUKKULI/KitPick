@@ -568,26 +568,10 @@ function TrendsPage() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "mb-8",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-3 mb-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
-                                className: "w-6 h-6 text-brand-500"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 19,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-3xl font-bold text-white",
-                                children: "트렌드 대시보드"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 20,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                        className: "text-3xl font-bold text-white mb-2",
+                        children: "트렌드 대시보드"
+                    }, void 0, false, {
                         fileName: "[project]/src/app/(main)/trends/page.tsx",
                         lineNumber: 18,
                         columnNumber: 9
@@ -597,7 +581,7 @@ function TrendsPage() {
                         children: "시장 전체 흐름과 출시 예정 신호."
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                        lineNumber: 22,
+                        lineNumber: 19,
                         columnNumber: 9
                     }, this)
                 ]
@@ -622,20 +606,20 @@ function TrendsPage() {
                                         children: stat.label
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 34,
+                                        lineNumber: 31,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(stat.icon, {
                                         className: `w-4 h-4 ${stat.color}`
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 35,
+                                        lineNumber: 32,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 33,
+                                lineNumber: 30,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -643,18 +627,18 @@ function TrendsPage() {
                                 children: stat.value
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 37,
+                                lineNumber: 34,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, i, true, {
                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                        lineNumber: 28,
+                        lineNumber: 25,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                lineNumber: 26,
+                lineNumber: 23,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -673,14 +657,14 @@ function TrendsPage() {
                                                 className: "w-5 h-5 text-brand-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                lineNumber: 47,
+                                                lineNumber: 44,
                                                 columnNumber: 15
                                             }, this),
                                             " 출시 레이더"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 46,
+                                        lineNumber: 43,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -688,13 +672,13 @@ function TrendsPage() {
                                         children: "예정"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 49,
+                                        lineNumber: 46,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 45,
+                                lineNumber: 42,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -709,7 +693,7 @@ function TrendsPage() {
                                                         children: item.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                        lineNumber: 58,
+                                                        lineNumber: 55,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -717,13 +701,13 @@ function TrendsPage() {
                                                         children: item.date
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                        lineNumber: 59,
+                                                        lineNumber: 56,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                lineNumber: 57,
+                                                lineNumber: 54,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$HypeScore$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["HypeScore"], {
@@ -732,24 +716,24 @@ function TrendsPage() {
                                                 className: "scale-90 origin-right"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                lineNumber: 61,
+                                                lineNumber: 58,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, item.id, true, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 53,
+                                        lineNumber: 50,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 51,
+                                lineNumber: 48,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                        lineNumber: 44,
+                        lineNumber: 41,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -765,14 +749,14 @@ function TrendsPage() {
                                                 className: "w-5 h-5 text-decision-wait"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                lineNumber: 71,
+                                                lineNumber: 68,
                                                 columnNumber: 15
                                             }, this),
                                             " 재판 신호"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 67,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -780,13 +764,13 @@ function TrendsPage() {
                                         children: "예측"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 73,
+                                        lineNumber: 70,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 69,
+                                lineNumber: 66,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -801,7 +785,7 @@ function TrendsPage() {
                                                         children: item.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                        lineNumber: 82,
+                                                        lineNumber: 79,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -812,13 +796,13 @@ function TrendsPage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                        lineNumber: 83,
+                                                        lineNumber: 80,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                lineNumber: 81,
+                                                lineNumber: 78,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -833,13 +817,13 @@ function TrendsPage() {
                                                                 className: "w-3 h-3"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                                lineNumber: 87,
+                                                                lineNumber: 84,
                                                                 columnNumber: 40
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                        lineNumber: 86,
+                                                        lineNumber: 83,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -847,36 +831,36 @@ function TrendsPage() {
                                                         children: "신뢰도"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                        lineNumber: 89,
+                                                        lineNumber: 86,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                                lineNumber: 85,
+                                                lineNumber: 82,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, item.id, true, {
                                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                        lineNumber: 77,
+                                        lineNumber: 74,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                                lineNumber: 75,
+                                lineNumber: 72,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/trends/page.tsx",
-                        lineNumber: 68,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/trends/page.tsx",
-                lineNumber: 42,
+                lineNumber: 39,
                 columnNumber: 7
             }, this)
         ]

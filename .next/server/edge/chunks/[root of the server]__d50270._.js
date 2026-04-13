@@ -31,6 +31,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/@supabase/ssr/dist/module/createServerClient.js [middleware] (ecmascript)");
 ;
 ;
+// 로그인 필요한 경로
 const PROTECTED = [
     '/profile',
     '/wishlist'
@@ -39,42 +40,31 @@ async function middleware(request) {
     let supabaseResponse = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].next({
         request
     });
-    const { pathname } = request.nextUrl;
-    // env 없으면 미들웨어 스킵 (로컬 개발 중 .env.local 미설정 대비)
-    if ("TURBOPACK compile-time falsy", 0) {
-        "TURBOPACK unreachable";
-    }
-    let user = null;
-    try {
-        const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["createServerClient"])(("TURBOPACK compile-time value", "https://jxyvtdwzknrcoycvhuyo.supabase.co"), ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4eXZ0ZHd6a25yY295Y3ZodXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MDQ2NzYsImV4cCI6MjA4OTI4MDY3Nn0.mm8VHVkyHudBeNtQryBc_3xTHPWAMLTiNqiOV_X6gNs"), {
-            cookies: {
-                getAll () {
-                    return request.cookies.getAll();
-                },
-                setAll (cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value })=>request.cookies.set(name, value));
-                    supabaseResponse = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].next({
-                        request
-                    });
-                    cookiesToSet.forEach(({ name, value, options })=>supabaseResponse.cookies.set(name, value, options));
-                }
+    const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["createServerClient"])(("TURBOPACK compile-time value", "https://jxyvtdwzknrcoycvhuyo.supabase.co"), ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4eXZ0ZHd6a25yY295Y3ZodXlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MDQ2NzYsImV4cCI6MjA4OTI4MDY3Nn0.mm8VHVkyHudBeNtQryBc_3xTHPWAMLTiNqiOV_X6gNs"), {
+        cookies: {
+            getAll () {
+                return request.cookies.getAll();
+            },
+            setAll (cookiesToSet) {
+                cookiesToSet.forEach(({ name, value })=>request.cookies.set(name, value));
+                supabaseResponse = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].next({
+                    request
+                });
+                cookiesToSet.forEach(({ name, value, options })=>supabaseResponse.cookies.set(name, value, options));
             }
-        });
-        // Edge Runtime에서 Supabase fetch 실패 시 try/catch로 조용히 처리
-        const { data } = await supabase.auth.getUser();
-        user = data.user;
-    } catch  {
-    // 네트워크 에러(fetch failed) 발생 시 — 비로그인으로 간주하고 계속 진행
-    // 에러 로그 출력하지 않음 (터미널 도배 방지)
-    }
-    // 보호 경로 — 비로그인 시 /login 리다이렉트
-    if (PROTECTED.some((p)=>pathname.startsWith(p)) && !user) {
+        }
+    });
+    // 세션 갱신 (반드시 getUser 호출해야 세션 유지됨)
+    const { data: { user } } = await supabase.auth.getUser();
+    const { pathname } = request.nextUrl;
+    // 보호된 경로 — 비로그인 시 /login으로 리다이렉트
+    if (PROTECTED.some((path)=>pathname.startsWith(path)) && !user) {
         const url = request.nextUrl.clone();
         url.pathname = '/login';
         url.searchParams.set('redirectTo', pathname);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
-    // 이미 로그인 상태에서 /login, /signup 접근 시 홈으로
+    // 이미 로그인된 사용자가 /login, /signup 접근 시 홈으로
     if ((pathname === '/login' || pathname === '/signup') && user) {
         const url = request.nextUrl.clone();
         url.pathname = '/';

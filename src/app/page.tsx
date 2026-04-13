@@ -6,9 +6,9 @@ import { mockProducts } from '@/data/mockData';
 import { DecisionCard } from '@/components/product/DecisionCard';
 import { LandingSearch } from '@/components/ui/LandingSearch';
 import { BottomNav } from '@/components/layout/BottomNav';
-import { ScrollToTop } from '@/components/ui/ScrollToTop';
 import { ProfileButton } from '@/components/layout/ProfileButton';
 import { useAuthStore } from '@/store/authStore';
+import { ScrollToTop } from '@/components/ui/ScrollToTop';
 
 const features = [
   {

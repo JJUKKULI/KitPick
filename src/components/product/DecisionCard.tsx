@@ -2,13 +2,10 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { TrendingDown, TrendingUp, Minus, Heart, Bookmark } from 'lucide-react';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
 import { SentimentBar } from '@/components/ui/SentimentBar';
 import { useWishlistStore } from '@/store/wishlistStore';
-import { useAuthStore } from '@/store/authStore';
-import { toast } from '@/components/ui/Toast';
 import { useLikeStore } from '@/store/likeStore';
 import type { Product } from '@/types';
 
@@ -19,15 +16,10 @@ interface DecisionCardProps {
 
 export function DecisionCard({ product, index = 0 }: DecisionCardProps) {
   const { toggle: toggleWish, isWished } = useWishlistStore();
-  const { user } = useAuthStore();
   const { toggle: toggleLike, isLiked } = useLikeStore();
 
-  // localStorage 기반 상태는 클라이언트 마운트 후에만 읽어야 Hydration 에러 없음
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
-  const wished = mounted && isWished(product.id);
-  const liked  = mounted && isLiked(product.id);
+  const wished = isWished(product.id);
+  const liked  = isLiked(product.id);
   const priceDiff = product.price - product.previousPrice;
   const isPriceDown = priceDiff < 0;
 
@@ -67,7 +59,7 @@ export function DecisionCard({ product, index = 0 }: DecisionCardProps) {
 
             {/* 북마크 — 관심 목록 (localStorage 유지) */}
             <button
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWish(product.id, user?.id); toast(wished ? 'info' : 'success', wished ? '관심 목록에서 제거됐어요' : '관심 목록에 추가됐어요'); }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWish(product.id); }}
               className={`p-1.5 rounded-full border transition-all duration-200 ${
                 wished
                   ? 'bg-brand-500/20 border-brand-500/40 text-brand-400'
