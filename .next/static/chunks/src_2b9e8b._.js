@@ -640,10 +640,13 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$DecisionBadge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/ui/DecisionBadge.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$SentimentBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/ui/SentimentBar.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$wishlistStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/wishlistStore.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/authStore.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$likeStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/likeStore.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$Toast$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/ui/Toast.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Heart$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/heart.js [app-client] (ecmascript) <export default as Heart>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bookmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bookmark$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/bookmark.js [app-client] (ecmascript) <export default as Bookmark>");
@@ -660,14 +663,41 @@ var _s = __turbopack_refresh__.signature();
 ;
 ;
 ;
+;
+;
+;
 function DecisionCard({ product, index = 0 }) {
     _s();
     const { toggle: toggleWish, isWished } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$wishlistStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useWishlistStore"])();
     const { toggle: toggleLike, isLiked } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$likeStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLikeStore"])();
-    const wished = isWished(product.id);
-    const liked = isLiked(product.id);
+    const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuthStore"])();
+    // Hydration 방지 — localStorage 상태는 마운트 후에만 읽기
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "DecisionCard.useEffect": ()=>{
+            setMounted(true);
+        }
+    }["DecisionCard.useEffect"], []);
+    const wished = mounted && isWished(product.id);
+    const liked = mounted && isLiked(product.id);
     const priceDiff = product.price - product.previousPrice;
     const isPriceDown = priceDiff < 0;
+    const priceDisplay = product.price >= 1000 ? `${product.price.toLocaleString('ko-KR')}원` : `$${product.price.toFixed(2)}`;
+    const diffDisplay = product.price >= 1000 ? `${Math.abs(priceDiff).toLocaleString('ko-KR')}원` : `$${Math.abs(priceDiff).toFixed(2)}`;
+    async function handleWish(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const willWish = !wished;
+        await toggleWish(product.id, user?.id);
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$Toast$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"])(willWish ? 'success' : 'info', willWish ? '관심 목록에 추가됐어요!' : '관심 목록에서 제거됐어요.', product.name);
+    }
+    function handleLike(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const willLike = !liked;
+        toggleLike(product.id);
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$Toast$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"])(willLike ? 'success' : 'info', willLike ? '좋아요!' : '좋아요 취소');
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
         initial: {
             opacity: 0,
@@ -695,7 +725,7 @@ function DecisionCard({ product, index = 0 }) {
                             className: "w-12 h-12 text-zinc-700"
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 38,
+                            lineNumber: 74,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -705,61 +735,53 @@ function DecisionCard({ product, index = 0 }) {
                                 size: "sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                lineNumber: 42,
+                                lineNumber: 77,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 41,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "absolute top-3 left-3 flex items-center gap-1.5",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: (e)=>{
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        toggleLike(product.id);
-                                    },
+                                    onClick: handleLike,
                                     className: `p-1.5 rounded-full border transition-all duration-200 ${liked ? 'bg-rose-500/20 border-rose-500/40 text-rose-400' : 'bg-surface-overlay/60 border-surface-border text-zinc-500 hover:text-rose-400 hover:border-rose-500/30'}`,
                                     "aria-label": liked ? '좋아요 취소' : '좋아요',
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Heart$3e$__["Heart"], {
                                         className: `w-3.5 h-3.5 ${liked ? 'fill-current' : ''}`
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                        lineNumber: 57,
+                                        lineNumber: 90,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 48,
+                                    lineNumber: 81,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: (e)=>{
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        toggleWish(product.id);
-                                    },
+                                    onClick: handleWish,
                                     className: `p-1.5 rounded-full border transition-all duration-200 ${wished ? 'bg-brand-500/20 border-brand-500/40 text-brand-400' : 'bg-surface-overlay/60 border-surface-border text-zinc-500 hover:text-brand-400 hover:border-brand-500/30'}`,
                                     "aria-label": wished ? '관심 목록 해제' : '관심 목록 추가',
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bookmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bookmark$3e$__["Bookmark"], {
                                         className: `w-3.5 h-3.5 ${wished ? 'fill-current' : ''}`
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 102,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 61,
+                                    lineNumber: 93,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 46,
+                            lineNumber: 80,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -767,13 +789,13 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.grade
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 75,
+                            lineNumber: 106,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                    lineNumber: 37,
+                    lineNumber: 73,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -785,7 +807,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.series
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 82,
+                            lineNumber: 113,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -793,7 +815,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.name
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 85,
+                            lineNumber: 116,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -801,13 +823,10 @@ function DecisionCard({ product, index = 0 }) {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "text-2xl font-bold text-white",
-                                    children: [
-                                        "$",
-                                        product.price.toFixed(2)
-                                    ]
-                                }, void 0, true, {
+                                    children: priceDisplay
+                                }, void 0, false, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 121,
                                     columnNumber: 13
                                 }, this),
                                 priceDiff !== 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -817,20 +836,20 @@ function DecisionCard({ product, index = 0 }) {
                                             className: "w-3 h-3 mr-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 93,
+                                            lineNumber: 124,
                                             columnNumber: 32
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
                                             className: "w-3 h-3 mr-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 93,
+                                            lineNumber: 124,
                                             columnNumber: 76
                                         }, this),
-                                        Math.abs(priceDiff).toFixed(2)
+                                        diffDisplay
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 92,
+                                    lineNumber: 123,
                                     columnNumber: 15
                                 }, this),
                                 priceDiff === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -840,20 +859,20 @@ function DecisionCard({ product, index = 0 }) {
                                             className: "w-3 h-3 mr-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 99,
+                                            lineNumber: 130,
                                             columnNumber: 17
                                         }, this),
                                         " 보합"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 98,
+                                    lineNumber: 129,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 89,
+                            lineNumber: 120,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -861,7 +880,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.reasoning
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 104,
+                            lineNumber: 135,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -874,7 +893,7 @@ function DecisionCard({ product, index = 0 }) {
                                             children: "인기도"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 108,
+                                            lineNumber: 139,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -886,18 +905,18 @@ function DecisionCard({ product, index = 0 }) {
                                                 }
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                                lineNumber: 110,
+                                                lineNumber: 141,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 109,
+                                            lineNumber: 140,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 107,
+                                    lineNumber: 138,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -907,7 +926,7 @@ function DecisionCard({ product, index = 0 }) {
                                             children: "여론"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 145,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$SentimentBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SentimentBar"], {
@@ -918,43 +937,44 @@ function DecisionCard({ product, index = 0 }) {
                                             className: "mt-0.5"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 115,
+                                            lineNumber: 146,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 113,
+                                    lineNumber: 144,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 106,
+                            lineNumber: 137,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                    lineNumber: 81,
+                    lineNumber: 112,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/product/DecisionCard.tsx",
-            lineNumber: 34,
+            lineNumber: 70,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/product/DecisionCard.tsx",
-        lineNumber: 27,
+        lineNumber: 63,
         columnNumber: 5
     }, this);
 }
-_s(DecisionCard, "Ex213rlSC05KoWiPpz4oTtOSxI8=", false, function() {
+_s(DecisionCard, "JTy26F9FsQQYpJZG7D23+kCyKg4=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$wishlistStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useWishlistStore"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$likeStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLikeStore"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$likeStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLikeStore"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuthStore"]
     ];
 });
 _c = DecisionCard;
@@ -973,16 +993,18 @@ __turbopack_esm__({
     "default": (()=>WishlistPage)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$mockData$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/data/mockData.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$wishlistStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/wishlistStore.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/store/authStore.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$product$2f$DecisionCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/components/product/DecisionCard.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bookmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bookmark$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/bookmark.js [app-client] (ecmascript) <export default as Bookmark>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Heart$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/heart.js [app-client] (ecmascript) <export default as Heart>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
 ;
 var _s = __turbopack_refresh__.signature();
 'use client';
+;
 ;
 ;
 ;
@@ -993,7 +1015,32 @@ function WishlistPage() {
     _s();
     const { wishlist } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$wishlistStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useWishlistStore"])();
     const { user } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuthStore"])();
-    const wishedProducts = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$mockData$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["mockProducts"].filter((p)=>wishlist.includes(p.id));
+    const [allProducts, setAllProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    // Supabase 실데이터 로드 → 없으면 mockData 폴백
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "WishlistPage.useEffect": ()=>{
+            async function load() {
+                setLoading(true);
+                try {
+                    const res = await fetch('/api/products?limit=100');
+                    if (res.ok) {
+                        const { products } = await res.json();
+                        if (products?.length > 0) {
+                            setAllProducts(products);
+                            return;
+                        }
+                    }
+                } catch  {}
+                setAllProducts(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$mockData$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["mockProducts"]);
+            }
+            load().finally({
+                "WishlistPage.useEffect": ()=>setLoading(false)
+            }["WishlistPage.useEffect"]);
+        }
+    }["WishlistPage.useEffect"], []);
+    // wishlist ID 목록으로 제품 필터링
+    const wishedProducts = allProducts.filter((p)=>wishlist.includes(p.id));
     if (!user) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "p-6 lg:p-10 max-w-7xl mx-auto w-full",
@@ -1004,7 +1051,7 @@ function WishlistPage() {
                         className: "w-10 h-10 text-zinc-700 mx-auto mb-3"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 19,
+                        lineNumber: 45,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1012,7 +1059,7 @@ function WishlistPage() {
                         children: "로그인이 필요합니다"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 20,
+                        lineNumber: 46,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1020,7 +1067,7 @@ function WishlistPage() {
                         children: "관심 목록을 보려면 로그인해주세요"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 21,
+                        lineNumber: 47,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1029,18 +1076,18 @@ function WishlistPage() {
                         children: "로그인하기"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 22,
+                        lineNumber: 48,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                lineNumber: 18,
+                lineNumber: 44,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-            lineNumber: 17,
+            lineNumber: 43,
             columnNumber: 7
         }, this);
     }
@@ -1057,7 +1104,7 @@ function WishlistPage() {
                                 className: "w-5 h-5 text-brand-500"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                                lineNumber: 36,
+                                lineNumber: 62,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -1065,51 +1112,74 @@ function WishlistPage() {
                                 children: "관심 목록"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                                lineNumber: 37,
+                                lineNumber: 63,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 35,
+                        lineNumber: 61,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         className: "text-sm text-zinc-400",
-                        children: wishedProducts.length > 0 ? `${wishedProducts.length}개의 키트를 관심 목록에 담았습니다` : '아직 관심 목록이 비어있습니다'
+                        children: loading ? '불러오는 중...' : wishedProducts.length > 0 ? `${wishedProducts.length}개의 키트를 관심 목록에 담았습니다` : '아직 관심 목록이 비어있습니다'
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 39,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                lineNumber: 34,
+                lineNumber: 60,
                 columnNumber: 7
             }, this),
-            wishedProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-center justify-center py-24",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                        className: "w-5 h-5 animate-spin text-zinc-500 mr-3"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(main)/wishlist/page.tsx",
+                        lineNumber: 77,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "text-sm text-zinc-400",
+                        children: "관심 목록 불러오는 중..."
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(main)/wishlist/page.tsx",
+                        lineNumber: 78,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/(main)/wishlist/page.tsx",
+                lineNumber: 76,
+                columnNumber: 9
+            }, this) : wishedProducts.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6",
                 children: wishedProducts.map((product, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$product$2f$DecisionCard$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DecisionCard"], {
                         product: product,
                         index: i
                     }, product.id, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 50,
+                        lineNumber: 83,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                lineNumber: 48,
+                lineNumber: 81,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex flex-col items-center justify-center py-24 border border-dashed border-surface-border rounded-2xl",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$heart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Heart$3e$__["Heart"], {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bookmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bookmark$3e$__["Bookmark"], {
                         className: "w-10 h-10 text-zinc-700 mx-auto mb-3"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 55,
+                        lineNumber: 89,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1117,7 +1187,7 @@ function WishlistPage() {
                         children: "관심 목록이 비어있습니다"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 56,
+                        lineNumber: 90,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1125,7 +1195,7 @@ function WishlistPage() {
                         children: "피드에서 마음에 드는 키트를 찜해보세요"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 57,
+                        lineNumber: 91,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1134,23 +1204,23 @@ function WishlistPage() {
                         children: "피드 보러가기"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                        lineNumber: 58,
+                        lineNumber: 92,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-                lineNumber: 54,
+                lineNumber: 87,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(main)/wishlist/page.tsx",
-        lineNumber: 32,
+        lineNumber: 58,
         columnNumber: 5
     }, this);
 }
-_s(WishlistPage, "eK3IcRMc2kye7dHKoUJepvhctZg=", false, function() {
+_s(WishlistPage, "07RtrwgOfoX1q1dEVzKivkzhgdU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$wishlistStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useWishlistStore"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$authStore$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuthStore"]

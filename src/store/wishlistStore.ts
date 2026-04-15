@@ -26,7 +26,7 @@ export const useWishlistStore = create<WishlistStore>()(
             .select('product_id')
             .eq('user_id', userId);
           if (!error && data) {
-            set({ wishlist: data.map((w) => w.product_id) });
+            set({ wishlist: data.map((w: { product_id: string }) => w.product_id) });
           }
         } catch (e) {
           console.error('[wishlist fetch]', e);
@@ -37,20 +37,34 @@ export const useWishlistStore = create<WishlistStore>()(
 
       toggle: async (productId, userId) => {
         const { wishlist } = get();
-        const isWished = wishlist.includes(productId);
+        const isCurrentlyWished = wishlist.includes(productId);
+
         // 낙관적 업데이트
-        set({ wishlist: isWished ? wishlist.filter((id) => id !== productId) : [...wishlist, productId] });
+        set({
+          wishlist: isCurrentlyWished
+            ? wishlist.filter((id) => id !== productId)
+            : [...wishlist, productId],
+        });
+
         // 로그인 상태면 Supabase 동기화
         if (userId) {
           try {
             const supabase = createClient();
-            if (isWished) {
-              await supabase.from('wishlists').delete().eq('user_id', userId).eq('product_id', productId);
+            if (isCurrentlyWished) {
+              const { error } = await supabase
+                .from('wishlists')
+                .delete()
+                .eq('user_id', userId)
+                .eq('product_id', productId);
+              if (error) throw error;
             } else {
-              const { error } = await supabase.from('wishlists').insert({ user_id: userId, product_id: productId });
+              const { error } = await supabase
+                .from('wishlists')
+                .insert({ user_id: userId, product_id: productId });
               if (error) {
                 // 실패 시 롤백
                 set({ wishlist: get().wishlist.filter((id) => id !== productId) });
+                throw error;
               }
             }
           } catch (e) {
@@ -62,6 +76,9 @@ export const useWishlistStore = create<WishlistStore>()(
       isWished: (id) => get().wishlist.includes(id),
       clear: () => set({ wishlist: [] }),
     }),
-    { name: 'kitpick-wishlist', partialize: (s) => ({ wishlist: s.wishlist }) }
+    {
+      name: 'kitpick-wishlist',
+      partialize: (s) => ({ wishlist: s.wishlist }),
+    }
   )
 );

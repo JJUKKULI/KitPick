@@ -139,6 +139,24 @@ const categoryMeta = {
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$tag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Tag$3e$__["Tag"],
         color: 'text-decision-trending',
         bg: 'bg-decision-trending/10 border-decision-trending/20'
+    },
+    review: {
+        label: '리뷰',
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$message$2d$square$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MessageSquare$3e$__["MessageSquare"],
+        color: 'text-blue-400',
+        bg: 'bg-blue-500/10 border-blue-500/20'
+    },
+    event: {
+        label: '이벤트',
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$megaphone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Megaphone$3e$__["Megaphone"],
+        color: 'text-purple-400',
+        bg: 'bg-purple-500/10 border-purple-500/20'
+    },
+    journal: {
+        label: '저널',
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$newspaper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Newspaper$3e$__["Newspaper"],
+        color: 'text-zinc-300',
+        bg: 'bg-zinc-700/30 border-zinc-600/30'
     }
 };
 const filterTabs = [
@@ -166,6 +184,11 @@ const filterTabs = [
         id: 'deal',
         label: '특가',
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$tag$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Tag$3e$__["Tag"]
+    },
+    {
+        id: 'review',
+        label: '리뷰',
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$message$2d$square$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MessageSquare$3e$__["MessageSquare"]
     }
 ];
 function ArticleCard({ article }) {
@@ -191,14 +214,14 @@ function ArticleCard({ article }) {
                                             className: "w-3 h-3"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                            lineNumber: 61,
+                                            lineNumber: 65,
                                             columnNumber: 15
                                         }, this),
                                         meta.label
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 60,
+                                    lineNumber: 64,
                                     columnNumber: 13
                                 }, this),
                                 article.is_hot && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -208,14 +231,14 @@ function ArticleCard({ article }) {
                                             className: "w-3 h-3"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                            lineNumber: 65,
+                                            lineNumber: 69,
                                             columnNumber: 17
                                         }, this),
                                         "HOT"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 64,
+                                    lineNumber: 68,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -223,13 +246,13 @@ function ArticleCard({ article }) {
                                     children: article.source
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 68,
+                                    lineNumber: 72,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                            lineNumber: 59,
+                            lineNumber: 63,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -239,20 +262,20 @@ function ArticleCard({ article }) {
                                     className: "w-3 h-3"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 71,
+                                    lineNumber: 75,
                                     columnNumber: 13
                                 }, this),
                                 article.posted_at ?? '방금 전'
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                            lineNumber: 70,
+                            lineNumber: 74,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                    lineNumber: 58,
+                    lineNumber: 62,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -260,7 +283,7 @@ function ArticleCard({ article }) {
                     children: article.title
                 }, void 0, false, {
                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                    lineNumber: 74,
+                    lineNumber: 78,
                     columnNumber: 9
                 }, this),
                 article.summary && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -270,7 +293,7 @@ function ArticleCard({ article }) {
                             children: article.summary
                         }, void 0, false, {
                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                            lineNumber: 77,
+                            lineNumber: 81,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -282,7 +305,7 @@ function ArticleCard({ article }) {
                                         className: "w-3.5 h-3.5"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                        lineNumber: 79,
+                                        lineNumber: 83,
                                         columnNumber: 29
                                     }, this),
                                     "접기"
@@ -293,7 +316,7 @@ function ArticleCard({ article }) {
                                         className: "w-3.5 h-3.5"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                        lineNumber: 79,
+                                        lineNumber: 83,
                                         columnNumber: 76
                                     }, this),
                                     "더 보기"
@@ -301,7 +324,7 @@ function ArticleCard({ article }) {
                             }, void 0, true)
                         }, void 0, false, {
                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                            lineNumber: 78,
+                            lineNumber: 82,
                             columnNumber: 13
                         }, this)
                     ]
@@ -319,12 +342,12 @@ function ArticleCard({ article }) {
                                     ]
                                 }, tag, true, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 86,
+                                    lineNumber: 90,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                            lineNumber: 84,
+                            lineNumber: 88,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -337,14 +360,14 @@ function ArticleCard({ article }) {
                                             className: "w-3.5 h-3.5"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                            lineNumber: 92,
+                                            lineNumber: 96,
                                             columnNumber: 17
                                         }, this),
                                         article.comment_count.toLocaleString()
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 91,
+                                    lineNumber: 95,
                                     columnNumber: 15
                                 }, this),
                                 article.source_url && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -358,36 +381,36 @@ function ArticleCard({ article }) {
                                             className: "w-3.5 h-3.5"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                            lineNumber: 98,
+                                            lineNumber: 102,
                                             columnNumber: 20
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                    lineNumber: 96,
+                                    lineNumber: 100,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(main)/journal/page.tsx",
-                            lineNumber: 89,
+                            lineNumber: 93,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                    lineNumber: 83,
+                    lineNumber: 87,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/(main)/journal/page.tsx",
-            lineNumber: 57,
+            lineNumber: 61,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/(main)/journal/page.tsx",
-        lineNumber: 56,
+        lineNumber: 60,
         columnNumber: 5
     }, this);
 }
@@ -407,8 +430,13 @@ function JournalPage() {
             try {
                 const params = new URLSearchParams({
                     limit: '30',
-                    ...activeFilter !== 'all' ? {
+                    ...activeFilter !== 'all' && ![
+                        'youtube'
+                    ].includes(activeFilter) ? {
                         category: activeFilter
+                    } : {},
+                    ...activeFilter === 'youtube' ? {
+                        source_type: 'youtube'
                     } : {}
                 });
                 const res = await fetch(`/api/crawl/journal?${params}`);
@@ -442,7 +470,13 @@ function JournalPage() {
         setCrawling(true);
         try {
             const res = await fetch('/api/crawl/journal', {
-                method: 'POST'
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    recentDays: 30
+                })
             });
             const data = await res.json();
             if (res.ok) {
@@ -473,7 +507,7 @@ function JournalPage() {
                                         className: "w-6 h-6 text-brand-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                        lineNumber: 164,
+                                        lineNumber: 168,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -481,7 +515,7 @@ function JournalPage() {
                                         children: "서브컬처 저널"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                        lineNumber: 165,
+                                        lineNumber: 169,
                                         columnNumber: 13
                                     }, this),
                                     useReal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -489,13 +523,13 @@ function JournalPage() {
                                         children: "실데이터"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 171,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 163,
+                                lineNumber: 167,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -503,13 +537,13 @@ function JournalPage() {
                                 children: "커뮤니티·공식 채널 최신 소식을 한곳에서 모아봐요."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 170,
+                                lineNumber: 174,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 162,
+                        lineNumber: 166,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -521,26 +555,26 @@ function JournalPage() {
                                 className: "w-4 h-4 animate-spin"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 178,
+                                lineNumber: 182,
                                 columnNumber: 23
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 178,
+                                lineNumber: 182,
                                 columnNumber: 70
                             }, this),
                             crawling ? '크롤링 중...' : '지금 수집'
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 173,
+                        lineNumber: 177,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                lineNumber: 161,
+                lineNumber: 165,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -569,7 +603,7 @@ function JournalPage() {
                                 children: s.value
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 191,
+                                lineNumber: 195,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -577,18 +611,18 @@ function JournalPage() {
                                 children: s.label
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 192,
+                                lineNumber: 196,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, s.label, true, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 190,
+                        lineNumber: 194,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                lineNumber: 184,
+                lineNumber: 188,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -603,20 +637,20 @@ function JournalPage() {
                                 className: "w-3.5 h-3.5"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                                lineNumber: 208,
+                                lineNumber: 212,
                                 columnNumber: 15
                             }, this),
                             tab.label
                         ]
                     }, tab.id, true, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 202,
+                        lineNumber: 206,
                         columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                lineNumber: 198,
+                lineNumber: 202,
                 columnNumber: 7
             }, this),
             loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -626,7 +660,7 @@ function JournalPage() {
                         className: "w-5 h-5 animate-spin text-zinc-400 mr-3"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 217,
+                        lineNumber: 221,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -634,13 +668,13 @@ function JournalPage() {
                         children: "소식 불러오는 중..."
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 218,
+                        lineNumber: 222,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                lineNumber: 216,
+                lineNumber: 220,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "space-y-3",
@@ -649,18 +683,18 @@ function JournalPage() {
                     children: '"지금 수집" 버튼을 눌러 최신 소식을 가져오세요.'
                 }, void 0, false, {
                     fileName: "[project]/src/app/(main)/journal/page.tsx",
-                    lineNumber: 223,
+                    lineNumber: 227,
                     columnNumber: 15
                 }, this) : articles.map((article)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ArticleCard, {
                         article: article
                     }, article.id, false, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 224,
+                        lineNumber: 228,
                         columnNumber: 41
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                lineNumber: 221,
+                lineNumber: 225,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -670,26 +704,26 @@ function JournalPage() {
                         className: "w-3.5 h-3.5"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 230,
+                        lineNumber: 234,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         children: lastCrawled ? `마지막 수집: ${new Date(lastCrawled).toLocaleString('ko-KR')} · 출처: 루리웹, 반다이 공식` : '출처: 반다이 공식, 디시인사이드, 루리웹 외'
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/journal/page.tsx",
-                        lineNumber: 231,
+                        lineNumber: 235,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/journal/page.tsx",
-                lineNumber: 229,
+                lineNumber: 233,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(main)/journal/page.tsx",
-        lineNumber: 159,
+        lineNumber: 163,
         columnNumber: 5
     }, this);
 }

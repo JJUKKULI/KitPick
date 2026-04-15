@@ -32,20 +32,24 @@ const MOCK_ARTICLES: NewsArticle[] = [
   { id: 'm5', category: 'community', source: '루리웹', source_url: 'https://bbs.ruliweb.com', title: '나이팅게일 HGUC 재판설 — 반다이 생산 스케줄 유출 루머', summary: '익명 소식통이 반다이 3분기 생산 스케줄에 나이팅게일 HGUC가 포함됐다고 주장했습니다.', tags: ['나이팅게일', 'HGUC', '재판루머'], posted_at: '14시간 전', comment_count: 528, is_hot: false, crawled_at: new Date().toISOString() },
 ];
 
-const categoryMeta: Record<ArticleCategory, { label: string; icon: React.ElementType; color: string; bg: string }> = {
+const categoryMeta: Record<string, { label: string; icon: React.ElementType; color: string; bg: string }> = {
   reprint:   { label: '재판 알림',   icon: Bell,          color: 'text-decision-watch',    bg: 'bg-decision-watch/10 border-decision-watch/20' },
   release:   { label: '신작 출시',   icon: Package,       color: 'text-decision-buy',      bg: 'bg-decision-buy/10 border-decision-buy/20' },
   community: { label: '커뮤니티',    icon: MessageSquare, color: 'text-zinc-300',           bg: 'bg-zinc-700/30 border-zinc-600/30' },
   deal:      { label: '특가 / 세일', icon: Tag,           color: 'text-decision-trending', bg: 'bg-decision-trending/10 border-decision-trending/20' },
+  review:    { label: '리뷰',        icon: MessageSquare, color: 'text-blue-400',          bg: 'bg-blue-500/10 border-blue-500/20' },
+  event:     { label: '이벤트',      icon: Megaphone,     color: 'text-purple-400',        bg: 'bg-purple-500/10 border-purple-500/20' },
+  journal:   { label: '저널',        icon: Newspaper,     color: 'text-zinc-300',          bg: 'bg-zinc-700/30 border-zinc-600/30' },
 };
 
 type FilterType = 'all' | ArticleCategory;
-const filterTabs: { id: FilterType; label: string; icon: React.ElementType }[] = [
+const filterTabs: { id: string; label: string; icon: React.ElementType }[] = [
   { id: 'all',       label: '전체',      icon: Newspaper },
   { id: 'reprint',   label: '재판 알림', icon: Bell },
   { id: 'release',   label: '신작 출시', icon: Package },
   { id: 'community', label: '커뮤니티',  icon: MessageSquare },
   { id: 'deal',      label: '특가',      icon: Tag },
+  { id: 'review',    label: '리뷰',      icon: MessageSquare },
 ];
 
 function ArticleCard({ article }: { article: NewsArticle }) {
@@ -116,7 +120,7 @@ export default function JournalPage() {
   const loadArticles = useCallback(async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({ limit: '30', ...(activeFilter !== 'all' ? { category: activeFilter } : {}) });
+      const params = new URLSearchParams({ limit: '30', ...(activeFilter !== 'all' && !['youtube'].includes(activeFilter) ? { category: activeFilter } : {}), ...(activeFilter === 'youtube' ? { source_type: 'youtube' } : {}) });
       const res = await fetch(`/api/crawl/journal?${params}`);
       if (res.ok) {
         const { articles: data } = await res.json();
@@ -138,7 +142,7 @@ export default function JournalPage() {
   async function handleCrawl() {
     setCrawling(true);
     try {
-      const res = await fetch('/api/crawl/journal', { method: 'POST' });
+      const res = await fetch('/api/crawl/journal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ recentDays: 30 }) });
       const data = await res.json();
       if (res.ok) {
         await loadArticles();

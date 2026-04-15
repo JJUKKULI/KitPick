@@ -144,10 +144,10 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
         },
         toggle: async (productId, userId)=>{
             const { wishlist } = get();
-            const isWished = wishlist.includes(productId);
+            const isCurrentlyWished = wishlist.includes(productId);
             // 낙관적 업데이트
             set({
-                wishlist: isWished ? wishlist.filter((id)=>id !== productId) : [
+                wishlist: isCurrentlyWished ? wishlist.filter((id)=>id !== productId) : [
                     ...wishlist,
                     productId
                 ]
@@ -156,8 +156,9 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
             if (userId) {
                 try {
                     const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
-                    if (isWished) {
-                        await supabase.from('wishlists').delete().eq('user_id', userId).eq('product_id', productId);
+                    if (isCurrentlyWished) {
+                        const { error } = await supabase.from('wishlists').delete().eq('user_id', userId).eq('product_id', productId);
+                        if (error) throw error;
                     } else {
                         const { error } = await supabase.from('wishlists').insert({
                             user_id: userId,
@@ -168,6 +169,7 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
                             set({
                                 wishlist: get().wishlist.filter((id)=>id !== productId)
                             });
+                            throw error;
                         }
                     }
                 } catch (e) {
