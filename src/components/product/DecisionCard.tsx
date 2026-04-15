@@ -70,8 +70,12 @@ export function DecisionCard({ product, index = 0 }: DecisionCardProps) {
       <div className="h-full bg-surface border border-surface-border rounded-xl overflow-hidden transition-colors duration-300 group-hover:border-surface-border-light group-hover:bg-surface-raised flex flex-col">
 
         {/* 이미지 영역 */}
-        <div className="h-40 w-full bg-gradient-to-br from-surface-raised to-surface-overlay relative flex items-center justify-center border-b border-surface-border">
-          <div className="w-12 h-12 text-zinc-700" />
+        <div className="h-40 w-full bg-gradient-to-br from-surface-raised to-surface-overlay relative flex items-center justify-center border-b border-surface-border overflow-hidden">
+          {(product as any).imageUrl ? (
+            <img src={(product as any).imageUrl} alt={product.name} className="w-full h-full object-contain p-3" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+          ) : (
+            <div className="w-12 h-12 text-zinc-700" />
+          )}
 
           <div className="absolute top-3 right-3">
             <DecisionBadge decision={product.decision} size="sm" />
