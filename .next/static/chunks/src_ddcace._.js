@@ -1006,13 +1006,12 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$mockData$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/data/mockData.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-client] (ecmascript) <export default as Search>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-client] (ecmascript) <export default as ArrowRight>");
 ;
 var _s = __turbopack_refresh__.signature();
 'use client';
-;
 ;
 ;
 ;
@@ -1029,22 +1028,51 @@ function saveRecent(query) {
         ].slice(0, 5)));
     } catch  {}
 }
-// 인기 태그 (추후 실데이터 교체)
 const HOT_TAGS = [
-    '사자비 Ver.Ka',
-    '수성의 마녀',
-    'MG 윙건담',
-    'HG 에어리얼',
-    'PG 유니콘'
+    '에어리얼 리빌드',
+    '나이팅게일 HGUC',
+    'MG 뉴건담 Ver.Ka',
+    'HG 윙건담 EW',
+    'RG 유니콘'
 ];
 function LandingSearch() {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const [query, setQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [focused, setFocused] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [preview, setPreview] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [searching, setSearching] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const inputRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // 실시간 미리보기
-    const preview = query.trim().length > 0 ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$mockData$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["mockProducts"].filter((p)=>p.name.toLowerCase().includes(query.toLowerCase()) || p.series.toLowerCase().includes(query.toLowerCase())).slice(0, 5) : [];
+    const timerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])();
+    // 디바운스 → 네이버 실시간 미리보기
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "LandingSearch.useEffect": ()=>{
+            if (!query.trim()) {
+                setPreview([]);
+                return;
+            }
+            clearTimeout(timerRef.current);
+            timerRef.current = setTimeout({
+                "LandingSearch.useEffect": async ()=>{
+                    setSearching(true);
+                    try {
+                        const res = await fetch(`/api/gundam?type=search&q=${encodeURIComponent(query.trim())}`);
+                        if (res.ok) {
+                            const data = await res.json();
+                            setPreview((data.gundams ?? []).slice(0, 5));
+                        }
+                    } catch  {} finally{
+                        setSearching(false);
+                    }
+                }
+            }["LandingSearch.useEffect"], 400);
+            return ({
+                "LandingSearch.useEffect": ()=>clearTimeout(timerRef.current)
+            })["LandingSearch.useEffect"];
+        }
+    }["LandingSearch.useEffect"], [
+        query
+    ]);
     function handleSearch(value) {
         const q = value.trim();
         if (!q) return;
@@ -1058,12 +1086,18 @@ function LandingSearch() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: `flex items-center gap-3 bg-surface border rounded-2xl px-5 py-4 transition-all duration-200 shadow-xl shadow-black/30 ${focused ? 'border-brand-500/70 ring-2 ring-brand-500/20' : 'border-surface-border-light'}`,
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
+                    searching ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                        className: "w-5 h-5 text-zinc-400 shrink-0 animate-spin"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                        lineNumber: 57,
+                        columnNumber: 22
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                         className: "w-5 h-5 text-zinc-400 shrink-0"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                        lineNumber: 60,
-                        columnNumber: 9
+                        lineNumber: 57,
+                        columnNumber: 92
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                         ref: inputRef,
@@ -1073,11 +1107,11 @@ function LandingSearch() {
                         onFocus: ()=>setFocused(true),
                         onBlur: ()=>setTimeout(()=>setFocused(false), 150),
                         onKeyDown: (e)=>e.key === 'Enter' && handleSearch(query),
-                        placeholder: "키트명, 시리즈, 등급으로 검색...",
+                        placeholder: "건프라, 피규어, 프라모델 이름으로 검색...",
                         className: "flex-1 bg-transparent text-base text-white placeholder:text-zinc-600 focus:outline-none"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                        lineNumber: 61,
+                        lineNumber: 58,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1089,83 +1123,114 @@ function LandingSearch() {
                                 className: "w-3.5 h-3.5"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                                lineNumber: 76,
+                                lineNumber: 70,
                                 columnNumber: 14
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                        lineNumber: 72,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                lineNumber: 53,
+                lineNumber: 56,
                 columnNumber: 7
             }, this),
             focused && preview.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute top-full left-0 right-0 mt-2 bg-surface-overlay border border-surface-border rounded-2xl shadow-2xl shadow-black/50 overflow-hidden z-50",
-                children: preview.map((p)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onMouseDown: ()=>{
-                            saveRecent(p.name);
-                            router.push(`/product/${p.id}`);
-                        },
-                        className: "w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-raised transition-colors text-left border-b border-surface-border last:border-0",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "w-9 h-9 rounded-lg bg-surface-raised border border-surface-border shrink-0"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                                lineNumber: 92,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex-1 min-w-0",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-sm text-white font-medium truncate",
-                                        children: p.name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                                        lineNumber: 94,
-                                        columnNumber: 17
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-xs text-zinc-500",
-                                        children: [
-                                            p.grade,
-                                            " · ",
-                                            p.series
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                                        lineNumber: 95,
-                                        columnNumber: 17
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                                lineNumber: 93,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: `text-xs font-semibold shrink-0 ${p.decision === 'buy' ? 'text-decision-buy' : p.decision === 'wait' ? 'text-decision-wait' : p.decision === 'watch' ? 'text-decision-watch' : 'text-decision-trending'}`,
-                                children: p.decision === 'buy' ? '구매추천' : p.decision === 'wait' ? '기다리세요' : p.decision === 'watch' ? '지켜보세요' : '트렌딩'
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                                lineNumber: 97,
-                                columnNumber: 15
-                            }, this)
-                        ]
-                    }, p.id, true, {
+                children: [
+                    preview.map((item, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onMouseDown: ()=>{
+                                saveRecent(item.name);
+                                router.push(`/gundam/${item.id}`);
+                            },
+                            className: "w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-raised transition-colors text-left border-b border-surface-border last:border-0",
+                            children: [
+                                item.image_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                    src: item.image_url,
+                                    alt: "",
+                                    className: "w-9 h-9 rounded-lg object-contain bg-surface-raised border border-surface-border shrink-0"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                                    lineNumber: 82,
+                                    columnNumber: 19
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "w-9 h-9 rounded-lg bg-surface-raised border border-surface-border flex items-center justify-center shrink-0 text-zinc-600 text-xs font-bold",
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                                    lineNumber: 83,
+                                    columnNumber: 19
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex-1 min-w-0",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "text-sm text-white font-medium truncate",
+                                            children: item.name
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                                            lineNumber: 85,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "text-xs text-zinc-500",
+                                            children: [
+                                                item.gundam_series?.short_name ?? '',
+                                                " ",
+                                                item.pilot ? `· ${item.pilot}` : ''
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                                            lineNumber: 86,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                                    lineNumber: 84,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-xs text-zinc-600 shrink-0",
+                                    children: "분석 보기 →"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                                    lineNumber: 88,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, i, true, {
+                            fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                            lineNumber: 78,
+                            columnNumber: 13
+                        }, this)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "px-4 py-2 text-right",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onMouseDown: ()=>handleSearch(query),
+                            className: "text-xs text-brand-400 hover:text-brand-300",
+                            children: [
+                                '"',
+                                query,
+                                '" 전체 검색 →'
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/ui/LandingSearch.tsx",
+                            lineNumber: 92,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                        lineNumber: 84,
-                        columnNumber: 13
-                    }, this))
-            }, void 0, false, {
+                        lineNumber: 91,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                lineNumber: 82,
+                lineNumber: 76,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1176,7 +1241,7 @@ function LandingSearch() {
                         children: "인기:"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                        lineNumber: 114,
+                        lineNumber: 100,
                         columnNumber: 9
                     }, this),
                     HOT_TAGS.map((tag)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1185,23 +1250,23 @@ function LandingSearch() {
                             children: tag
                         }, tag, false, {
                             fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                            lineNumber: 116,
+                            lineNumber: 102,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ui/LandingSearch.tsx",
-                lineNumber: 113,
+                lineNumber: 99,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ui/LandingSearch.tsx",
-        lineNumber: 51,
+        lineNumber: 55,
         columnNumber: 5
     }, this);
 }
-_s(LandingSearch, "bum9PplimYBDu0tttQXlzeEDWmQ=", false, function() {
+_s(LandingSearch, "6lpXaaeizos8vyybg0Tz33Fld4s=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];

@@ -1,0 +1,3 @@
+{
+  "/(main)/feed/[seriesId]/page": "app/(main)/feed/[seriesId]/page.js"
+}

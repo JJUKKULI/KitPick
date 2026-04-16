@@ -219,3 +219,15 @@ JOIN (VALUES
 ) AS v(name, days_ago, price)
   ON p.name = v.name
 ON CONFLICT (product_id, source, recorded_at) DO NOTHING;
+
+-- ─── naver_query 정밀 업데이트 (더 구체적인 검색어로 교체) ──────────────
+UPDATE public.products SET naver_query = 'HG 1/144 에어리얼 리빌드 건프라'      WHERE name = '에어리얼 리빌드';
+UPDATE public.products SET naver_query = 'HGUC 1/144 RX-78-2 건담 리바이브 반다이' WHERE name = 'RX-78-2 건담 (Revive)';
+UPDATE public.products SET naver_query = 'MG 1/100 데스티니 건담 Spec2 Ver.Ka'   WHERE name = '데스티니 건담 Spec II Ver.Ka';
+UPDATE public.products SET naver_query = 'HGUC 1/144 나이팅게일 건프라 반다이'   WHERE name = '나이팅게일';
+UPDATE public.products SET naver_query = 'HG 1/144 윙건담 EW 무한의왈츠 건프라'  WHERE name = '윙 건담 (Endless Waltz)';
+UPDATE public.products SET naver_query = 'RG 1/144 유니콘건담 데스트로이모드 건프라' WHERE name = '유니콘 건담 (데스트로이 모드)';
+UPDATE public.products SET naver_query = 'MG 1/100 뉴건담 Nu건담 Ver.Ka 반다이'  WHERE name = 'ν건담 Ver.Ka';
+UPDATE public.products SET naver_query = 'PG 1/60 스트라이크건담 퍼펙트그레이드' WHERE name = '스트라이크 건담';
+UPDATE public.products SET naver_query = 'HG 1/144 건담 루브리스 수성의마녀'     WHERE name = '건담 루브리스';
+UPDATE public.products SET naver_query = 'MG 1/100 프리덤건담 Ver2.0 건프라'     WHERE name = '프리덤 건담 Ver.2.0';

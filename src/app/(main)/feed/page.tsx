@@ -1,107 +1,92 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, SlidersHorizontal, Zap, Loader2 } from 'lucide-react';
-import { mockProducts } from '@/data/mockData';
-import { DecisionCard } from '@/components/product/DecisionCard';
-import type { DecisionType, Product } from '@/types';
+import Link from 'next/link';
+import { Zap, Loader2, ChevronRight } from 'lucide-react';
 
-type FilterType = DecisionType | 'all';
+interface Series {
+  id: string;
+  name: string;
+  short_name: string;
+  description: string;
+  year: number;
+  image_url: string | null;
+  gundam_count: number;
+  display_order: number;
+}
 
-const filters: { id: FilterType; label: string; color?: string }[] = [
-  { id: 'all',      label: '전체' },
-  { id: 'buy',      label: '구매 추천',  color: 'text-decision-buy' },
-  { id: 'wait',     label: '기다리세요', color: 'text-decision-wait' },
-  { id: 'watch',    label: '지켜보세요', color: 'text-decision-watch' },
-  { id: 'trending', label: '트렌딩',     color: 'text-decision-trending' },
+const SERIES_COLORS = [
+  'from-blue-600/30 to-blue-900/10 border-blue-500/20',
+  'from-violet-600/30 to-violet-900/10 border-violet-500/20',
+  'from-red-600/30 to-red-900/10 border-red-500/20',
+  'from-sky-600/30 to-sky-900/10 border-sky-500/20',
+  'from-orange-600/30 to-orange-900/10 border-orange-500/20',
+  'from-rose-600/30 to-rose-900/10 border-rose-500/20',
+  'from-indigo-600/30 to-indigo-900/10 border-indigo-500/20',
+  'from-teal-600/30 to-teal-900/10 border-teal-500/20',
+  'from-amber-600/30 to-amber-900/10 border-amber-500/20',
+  'from-brand-500/30 to-brand-900/10 border-brand-500/20',
 ];
 
 export default function FeedPage() {
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-  const [searchQuery,  setSearchQuery]  = useState('');
-  const [products,     setProducts]     = useState<Product[]>([]);
-  const [loading,      setLoading]      = useState(true);
-  const [useReal,      setUseReal]      = useState(false);
+  const [series,  setSeries]  = useState<Series[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function load() {
-      setLoading(true);
-      try {
-        const res = await fetch('/api/products?limit=30');
-        if (res.ok) {
-          const { products: data } = await res.json();
-          if (data?.length > 0) {
-            setProducts(data);
-            setUseReal(true);
-            return;
-          }
-        }
-      } catch { /* 폴백 */ }
-      setProducts(mockProducts);
-      setUseReal(false);
-    }
-    load().finally(() => setLoading(false));
+    fetch('/api/gundam?type=series')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data?.series) setSeries(data.series); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
-
-  const filtered = products.filter(p => {
-    const matchFilter = activeFilter === 'all' || p.decision === activeFilter;
-    const matchSearch =
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.series.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchFilter && matchSearch;
-  });
 
   return (
     <div className="p-6 lg:p-10 w-full">
-      <div className="mb-8">
+      <div className="mb-10">
         <div className="flex items-center gap-3 mb-2">
           <Zap className="w-6 h-6 text-brand-500" />
           <h1 className="text-3xl font-bold text-white">구매 결정 피드</h1>
-          {useReal && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-decision-buy/10 border border-decision-buy/20 text-decision-buy font-medium">
-              실데이터
-            </span>
-          )}
         </div>
-        <p className="text-zinc-400 text-sm">실시간 시장 분석과 AI 구매 추천.</p>
-      </div>
-
-      {/* 필터 & 검색 */}
-      <div className="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center mb-8 bg-surface border border-surface-border p-4 rounded-xl">
-        <div className="flex flex-wrap gap-2">
-          {filters.map(filter => (
-            <button key={filter.id} onClick={() => setActiveFilter(filter.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeFilter === filter.id
-                  ? 'bg-surface-raised text-white border border-surface-border-light shadow-sm'
-                  : `bg-transparent text-zinc-400 hover:bg-surface-raised/50 border border-transparent hover:border-surface-border ${filter.color ?? ''}`
-              }`}>
-              {filter.label}
-            </button>
-          ))}
-        </div>
-        <div className="relative w-full lg:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-          <input type="text" placeholder="키트, 시리즈 검색..." value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="w-full bg-surface-base border border-surface-border rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-500 transition-all" />
-        </div>
+        <p className="text-zinc-400 text-sm">시리즈별 건담을 탐색하고 AI 구매 분석을 확인하세요.</p>
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="w-5 h-5 animate-spin text-zinc-400 mr-3" />
-          <span className="text-sm text-zinc-400">제품 로드 중...</span>
-        </div>
-      ) : filtered.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filtered.map((product, i) => (
-            <DecisionCard key={product.id} product={product} index={i} />
-          ))}
+        <div className="flex items-center justify-center py-32">
+          <Loader2 className="w-6 h-6 animate-spin text-zinc-400" />
         </div>
       ) : (
-        <div className="text-center py-20 border border-surface-border border-dashed rounded-xl">
-          <p className="text-zinc-500 text-sm">검색 조건에 맞는 제품이 없습니다.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {series.map((s, i) => (
+            <Link
+              key={s.id}
+              href={`/feed/${s.id}`}
+              className={`group relative bg-gradient-to-br ${SERIES_COLORS[i % SERIES_COLORS.length]} border rounded-2xl p-6 hover:scale-[1.02] transition-all duration-200 overflow-hidden`}
+            >
+              {/* 배경 장식 */}
+              <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/5 -mr-10 -mt-10" />
+
+              <div className="relative z-10">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <p className="text-xs text-zinc-400 mb-1">{s.year}년</p>
+                    <h2 className="text-xl font-bold text-white leading-tight">{s.short_name}</h2>
+                  </div>
+                  <div className="flex items-center gap-1 bg-black/30 px-2.5 py-1 rounded-full text-xs text-zinc-300 shrink-0">
+                    {s.gundam_count}기체
+                  </div>
+                </div>
+
+                <p className="text-sm text-zinc-400 line-clamp-2 mb-4 leading-relaxed">
+                  {s.description}
+                </p>
+
+                <div className="flex items-center text-xs text-zinc-300 group-hover:text-white transition-colors">
+                  <span>건담 목록 보기</span>
+                  <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       )}
     </div>

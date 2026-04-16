@@ -22,12 +22,13 @@ function priceLabel(p: number) {
   return p >= 1000 ? `${p.toLocaleString('ko-KR')}원` : '-';
 }
 
-function NaverResultCard({ item, index }: { item: NaverItem; index: number }) {
+function NaverResultCard({ item, index, onDetail }: { item: NaverItem; index: number; onDetail: (item: NaverItem) => void }) {
   const [imgError, setImgError] = useState(false);
 
   return (
     <div
-      className="bg-surface border border-surface-border rounded-xl overflow-hidden hover:border-surface-border-light transition-all group"
+      onClick={() => onDetail(item)}
+      className="bg-surface border border-surface-border rounded-xl overflow-hidden hover:border-brand-500/40 transition-all group cursor-pointer"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
       {/* 이미지 */}
@@ -81,7 +82,6 @@ function SearchContent() {
   const router       = useRouter();
   const searchParams = useSearchParams();
   const initialQ     = searchParams.get('q') ?? '';
-
   const [query,   setQuery]   = useState(initialQ);
   const [results, setResults] = useState<NaverItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -94,6 +94,11 @@ function SearchContent() {
     if (initialQ) doSearch(initialQ);
     inputRef.current?.focus();
   }, []);
+
+  function handleDetail(item: NaverItem) {
+    const url = `/product/naver?q=${encodeURIComponent(item.title)}&image=${encodeURIComponent(item.image)}`;
+    router.push(url);
+  }
 
   async function doSearch(q: string) {
     if (!q.trim()) return;
@@ -209,10 +214,16 @@ function SearchContent() {
             </p>
           </div>
 
+          {results.length > 0 && (
+            <p className="text-xs text-zinc-600 mb-3 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-500 inline-block" />
+              카드를 클릭하면 AI 구매 분석과 쇼핑몰 최저가를 확인할 수 있어요
+            </p>
+          )}
           {results.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {results.map((item, i) => (
-                <NaverResultCard key={`${item.link}-${i}`} item={item} index={i} />
+                <NaverResultCard key={`${item.link}-${i}`} item={item} index={i} onDetail={handleDetail} />
               ))}
             </div>
           ) : (

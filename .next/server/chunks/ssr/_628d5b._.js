@@ -195,13 +195,13 @@ function MainLayout({ children }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/",
-                                className: "flex md:hidden items-center gap-2 text-white font-bold tracking-wider hover:opacity-80 transition-opacity",
+                                className: "flex items-center gap-2 text-white font-bold tracking-wider md:hidden",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$hexagon$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Hexagon$3e$__["Hexagon"], {
-                                        className: "w-6 h-6 text-brand-500 fill-brand-500/20 shrink-0"
+                                        className: "w-5 h-5 text-brand-500 fill-brand-500/20"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/layout.tsx",
-                                        lineNumber: 21,
+                                        lineNumber: 24,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -209,7 +209,7 @@ function MainLayout({ children }) {
                                         children: "KITPICK"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/layout.tsx",
-                                        lineNumber: 22,
+                                        lineNumber: 25,
                                         columnNumber: 13
                                     }, this)
                                 ]
@@ -222,12 +222,12 @@ function MainLayout({ children }) {
                                 className: "hidden md:block"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/layout.tsx",
-                                lineNumber: 25,
+                                lineNumber: 29,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$ProfileButton$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ProfileButton"], {}, void 0, false, {
                                 fileName: "[project]/src/app/(main)/layout.tsx",
-                                lineNumber: 26,
+                                lineNumber: 31,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -245,7 +245,7 @@ function MainLayout({ children }) {
                         children: children
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/layout.tsx",
-                        lineNumber: 30,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, this)
                 ]
@@ -256,12 +256,12 @@ function MainLayout({ children }) {
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$2f$BottomNav$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["BottomNav"], {}, void 0, false, {
                 fileName: "[project]/src/app/(main)/layout.tsx",
-                lineNumber: 39,
+                lineNumber: 43,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$ScrollToTop$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ScrollToTop"], {}, void 0, false, {
                 fileName: "[project]/src/app/(main)/layout.tsx",
-                lineNumber: 40,
+                lineNumber: 44,
                 columnNumber: 7
             }, this)
         ]

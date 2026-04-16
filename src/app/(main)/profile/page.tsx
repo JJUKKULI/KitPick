@@ -7,6 +7,7 @@ import {
   Check, X, Loader2, AlertTriangle, Camera, Trash2,
 } from 'lucide-react';
 import { mockProducts } from '@/data/mockData';
+import type { Product } from '@/types';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
@@ -123,7 +124,24 @@ export default function ProfilePage() {
   const { user, signOut } = useAuthStore();
   const { wishlist, toggle } = useWishlistStore();
   const { updateUsername, updateAvatarUrl } = useProfileStore();
-  const wishedProducts = mockProducts.filter((p) => wishlist.includes(p.id));
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+
+  // Supabase 실데이터 로드 (없으면 mockData 폴백) — wishlist 매칭용
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const res = await fetch('/api/products?limit=100');
+        if (res.ok) {
+          const { products } = await res.json();
+          if (products?.length > 0) { setAllProducts(products); return; }
+        }
+      } catch {}
+      setAllProducts(mockProducts);
+    }
+    loadProducts();
+  }, []);
+
+  const wishedProducts = allProducts.filter((p) => wishlist.includes(p.id));
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [editingName, setEditingName] = useState(false);
@@ -315,7 +333,7 @@ export default function ProfilePage() {
           </div>
         ) : (
           <div className="text-center py-16 border border-dashed border-surface-border rounded-2xl">
-            <Heart className="w-10 h-10 text-zinc-700 mx-auto mb-3" />
+            <Bookmark className="w-10 h-10 text-zinc-700 mx-auto mb-3" />
             <p className="text-sm font-medium text-zinc-400 mb-1">찜한 키트가 없습니다</p>
             <p className="text-xs text-zinc-600 mb-4">피드에서 마음에 드는 키트를 찜해보세요</p>
             <Link href="/feed" className="inline-block px-4 py-2 bg-brand-500/10 border border-brand-500/20 text-brand-400 rounded-lg text-sm font-medium hover:bg-brand-500/20 transition-colors">피드 보러가기</Link>

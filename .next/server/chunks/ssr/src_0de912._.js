@@ -697,14 +697,25 @@ function DecisionCard({ product, index = 0 }) {
             className: "h-full bg-surface border border-surface-border rounded-xl overflow-hidden transition-colors duration-300 group-hover:border-surface-border-light group-hover:bg-surface-raised flex flex-col",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "h-40 w-full bg-gradient-to-br from-surface-raised to-surface-overlay relative flex items-center justify-center border-b border-surface-border",
+                    className: "h-40 w-full bg-gradient-to-br from-surface-raised to-surface-overlay relative flex items-center justify-center border-b border-surface-border overflow-hidden",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        product.imageUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: product.imageUrl,
+                            alt: product.name,
+                            className: "w-full h-full object-contain p-3",
+                            onError: (e)=>{
+                                e.target.style.display = 'none';
+                            }
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/product/DecisionCard.tsx",
+                            lineNumber: 75,
+                            columnNumber: 13
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "w-12 h-12 text-zinc-700"
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 74,
-                            columnNumber: 11
+                            lineNumber: 77,
+                            columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "absolute top-3 right-3",
@@ -713,12 +724,12 @@ function DecisionCard({ product, index = 0 }) {
                                 size: "sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                lineNumber: 77,
+                                lineNumber: 81,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 76,
+                            lineNumber: 80,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -732,12 +743,12 @@ function DecisionCard({ product, index = 0 }) {
                                         className: `w-3.5 h-3.5 ${liked ? 'fill-current' : ''}`
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                        lineNumber: 90,
+                                        lineNumber: 94,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 85,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -748,18 +759,18 @@ function DecisionCard({ product, index = 0 }) {
                                         className: `w-3.5 h-3.5 ${wished ? 'fill-current' : ''}`
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                        lineNumber: 102,
+                                        lineNumber: 106,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 93,
+                                    lineNumber: 97,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 80,
+                            lineNumber: 84,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -767,7 +778,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.grade
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 106,
+                            lineNumber: 110,
                             columnNumber: 11
                         }, this)
                     ]
@@ -785,7 +796,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.series
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 113,
+                            lineNumber: 117,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -793,7 +804,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.name
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 116,
+                            lineNumber: 120,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -804,7 +815,7 @@ function DecisionCard({ product, index = 0 }) {
                                     children: priceDisplay
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 121,
+                                    lineNumber: 125,
                                     columnNumber: 13
                                 }, this),
                                 priceDiff !== 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -814,20 +825,20 @@ function DecisionCard({ product, index = 0 }) {
                                             className: "w-3 h-3 mr-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 124,
+                                            lineNumber: 128,
                                             columnNumber: 32
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
                                             className: "w-3 h-3 mr-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 124,
+                                            lineNumber: 128,
                                             columnNumber: 76
                                         }, this),
                                         diffDisplay
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 123,
+                                    lineNumber: 127,
                                     columnNumber: 15
                                 }, this),
                                 priceDiff === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -837,20 +848,20 @@ function DecisionCard({ product, index = 0 }) {
                                             className: "w-3 h-3 mr-1"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 130,
+                                            lineNumber: 134,
                                             columnNumber: 17
                                         }, this),
                                         " 보합"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 129,
+                                    lineNumber: 133,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 120,
+                            lineNumber: 124,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -858,7 +869,7 @@ function DecisionCard({ product, index = 0 }) {
                             children: product.reasoning
                         }, void 0, false, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 135,
+                            lineNumber: 139,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -871,7 +882,7 @@ function DecisionCard({ product, index = 0 }) {
                                             children: "인기도"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 139,
+                                            lineNumber: 143,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -883,18 +894,18 @@ function DecisionCard({ product, index = 0 }) {
                                                 }
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                                lineNumber: 141,
+                                                lineNumber: 145,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 140,
+                                            lineNumber: 144,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 138,
+                                    lineNumber: 142,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -904,7 +915,7 @@ function DecisionCard({ product, index = 0 }) {
                                             children: "여론"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 145,
+                                            lineNumber: 149,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$SentimentBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SentimentBar"], {
@@ -915,25 +926,25 @@ function DecisionCard({ product, index = 0 }) {
                                             className: "mt-0.5"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                            lineNumber: 146,
+                                            lineNumber: 150,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                                    lineNumber: 144,
+                                    lineNumber: 148,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/product/DecisionCard.tsx",
-                            lineNumber: 137,
+                            lineNumber: 141,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/product/DecisionCard.tsx",
-                    lineNumber: 112,
+                    lineNumber: 116,
                     columnNumber: 9
                 }, this)
             ]
