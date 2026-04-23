@@ -8,7 +8,7 @@
     "static/chunks/src_490c21._.js",
     "static/chunks/node_modules_lodash_706a43._.js",
     "static/chunks/node_modules_recharts_es6_101cec._.js",
-    "static/chunks/node_modules_ce5ef9._.js"
+    "static/chunks/node_modules_268b44._.js"
   ],
   "source": "dynamic"
 });

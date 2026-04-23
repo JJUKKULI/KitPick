@@ -499,7 +499,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/refresh-cw.js [app-ssr] (ecmascript) <export default as RefreshCw>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-ssr] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-ssr] (ecmascript) <export default as AlertCircle>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_import__("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-ssr] (ecmascript) <export default as Search>");
 'use client';
 ;
 ;
@@ -538,222 +537,6 @@ const STOCK_LABEL = {
 function priceLabel(p) {
     if (!p) return '-';
     return p >= 1000 ? `${p.toLocaleString('ko-KR')}원` : `$${p.toFixed(2)}`;
-}
-// ── 등급별 가격 비교 ─────────────────────────────────────────────────────
-function GradePriceTable({ gundamName }) {
-    const [grades, setGrades] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [searched, setSearched] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    async function load() {
-        setLoading(true);
-        setSearched(true);
-        try {
-            const res = await fetch(`/api/price/grades?name=${encodeURIComponent(gundamName)}`);
-            if (res.ok) setGrades((await res.json()).results ?? []);
-        } catch  {} finally{
-            setLoading(false);
-        }
-    }
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "bg-surface border border-surface-border rounded-xl overflow-hidden",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "px-5 py-4 border-b border-surface-border flex items-center justify-between",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                        className: "text-sm font-semibold text-white flex items-center gap-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shopping$2d$cart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingCart$3e$__["ShoppingCart"], {
-                                className: "w-4 h-4 text-brand-500"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 86,
-                                columnNumber: 11
-                            }, this),
-                            " 등급별 최저가 비교"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 85,
-                        columnNumber: 9
-                    }, this),
-                    !searched ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: load,
-                        className: "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-brand-500/10 border border-brand-500/30 text-brand-400 hover:bg-brand-500/20 transition-all",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
-                                className: "w-3.5 h-3.5"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 89,
-                                columnNumber: 212
-                            }, this),
-                            " 조회"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 89,
-                        columnNumber: 13
-                    }, this) : loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "text-xs text-zinc-500 flex items-center gap-1",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
-                                className: "w-3 h-3 animate-spin"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 91,
-                                columnNumber: 79
-                            }, this),
-                            "조회 중..."
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 91,
-                        columnNumber: 15
-                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: load,
-                        className: "text-xs text-zinc-600 hover:text-zinc-400",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__["RefreshCw"], {
-                                className: "w-3 h-3 inline mr-1"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 92,
-                                columnNumber: 92
-                            }, this),
-                            "새로고침"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 92,
-                        columnNumber: 15
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                lineNumber: 84,
-                columnNumber: 7
-            }, this),
-            !searched && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "py-6 text-center text-sm text-zinc-600",
-                children: "조회 버튼을 눌러주세요"
-            }, void 0, false, {
-                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                lineNumber: 94,
-                columnNumber: 21
-            }, this),
-            loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "py-6 text-center",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
-                    className: "w-5 h-5 animate-spin text-zinc-500 mx-auto"
-                }, void 0, false, {
-                    fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                    lineNumber: 95,
-                    columnNumber: 53
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                lineNumber: 95,
-                columnNumber: 19
-            }, this),
-            !loading && searched && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "divide-y divide-surface-border",
-                children: grades.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center justify-between px-5 py-3 hover:bg-surface-raised/30 transition-colors",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center gap-3",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: `text-xs font-bold px-2.5 py-1 rounded-full border shrink-0 ${item.grade.badge ?? 'bg-zinc-700/40 text-zinc-400 border-zinc-600/30'}`,
-                                        children: item.grade.label
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 101,
-                                        columnNumber: 17
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "text-xs text-zinc-600 hidden sm:block",
-                                        children: item.grade.scale
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 102,
-                                        columnNumber: 17
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 100,
-                                columnNumber: 15
-                            }, this),
-                            item.found && item.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                href: item.link,
-                                target: "_blank",
-                                rel: "noopener noreferrer",
-                                className: "flex items-center gap-2 group",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-right",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "text-sm font-bold text-decision-buy",
-                                                children: priceLabel(item.price)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 107,
-                                                columnNumber: 23
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "text-[10px] text-zinc-600",
-                                                children: item.mallName
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 108,
-                                                columnNumber: 23
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 106,
-                                        columnNumber: 21
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__["ExternalLink"], {
-                                        className: "w-3.5 h-3.5 text-zinc-600 group-hover:text-brand-400"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 110,
-                                        columnNumber: 21
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 105,
-                                columnNumber: 19
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-xs text-zinc-600",
-                                children: "조회되지 않습니다"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 112,
-                                columnNumber: 19
-                            }, this)
-                        ]
-                    }, item.grade.id, true, {
-                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 99,
-                        columnNumber: 13
-                    }, this))
-            }, void 0, false, {
-                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                lineNumber: 97,
-                columnNumber: 9
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-        lineNumber: 83,
-        columnNumber: 5
-    }, this);
 }
 function GradeDetailPage() {
     const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])();
@@ -840,12 +623,12 @@ function GradeDetailPage() {
             className: "w-6 h-6 animate-spin text-zinc-400"
         }, void 0, false, {
             fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-            lineNumber: 193,
+            lineNumber: 141,
             columnNumber: 86
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-        lineNumber: 193,
+        lineNumber: 141,
         columnNumber: 23
     }, this);
     if (!gradeData) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -853,7 +636,7 @@ function GradeDetailPage() {
         children: "등급 정보를 찾을 수 없습니다."
     }, void 0, false, {
         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-        lineNumber: 194,
+        lineNumber: 142,
         columnNumber: 26
     }, this);
     const gundam = gradeData.gundams;
@@ -879,7 +662,7 @@ function GradeDetailPage() {
                                 className: "w-4 h-4 mr-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 211,
+                                lineNumber: 159,
                                 columnNumber: 11
                             }, this),
                             " ",
@@ -888,7 +671,7 @@ function GradeDetailPage() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 210,
+                        lineNumber: 158,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -902,20 +685,20 @@ function GradeDetailPage() {
                                 className: `w-4 h-4 ${wished ? 'fill-current' : ''}`
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 216,
+                                lineNumber: 164,
                                 columnNumber: 11
                             }, this),
                             wished ? '관심 목록 해제' : '관심 목록 추가'
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 213,
+                        lineNumber: 161,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                lineNumber: 209,
+                lineNumber: 157,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -936,13 +719,13 @@ function GradeDetailPage() {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 227,
+                                        lineNumber: 175,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$package$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Package$3e$__["Package"], {
                                         className: "w-16 h-16 text-zinc-700"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 228,
+                                        lineNumber: 176,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -950,7 +733,7 @@ function GradeDetailPage() {
                                         children: gradeData.grade
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 229,
+                                        lineNumber: 177,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -958,23 +741,16 @@ function GradeDetailPage() {
                                         children: stock.label
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 230,
+                                        lineNumber: 178,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 225,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(GradePriceTable, {
-                                gundamName: gundam?.name ?? ''
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 234,
-                                columnNumber: 11
-                            }, this),
-                            naverItems.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "bg-surface border border-surface-border rounded-xl overflow-hidden",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -987,34 +763,37 @@ function GradeDetailPage() {
                                                         className: "w-4 h-4 text-zinc-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 240,
-                                                        columnNumber: 90
+                                                        lineNumber: 185,
+                                                        columnNumber: 17
                                                     }, this),
-                                                    "네이버 쇼핑 최저가"
+                                                    gradeData.grade,
+                                                    " ",
+                                                    gundam?.name,
+                                                    " 최저가"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 240,
-                                                columnNumber: 17
+                                                lineNumber: 184,
+                                                columnNumber: 15
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            naverItems.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "text-xs text-zinc-600",
                                                 children: [
                                                     naverItems.length,
-                                                    "개"
+                                                    "개 쇼핑몰"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 241,
-                                                columnNumber: 17
+                                                lineNumber: 187,
+                                                columnNumber: 41
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 239,
-                                        columnNumber: 15
+                                        lineNumber: 183,
+                                        columnNumber: 13
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    naverItems.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "divide-y divide-surface-border",
                                         children: naverItems.map((item, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                 href: item.link,
@@ -1030,7 +809,7 @@ function GradeDetailPage() {
                                                                 children: "최저"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                                lineNumber: 248,
+                                                                lineNumber: 195,
                                                                 columnNumber: 35
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1038,13 +817,13 @@ function GradeDetailPage() {
                                                                 children: item.mallName
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                                lineNumber: 249,
+                                                                lineNumber: 196,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 247,
+                                                        lineNumber: 194,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1055,38 +834,62 @@ function GradeDetailPage() {
                                                                 children: priceLabel(item.price)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                                lineNumber: 252,
+                                                                lineNumber: 199,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__["ExternalLink"], {
                                                                 className: "w-3.5 h-3.5 text-zinc-600 group-hover:text-brand-400 transition-colors"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                                lineNumber: 253,
+                                                                lineNumber: 200,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 251,
+                                                        lineNumber: 198,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, i, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 192,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 243,
+                                        lineNumber: 190,
+                                        columnNumber: 15
+                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "px-4 py-5 text-center",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-sm text-zinc-600",
+                                                children: "네이버 쇼핑 연동 중..."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                                lineNumber: 207,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-xs text-zinc-700 mt-1",
+                                                children: "잠시 후 자동으로 최저가가 표시됩니다"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                                lineNumber: 208,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                        lineNumber: 206,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 238,
-                                columnNumber: 13
+                                lineNumber: 182,
+                                columnNumber: 11
                             }, this),
                             gradeData.reprint_history?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "bg-surface border border-surface-border rounded-xl p-5",
@@ -1098,14 +901,14 @@ function GradeDetailPage() {
                                                 className: "w-4 h-4 text-zinc-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 264,
+                                                lineNumber: 216,
                                                 columnNumber: 93
                                             }, this),
                                             "재판 이력"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 264,
+                                        lineNumber: 216,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1118,7 +921,7 @@ function GradeDetailPage() {
                                                         children: r.date
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 220,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1126,24 +929,24 @@ function GradeDetailPage() {
                                                         children: r.note
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 269,
+                                                        lineNumber: 221,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, i, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 267,
+                                                lineNumber: 219,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 265,
+                                        lineNumber: 217,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 263,
+                                lineNumber: 215,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1156,14 +959,14 @@ function GradeDetailPage() {
                                                 className: "w-4 h-4 text-zinc-400"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 278,
+                                                lineNumber: 230,
                                                 columnNumber: 91
                                             }, this),
                                             "커뮤니티 주요 의견"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 278,
+                                        lineNumber: 230,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1171,19 +974,19 @@ function GradeDetailPage() {
                                         children: "커뮤니티 데이터 준비 중"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 279,
+                                        lineNumber: 231,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 277,
+                                lineNumber: 229,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 223,
+                        lineNumber: 171,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1199,7 +1002,7 @@ function GradeDetailPage() {
                                                 children: seriesName
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 288,
+                                                lineNumber: 240,
                                                 columnNumber: 15
                                             }, this),
                                             gradeData.release_date && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -1208,7 +1011,7 @@ function GradeDetailPage() {
                                                         className: "w-1 h-1 rounded-full bg-zinc-700"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 290,
+                                                        lineNumber: 242,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1218,7 +1021,7 @@ function GradeDetailPage() {
                                                                 className: "w-3 h-3"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                                lineNumber: 290,
+                                                                lineNumber: 242,
                                                                 columnNumber: 136
                                                             }, this),
                                                             new Date(gradeData.release_date).getFullYear(),
@@ -1226,7 +1029,7 @@ function GradeDetailPage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 290,
+                                                        lineNumber: 242,
                                                         columnNumber: 72
                                                     }, this)
                                                 ]
@@ -1234,7 +1037,7 @@ function GradeDetailPage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 287,
+                                        lineNumber: 239,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -1242,7 +1045,7 @@ function GradeDetailPage() {
                                         children: gundam?.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 293,
+                                        lineNumber: 245,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1254,7 +1057,7 @@ function GradeDetailPage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 294,
+                                        lineNumber: 246,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1265,7 +1068,7 @@ function GradeDetailPage() {
                                                 size: "lg"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 296,
+                                                lineNumber: 248,
                                                 columnNumber: 15
                                             }, this),
                                             aiResult && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1277,19 +1080,19 @@ function GradeDetailPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 297,
+                                                lineNumber: 249,
                                                 columnNumber: 28
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 295,
+                                        lineNumber: 247,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 286,
+                                lineNumber: 238,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1305,14 +1108,14 @@ function GradeDetailPage() {
                                                         className: "w-3 h-3"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 304,
+                                                        lineNumber: 256,
                                                         columnNumber: 95
                                                     }, this),
                                                     "현재 최저가"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 304,
+                                                lineNumber: 256,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1320,7 +1123,7 @@ function GradeDetailPage() {
                                                 children: priceLabel(currentPrice)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 305,
+                                                lineNumber: 257,
                                                 columnNumber: 15
                                             }, this),
                                             premiumRate !== null && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1330,13 +1133,13 @@ function GradeDetailPage() {
                                                         className: "w-3 h-3"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 308,
+                                                        lineNumber: 260,
                                                         columnNumber: 32
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingDown$3e$__["TrendingDown"], {
                                                         className: "w-3 h-3"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 308,
+                                                        lineNumber: 260,
                                                         columnNumber: 69
                                                     }, this),
                                                     "정가 대비 ",
@@ -1346,13 +1149,13 @@ function GradeDetailPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 307,
+                                                lineNumber: 259,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 303,
+                                        lineNumber: 255,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1363,7 +1166,7 @@ function GradeDetailPage() {
                                                 children: "공식 정가"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 314,
+                                                lineNumber: 266,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1371,7 +1174,7 @@ function GradeDetailPage() {
                                                 children: priceLabel(officialPrice)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 315,
+                                                lineNumber: 267,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1379,13 +1182,13 @@ function GradeDetailPage() {
                                                 children: "반다이 희망소비자가"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 316,
+                                                lineNumber: 268,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 313,
+                                        lineNumber: 265,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1396,7 +1199,7 @@ function GradeDetailPage() {
                                                 children: "커뮤니티 관심도"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 319,
+                                                lineNumber: 271,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$HypeScore$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["HypeScore"], {
@@ -1404,19 +1207,19 @@ function GradeDetailPage() {
                                                 label: ""
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 320,
+                                                lineNumber: 272,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 318,
+                                        lineNumber: 270,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 302,
+                                lineNumber: 254,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1427,7 +1230,7 @@ function GradeDetailPage() {
                                         children: "커뮤니티 여론 분포"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 326,
+                                        lineNumber: 278,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$SentimentBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SentimentBar"], {
@@ -1436,7 +1239,7 @@ function GradeDetailPage() {
                                         negative: gradeData.sentiment_negative
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 327,
+                                        lineNumber: 279,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1450,7 +1253,7 @@ function GradeDetailPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 329,
+                                                lineNumber: 281,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1461,7 +1264,7 @@ function GradeDetailPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 330,
+                                                lineNumber: 282,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1472,22 +1275,22 @@ function GradeDetailPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 331,
+                                                lineNumber: 283,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 328,
+                                        lineNumber: 280,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 325,
+                                lineNumber: 277,
                                 columnNumber: 11
                             }, this),
-                            currentReasoning && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            currentReasoning && !currentReasoning.includes('가격 데이터 수집 중') && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "bg-surface border border-surface-border rounded-xl p-5",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1495,7 +1298,7 @@ function GradeDetailPage() {
                                         children: "구매 결정 요약"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 338,
+                                        lineNumber: 290,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1503,13 +1306,75 @@ function GradeDetailPage() {
                                         children: currentReasoning
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 339,
+                                        lineNumber: 291,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 337,
+                                lineNumber: 289,
+                                columnNumber: 13
+                            }, this),
+                            currentReasoning?.includes('가격 데이터 수집 중') && !aiResult && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-surface border border-surface-border rounded-xl p-5",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        className: "text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2",
+                                        children: "💡 이 기체의 분석을 시작하려면"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                        lineNumber: 296,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ol", {
+                                        className: "text-sm text-zinc-400 leading-relaxed space-y-1 list-decimal list-inside",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                children: [
+                                                    "좌측 ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-brand-400",
+                                                        children: "등급별 최저가 → 가격 조회"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                                        lineNumber: 298,
+                                                        columnNumber: 24
+                                                    }, this),
+                                                    " 버튼으로 네이버 최저가 확인"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                                lineNumber: 298,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                children: [
+                                                    "우측 ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-brand-400",
+                                                        children: "AI 분석"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                                        lineNumber: 299,
+                                                        columnNumber: 24
+                                                    }, this),
+                                                    " 버튼으로 구매 결정 받기"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                                lineNumber: 299,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                        lineNumber: 297,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
+                                lineNumber: 295,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1519,7 +1384,7 @@ function GradeDetailPage() {
                                         className: "absolute top-0 left-0 w-1 h-full bg-brand-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 345,
+                                        lineNumber: 306,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1532,14 +1397,14 @@ function GradeDetailPage() {
                                                         className: "w-4 h-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 347,
+                                                        lineNumber: 308,
                                                         columnNumber: 92
                                                     }, this),
                                                     "AI 시장 인사이트"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 347,
+                                                lineNumber: 308,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1552,7 +1417,7 @@ function GradeDetailPage() {
                                                             className: "w-3.5 h-3.5 animate-spin"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                            lineNumber: 350,
+                                                            lineNumber: 311,
                                                             columnNumber: 32
                                                         }, this),
                                                         "분석 중..."
@@ -1563,7 +1428,7 @@ function GradeDetailPage() {
                                                             className: "w-3.5 h-3.5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                            lineNumber: 350,
+                                                            lineNumber: 311,
                                                             columnNumber: 95
                                                         }, this),
                                                         aiResult ? '재분석' : 'AI 분석'
@@ -1571,13 +1436,13 @@ function GradeDetailPage() {
                                                 }, void 0, true)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 348,
+                                                lineNumber: 309,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 346,
+                                        lineNumber: 307,
                                         columnNumber: 13
                                     }, this),
                                     analyzing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1587,7 +1452,7 @@ function GradeDetailPage() {
                                                 className: "w-5 h-5 text-brand-400 animate-spin shrink-0"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 354,
+                                                lineNumber: 315,
                                                 columnNumber: 63
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1595,20 +1460,20 @@ function GradeDetailPage() {
                                                 children: "GPT-4o-mini 분석 중..."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 354,
+                                                lineNumber: 315,
                                                 columnNumber: 131
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 354,
+                                        lineNumber: 315,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-zinc-300 leading-relaxed text-sm",
                                         children: currentInsight || '분석 버튼을 눌러 AI 인사이트를 확인하세요.'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 355,
+                                        lineNumber: 316,
                                         columnNumber: 17
                                     }, this),
                                     aiResult && !analyzing && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1621,7 +1486,7 @@ function GradeDetailPage() {
                                                         className: "w-3.5 h-3.5 text-decision-buy"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 358,
+                                                        lineNumber: 319,
                                                         columnNumber: 89
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1629,7 +1494,7 @@ function GradeDetailPage() {
                                                         children: "목표 구매가:"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 358,
+                                                        lineNumber: 319,
                                                         columnNumber: 147
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1637,13 +1502,13 @@ function GradeDetailPage() {
                                                         children: aiResult.buyTarget
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 358,
+                                                        lineNumber: 319,
                                                         columnNumber: 193
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 358,
+                                                lineNumber: 319,
                                                 columnNumber: 40
                                             }, this),
                                             aiResult.keyRisks?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1653,7 +1518,7 @@ function GradeDetailPage() {
                                                         className: "w-3.5 h-3.5 text-brand-400 shrink-0 mt-0.5"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 359,
+                                                        lineNumber: 320,
                                                         columnNumber: 99
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1661,13 +1526,13 @@ function GradeDetailPage() {
                                                         children: aiResult.keyRisks.join(' · ')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 359,
+                                                        lineNumber: 320,
                                                         columnNumber: 169
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 359,
+                                                lineNumber: 320,
                                                 columnNumber: 51
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1679,19 +1544,19 @@ function GradeDetailPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 360,
+                                                lineNumber: 321,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 357,
+                                        lineNumber: 318,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 344,
+                                lineNumber: 305,
                                 columnNumber: 11
                             }, this),
                             gradeData.price_history?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1707,14 +1572,14 @@ function GradeDetailPage() {
                                                         className: "w-4 h-4 text-zinc-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 369,
+                                                        lineNumber: 330,
                                                         columnNumber: 90
                                                     }, this),
                                                     "가격 추이"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 369,
+                                                lineNumber: 330,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1727,7 +1592,7 @@ function GradeDetailPage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 371,
+                                                        lineNumber: 332,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1737,50 +1602,50 @@ function GradeDetailPage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                        lineNumber: 372,
+                                                        lineNumber: 333,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                                lineNumber: 370,
+                                                lineNumber: 331,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 368,
+                                        lineNumber: 329,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$PriceTrendChart$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PriceTrendChart"], {
                                         data: gradeData.price_history
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                        lineNumber: 375,
+                                        lineNumber: 336,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                                lineNumber: 367,
+                                lineNumber: 328,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                        lineNumber: 284,
+                        lineNumber: 236,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-                lineNumber: 221,
+                lineNumber: 169,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(main)/gundam/[gundamId]/[gradeId]/page.tsx",
-        lineNumber: 207,
+        lineNumber: 155,
         columnNumber: 5
     }, this);
 }

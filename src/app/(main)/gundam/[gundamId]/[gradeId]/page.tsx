@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {
   ArrowLeft, Sparkles, MessageSquare, TrendingUp, TrendingDown,
   Calendar, Bookmark, Loader2, RefreshCw, ShoppingCart,
-  RotateCcw, AlertCircle, ExternalLink, Search, Package,
+  RotateCcw, AlertCircle, ExternalLink, Package,
 } from 'lucide-react';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
 import { PriceTrendChart } from '@/components/ui/PriceTrendChart';
@@ -64,59 +64,7 @@ function priceLabel(p: number | null | undefined) {
   return p >= 1000 ? `${p.toLocaleString('ko-KR')}원` : `$${p.toFixed(2)}`;
 }
 
-// ── 등급별 가격 비교 ─────────────────────────────────────────────────────
-function GradePriceTable({ gundamName }: { gundamName: string }) {
-  const [grades, setGrades]     = useState<GradeResult[]>([]);
-  const [loading, setLoading]   = useState(false);
-  const [searched, setSearched] = useState(false);
 
-  async function load() {
-    setLoading(true); setSearched(true);
-    try {
-      const res = await fetch(`/api/price/grades?name=${encodeURIComponent(gundamName)}`);
-      if (res.ok) setGrades((await res.json()).results ?? []);
-    } catch {}
-    finally { setLoading(false); }
-  }
-
-  return (
-    <div className="bg-surface border border-surface-border rounded-xl overflow-hidden">
-      <div className="px-5 py-4 border-b border-surface-border flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-          <ShoppingCart className="w-4 h-4 text-brand-500" /> 등급별 최저가 비교
-        </h3>
-        {!searched
-          ? <button onClick={load} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-brand-500/10 border border-brand-500/30 text-brand-400 hover:bg-brand-500/20 transition-all"><Search className="w-3.5 h-3.5" /> 조회</button>
-          : loading
-            ? <span className="text-xs text-zinc-500 flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" />조회 중...</span>
-            : <button onClick={load} className="text-xs text-zinc-600 hover:text-zinc-400"><RefreshCw className="w-3 h-3 inline mr-1" />새로고침</button>}
-      </div>
-      {!searched && <div className="py-6 text-center text-sm text-zinc-600">조회 버튼을 눌러주세요</div>}
-      {loading && <div className="py-6 text-center"><Loader2 className="w-5 h-5 animate-spin text-zinc-500 mx-auto" /></div>}
-      {!loading && searched && (
-        <div className="divide-y divide-surface-border">
-          {grades.map(item => (
-            <div key={item.grade.id} className="flex items-center justify-between px-5 py-3 hover:bg-surface-raised/30 transition-colors">
-              <div className="flex items-center gap-3">
-                <span className={`text-xs font-bold px-2.5 py-1 rounded-full border shrink-0 ${item.grade.badge ?? 'bg-zinc-700/40 text-zinc-400 border-zinc-600/30'}`}>{item.grade.label}</span>
-                <span className="text-xs text-zinc-600 hidden sm:block">{item.grade.scale}</span>
-              </div>
-              {item.found && item.price
-                ? <a href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group">
-                    <div className="text-right">
-                      <div className="text-sm font-bold text-decision-buy">{priceLabel(item.price)}</div>
-                      <div className="text-[10px] text-zinc-600">{item.mallName}</div>
-                    </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-zinc-600 group-hover:text-brand-400" />
-                  </a>
-                : <span className="text-xs text-zinc-600">조회되지 않습니다</span>}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function GradeDetailPage() {
   const params   = useParams();
@@ -230,16 +178,15 @@ export default function GradeDetailPage() {
             <div className={`absolute top-3 right-3 text-xs px-2 py-1 rounded-full bg-surface-overlay/90 border border-surface-border ${stock.color}`}>{stock.label}</div>
           </div>
 
-          {/* 등급별 가격 비교 */}
-          <GradePriceTable gundamName={gundam?.name ?? ''} />
-
-          {/* 네이버 최저가 */}
-          {naverItems.length > 0 && (
-            <div className="bg-surface border border-surface-border rounded-xl overflow-hidden">
-              <div className="px-4 py-3 border-b border-surface-border flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-white flex items-center gap-2"><ShoppingCart className="w-4 h-4 text-zinc-400" />네이버 쇼핑 최저가</h3>
-                <span className="text-xs text-zinc-600">{naverItems.length}개</span>
-              </div>
+          {/* 네이버 최저가 — 항상 표시 */}
+          <div className="bg-surface border border-surface-border rounded-xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-surface-border flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                <ShoppingCart className="w-4 h-4 text-zinc-400" />{gradeData.grade} {gundam?.name} 최저가
+              </h3>
+              {naverItems.length > 0 && <span className="text-xs text-zinc-600">{naverItems.length}개 쇼핑몰</span>}
+            </div>
+            {naverItems.length > 0 ? (
               <div className="divide-y divide-surface-border">
                 {naverItems.map((item, i) => (
                   <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
@@ -255,8 +202,13 @@ export default function GradeDetailPage() {
                   </a>
                 ))}
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="px-4 py-5 text-center">
+                <p className="text-sm text-zinc-600">네이버 쇼핑 연동 중...</p>
+                <p className="text-xs text-zinc-700 mt-1">잠시 후 자동으로 최저가가 표시됩니다</p>
+              </div>
+            )}
+          </div>
 
           {/* 재판 이력 */}
           {gradeData.reprint_history?.length > 0 && (
@@ -333,10 +285,19 @@ export default function GradeDetailPage() {
           </div>
 
           {/* 구매 결정 요약 */}
-          {currentReasoning && (
+          {currentReasoning && !currentReasoning.includes('가격 데이터 수집 중') && (
             <div className="bg-surface border border-surface-border rounded-xl p-5">
               <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">구매 결정 요약</h3>
               <p className="text-sm text-zinc-200 leading-relaxed">{currentReasoning}</p>
+            </div>
+          )}
+          {currentReasoning?.includes('가격 데이터 수집 중') && !aiResult && (
+            <div className="bg-surface border border-surface-border rounded-xl p-5">
+              <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">💡 이 기체의 분석을 시작하려면</h3>
+              <ol className="text-sm text-zinc-400 leading-relaxed space-y-1 list-decimal list-inside">
+                <li>좌측 <span className="text-brand-400">등급별 최저가 → 가격 조회</span> 버튼으로 네이버 최저가 확인</li>
+                <li>우측 <span className="text-brand-400">AI 분석</span> 버튼으로 구매 결정 받기</li>
+              </ol>
             </div>
           )}
 
