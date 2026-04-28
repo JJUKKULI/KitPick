@@ -113,7 +113,7 @@ export default function GradeDetailPage() {
   const wished = mounted && gradeData ? isWished(gradeData.id) : false;
   const currentDecision  = aiResult?.decision  ?? gradeData?.decision  ?? 'watch';
   const currentReasoning = aiResult?.reasoning ?? gradeData?.reasoning ?? '';
-  const currentInsight   = aiResult?.ai_insight ?? gradeData?.ai_insight ?? '';
+  const currentInsight   = aiResult?.aiInsight ?? gradeData?.ai_insight ?? '';
 
   async function handleAnalyze() {
     if (!gradeData || analyzing) return;
