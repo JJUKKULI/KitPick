@@ -1,5 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/(main)/feed/page": "app/(main)/feed/page.js",
-  "/api/gundam/route": "app/api/gundam/route.js"
+  "/api/profile/route": "app/api/profile/route.js"
 }

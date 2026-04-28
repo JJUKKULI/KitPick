@@ -65,19 +65,56 @@ export async function GET(request: Request) {
     });
   }
 
-  // 등급 상세
+  // 등급 상세 + 30일 가격 이력 + 커뮤니티 통계
   if (type === 'grade') {
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ error: 'id 필요' }, { status: 400 });
 
-    const { data, error } = await supabase
-      .from('gundam_grades')
-      .select('*, gundams(id, name, full_name, pilot, description, image_url, gundam_series(name, short_name))')
-      .eq('id', id)
-      .single();
+    const [gradeRes, historyRes] = await Promise.all([
+      supabase
+        .from('gundam_grades')
+        .select('*, gundams(id, name, full_name, pilot, description, image_url, gundam_series(name, short_name))')
+        .eq('id', id)
+        .single(),
+      supabase
+        .from('price_history_daily')
+        .select('price, mall_name, recorded_at')
+        .eq('grade_id', id)
+        .order('recorded_at', { ascending: false })
+        .limit(30),
+    ]);
 
-    if (error || !data) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    return NextResponse.json({ grade: data });
+    if (gradeRes.error || !gradeRes.data) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
+    // 커뮤니티 통계 (해당 건담의 최신 데이터)
+    const gundamId = (gradeRes.data.gundams as any)?.id;
+    let communityStats = null;
+    if (gundamId) {
+      const { data: cs } = await supabase
+        .from('community_stats')
+        .select('*')
+        .eq('gundam_id', gundamId)
+        .eq('source', 'ruliweb')
+        .order('collected_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      communityStats = cs;
+    }
+
+    // 30일 이력 → price_history 포맷 변환 (차트용)
+    const history = (historyRes.data ?? [])
+      .reverse()
+      .map(h => ({ date: h.recorded_at.slice(5), price: h.price }));
+
+    return NextResponse.json({
+      grade: {
+        ...gradeRes.data,
+        price_history_real: history,
+        community_stats:    communityStats,
+      }
+    });
   }
 
   // 건담 검색

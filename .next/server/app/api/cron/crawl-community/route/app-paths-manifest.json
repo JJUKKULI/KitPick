@@ -1,0 +1,3 @@
+{
+  "/api/cron/crawl-community/route": "app/api/cron/crawl-community/route.js"
+}

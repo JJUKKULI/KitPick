@@ -36,6 +36,15 @@ interface GradeData {
   reprint_history: { date: string; note: string }[];
   stock_status: string;
   image_url: string | null;
+  price_history_real?: { date: string; price: number }[];
+  community_stats?: {
+    mention_count: number;
+    sentiment_positive: number;
+    sentiment_neutral: number;
+    sentiment_negative: number;
+    top_comments: Array<{ title: string; recommend: number; views: number; url: string }>;
+    collected_at: string;
+  } | null;
   gundams: {
     id: string;
     name: string;
@@ -225,10 +234,36 @@ export default function GradeDetailPage() {
             </div>
           )}
 
-          {/* 커뮤니티 주요 의견 (placeholder) */}
-          <div className="bg-surface border border-surface-border rounded-xl p-6">
-            <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2"><MessageSquare className="w-4 h-4 text-zinc-400" />커뮤니티 주요 의견</h3>
-            <p className="text-sm text-zinc-600 italic text-center py-4">커뮤니티 데이터 준비 중</p>
+          {/* 커뮤니티 주요 의견 — 루리웹 실데이터 */}
+          <div className="bg-surface border border-surface-border rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-zinc-400" />루리웹 주요 의견
+              </h3>
+              {gradeData.community_stats?.mention_count && (
+                <span className="text-[10px] text-zinc-600">언급 {gradeData.community_stats.mention_count}건</span>
+              )}
+            </div>
+            {gradeData.community_stats?.top_comments?.length ? (
+              <div className="space-y-2">
+                {gradeData.community_stats.top_comments.map((c, i) => (
+                  <a key={i} href={c.url} target="_blank" rel="noopener noreferrer"
+                    className="block p-3 rounded-lg bg-surface-raised border border-surface-border hover:border-brand-500/30 transition-colors group">
+                    <p className="text-xs text-zinc-200 line-clamp-2 group-hover:text-white">{c.title}</p>
+                    <div className="flex gap-3 mt-1.5 text-[10px] text-zinc-600">
+                      <span>추천 {c.recommend}</span>
+                      <span>조회 {c.views.toLocaleString()}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-zinc-600 italic text-center py-4">
+                수집된 커뮤니티 데이터가 없습니다
+                <br />
+                <span className="text-[10px]">Cron 작업 실행 후 자동 수집됩니다</span>
+              </p>
+            )}
           </div>
         </div>
 
@@ -323,19 +358,29 @@ export default function GradeDetailPage() {
             )}
           </div>
 
-          {/* 가격 추이 */}
-          {gradeData.price_history?.length > 0 && (
-            <div className="bg-surface border border-surface-border rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-white flex items-center gap-2"><TrendingUp className="w-4 h-4 text-zinc-400" />가격 추이</h3>
-                <div className="flex gap-3 text-xs text-zinc-600">
-                  <span>최저 {priceLabel(Math.min(...gradeData.price_history.map(h => h.price)))}</span>
-                  <span>최고 {priceLabel(Math.max(...gradeData.price_history.map(h => h.price)))}</span>
+          {/* 가격 추이 — 실데이터(price_history_daily) 우선 */}
+          {(() => {
+            const real = gradeData.price_history_real ?? [];
+            const fallback = gradeData.price_history ?? [];
+            const chartData = real.length >= 2 ? real : fallback;
+            if (chartData.length === 0) return null;
+            return (
+              <div className="bg-surface border border-surface-border rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-zinc-400" />
+                    가격 추이
+                    {real.length >= 2 && <span className="text-[10px] text-decision-buy">· 실데이터 {real.length}일</span>}
+                  </h3>
+                  <div className="flex gap-3 text-xs text-zinc-600">
+                    <span>최저 {priceLabel(Math.min(...chartData.map(h => h.price)))}</span>
+                    <span>최고 {priceLabel(Math.max(...chartData.map(h => h.price)))}</span>
+                  </div>
                 </div>
+                <PriceTrendChart data={chartData} />
               </div>
-              <PriceTrendChart data={gradeData.price_history} />
-            </div>
-          )}
+            );
+          })()}
         </div>
       </div>
     </div>
