@@ -29,7 +29,7 @@ const COMMUNITY_RSS = [
   {
     url: 'https://news.google.com/rss/search?q=프라모델+리뷰+arca.live&hl=ko&gl=KR&ceid=KR:ko',
     name: '아카라이브',
-    defaultCat: 'journal' as const,
+    defaultCat: 'community' as const,
   },
   {
     url: 'https://news.google.com/rss/search?q=건프라+커뮤니티+인기+2025&hl=ko&gl=KR&ceid=KR:ko',

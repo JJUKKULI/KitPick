@@ -6,7 +6,7 @@ const JOURNAL_RSS = [
   {
     url: 'https://news.google.com/rss/search?q=프라모델+arca.live+scalemodel&hl=ko&gl=KR&ceid=KR:ko',
     name: '아카라이브',
-    defaultCat: 'journal' as const,
+    defaultCat: 'release' as const,
   },
   // 건프라 전문 리뷰/저널
   {

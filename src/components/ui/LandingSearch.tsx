@@ -30,7 +30,7 @@ export function LandingSearch() {
   const [preview,   setPreview]   = useState<GundamPreviewItem[]>([]);
   const [searching, setSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // 디바운스 → 네이버 실시간 미리보기
   useEffect(() => {
