@@ -313,15 +313,24 @@ function ProfileContent() {
             {wishGrades.map((item) => (
               <Link key={item.id} href={`/gundam/${item.gundams?.id}/${item.id}`}
                 className="flex items-center gap-3 p-4 bg-surface border border-surface-border rounded-xl hover:border-surface-border-light transition-colors">
-                <div className="w-12 h-12 bg-surface-raised rounded-lg border border-surface-border shrink-0 flex items-center justify-center">
-                  <User className="w-5 h-5 text-zinc-600" />
+                <div className="w-12 h-12 bg-surface-raised rounded-lg border border-surface-border shrink-0 flex items-center justify-center overflow-hidden">
+                  {item.gundams?.image_url
+                    ? <img src={item.gundams.image_url} alt={item.gundams.name} className="w-full h-full object-contain p-1" />
+                    : <User className="w-5 h-5 text-zinc-600" />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-white text-sm truncate">{item.name}</div>
-                  <div className="text-xs text-zinc-500 mt-0.5">{item.grade} · {item.series}</div>
+                  <div className="font-medium text-white text-sm truncate">{item.gundams?.name ?? '기체명 없음'}</div>
+                  <div className="text-xs text-zinc-500 mt-0.5">
+                    {item.grade}{item.scale ? ` · ${item.scale}` : ''}
+                    {(item.gundams?.gundam_series as any)?.short_name ? ` · ${(item.gundams?.gundam_series as any).short_name}` : ''}
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="font-bold text-white text-sm hidden sm:block">${item.price.toFixed(2)}</span>
+                  {item.current_price && (
+                    <span className="font-bold text-decision-buy text-sm hidden sm:block">
+                      {item.current_price.toLocaleString('ko-KR')}원
+                    </span>
+                  )}
                   <DecisionBadge decision={item.decision} size="sm" />
                   <button onClick={(e) => { e.preventDefault(); toggle(item.id, user?.id); }}
                     className="p-1.5 rounded-full text-brand-400 hover:bg-brand-500/10 transition-colors">
