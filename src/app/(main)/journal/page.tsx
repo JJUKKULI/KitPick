@@ -120,7 +120,8 @@ export default function JournalPage() {
   const loadArticles = useCallback(async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({ limit: '30', ...(activeFilter !== 'all' && !['youtube'].includes(activeFilter) ? { category: activeFilter } : {}), ...(activeFilter === 'youtube' ? { source_type: 'youtube' } : {}) });
+      const params = new URLSearchParams({ limit: '30' });
+      if (activeFilter !== 'all') params.set('category', activeFilter);
       const res = await fetch(`/api/crawl/journal?${params}`);
       if (res.ok) {
         const { articles: data } = await res.json();
