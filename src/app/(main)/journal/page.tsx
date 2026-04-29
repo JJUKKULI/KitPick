@@ -43,7 +43,7 @@ const categoryMeta: Record<string, { label: string; icon: React.ElementType; col
 };
 
 type FilterType = 'all' | ArticleCategory;
-const filterTabs: { id: string; label: string; icon: React.ElementType }[] = [
+const filterTabs: { id: FilterType; label: string; icon: React.ElementType }[] = [
   { id: 'all',       label: '전체',      icon: Newspaper },
   { id: 'reprint',   label: '재판 알림', icon: Bell },
   { id: 'release',   label: '신작 출시', icon: Package },
