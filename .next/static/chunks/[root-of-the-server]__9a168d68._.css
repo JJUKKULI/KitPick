@@ -744,6 +744,10 @@
     margin-right: calc(var(--spacing) * 3);
   }
 
+  .mb-0\.5 {
+    margin-bottom: calc(var(--spacing) * .5);
+  }
+
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
   }
@@ -2996,6 +3000,18 @@
     @supports (color: color-mix(in lab, red, red)) {
       .hover\:border-brand-500\/40:hover {
         border-color: color-mix(in oklab, var(--color-brand-500) 40%, transparent);
+      }
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:border-red-400\/30:hover {
+      border-color: #ff65684d;
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:border-red-400\/30:hover {
+        border-color: color-mix(in oklab, var(--color-red-400) 30%, transparent);
       }
     }
   }

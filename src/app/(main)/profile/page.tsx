@@ -6,8 +6,6 @@ import {
   User, Bookmark, Heart, Settings, Pencil,
   Check, X, Loader2, AlertTriangle, Camera, Trash2,
 } from 'lucide-react';
-import { mockProducts } from '@/data/mockData';
-import type { Product } from '@/types';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
@@ -117,6 +115,16 @@ function AvatarSection({
   );
 }
 
+interface WishGrade {
+  id: string;
+  grade: string;
+  scale: string | null;
+  official_price: number | null;
+  current_price: number | null;
+  decision: import('@/types').DecisionType;
+  gundams: { id: string; name: string; image_url: string | null; gundam_series: { short_name: string } | null } | null;
+}
+
 // ── 메인 페이지 ──────────────────────────────────────────────────────────
 function ProfileContent() {
   const searchParams = useSearchParams();
@@ -124,24 +132,16 @@ function ProfileContent() {
   const { user, signOut } = useAuthStore();
   const { wishlist, toggle } = useWishlistStore();
   const { updateUsername, updateAvatarUrl } = useProfileStore();
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [wishGrades, setWishGrades] = useState<WishGrade[]>([]);
 
-  // Supabase 실데이터 로드 (없으면 mockData 폴백) — wishlist 매칭용
+  // wishlist ID → 등급 상세 조회
   useEffect(() => {
-    async function loadProducts() {
-      try {
-        const res = await fetch('/api/products?limit=100');
-        if (res.ok) {
-          const { products } = await res.json();
-          if (products?.length > 0) { setAllProducts(products); return; }
-        }
-      } catch {}
-      setAllProducts(mockProducts);
-    }
-    loadProducts();
-  }, []);
-
-  const wishedProducts = allProducts.filter((p) => wishlist.includes(p.id));
+    if (wishlist.length === 0) { setWishGrades([]); return; }
+    fetch(`/api/wishlist/grades?ids=${wishlist.join(',')}`)
+      .then(r => r.ok ? r.json() : { grades: [] })
+      .then(({ grades }) => setWishGrades(grades ?? []))
+      .catch(() => setWishGrades([]));
+  }, [wishlist.join(',')]);
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [editingName, setEditingName] = useState(false);
@@ -208,7 +208,7 @@ function ProfileContent() {
   const memberYear = profile?.created_at ? new Date(profile.created_at).getFullYear() : new Date().getFullYear();
 
   const tabs = [
-    { id: 'wishlist', label: '관심 목록', icon: Bookmark, count: wishedProducts.length },
+    { id: 'wishlist', label: '관심 목록', icon: Bookmark, count: wishGrades.length },
     { id: 'settings', label: '설정',     icon: Settings,  count: null },
   ];
 
@@ -284,7 +284,7 @@ function ProfileContent() {
         </div>
 
         <div className="flex gap-6 mt-5 pt-5 border-t border-surface-border">
-          <div className="text-center"><div className="text-xl font-bold text-white">{wishedProducts.length}</div><div className="text-xs text-zinc-500 mt-0.5">찜한 키트</div></div>
+          <div className="text-center"><div className="text-xl font-bold text-white">{wishGrades.length}</div><div className="text-xs text-zinc-500 mt-0.5">찜한 키트</div></div>
           <div className="w-px bg-surface-border" />
           <div className="text-center"><div className="text-xl font-bold text-white">0</div><div className="text-xs text-zinc-500 mt-0.5">저장된 저널</div></div>
           <div className="w-px bg-surface-border" />
@@ -308,10 +308,10 @@ function ProfileContent() {
 
       {/* 관심 목록 */}
       {activeTab === 'wishlist' && (
-        wishedProducts.length > 0 ? (
+        wishGrades.length > 0 ? (
           <div className="space-y-3">
-            {wishedProducts.map((item) => (
-              <Link key={item.id} href={`/product/${item.id}`}
+            {wishGrades.map((item) => (
+              <Link key={item.id} href={`/gundam/${item.gundams?.id}/${item.id}`}
                 className="flex items-center gap-3 p-4 bg-surface border border-surface-border rounded-xl hover:border-surface-border-light transition-colors">
                 <div className="w-12 h-12 bg-surface-raised rounded-lg border border-surface-border shrink-0 flex items-center justify-center">
                   <User className="w-5 h-5 text-zinc-600" />
