@@ -205,7 +205,7 @@ export default function ProductDetailPage() {
         }
       } catch {}
       const mock = mockProducts.find(p => p.id === params.id) ?? mockProducts[0];
-      setProduct({ ...mock, officialPrice: null, stockStatus: 'unknown', reprintHistory: [], mentionCount: 0 });
+      setProduct({ ...mock, imageUrl: (mock as any).imageUrl ?? null, officialPrice: null, stockStatus: 'unknown', reprintHistory: [], mentionCount: 0 });
     }
     load().finally(() => setLoading(false));
   }, [params.id]);
