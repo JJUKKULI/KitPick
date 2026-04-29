@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, useRef, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import {
   User, Bookmark, Heart, Settings, Pencil,
   Check, X, Loader2, AlertTriangle, Camera, Trash2,
@@ -118,7 +118,7 @@ function AvatarSection({
 }
 
 // ── 메인 페이지 ──────────────────────────────────────────────────────────
-export default function ProfilePage() {
+function ProfileContent() {
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') ?? 'wishlist';
   const { user, signOut } = useAuthStore();
@@ -392,5 +392,17 @@ export default function ProfilePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <ProfileContent />
+    </Suspense>
   );
 }

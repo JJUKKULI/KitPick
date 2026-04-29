@@ -13,14 +13,21 @@ function saveRecent(query: string) {
   } catch {}
 }
 
-interface NaverItem { title: string; price: number; mallName: string; link: string; image: string; }
+interface GundamPreviewItem {
+  id:            string;
+  name:          string;
+  pilot:         string | null;
+  image_url:     string | null;
+  gundam_series: { short_name: string } | null;
+}
+
 const HOT_TAGS = ['에어리얼 리빌드', '나이팅게일 HGUC', 'MG 뉴건담 Ver.Ka', 'HG 윙건담 EW', 'RG 유니콘'];
 
 export function LandingSearch() {
   const router = useRouter();
   const [query,     setQuery]     = useState('');
   const [focused,   setFocused]   = useState(false);
-  const [preview,   setPreview]   = useState<NaverItem[]>([]);
+  const [preview,   setPreview]   = useState<GundamPreviewItem[]>([]);
   const [searching, setSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
