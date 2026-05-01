@@ -3,7 +3,6 @@
   "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(main)/feed/page": "app/(main)/feed/page.js",
   "/(main)/profile/page": "app/(main)/profile/page.js",
-  "/(main)/settings/page": "app/(main)/settings/page.js",
   "/api/gundam/route": "app/api/gundam/route.js",
   "/api/profile/avatar/route": "app/api/profile/avatar/route.js",
   "/api/profile/route": "app/api/profile/route.js",

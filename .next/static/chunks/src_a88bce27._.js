@@ -53,8 +53,16 @@ const useAuthStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
             set({
                 user: null
             });
-        // 로그아웃 시 찜 목록은 localStorage에 유지 (선택사항)
-        // useWishlistStore.getState().clear();
+            // 로그아웃 시 모든 사용자 데이터 즉시 초기화
+            // (동적 import로 순환참조 방지)
+            const { useWishlistStore } = await __turbopack_context__.r("[project]/src/store/wishlistStore.ts [app-client] (ecmascript, async loader)")(__turbopack_context__.i);
+            const { useProfileStore } = await __turbopack_context__.r("[project]/src/store/profileStore.ts [app-client] (ecmascript, async loader)")(__turbopack_context__.i);
+            useWishlistStore.getState().clear();
+            useProfileStore.getState().clear();
+            // localStorage의 persist 데이터도 제거
+            if ("TURBOPACK compile-time truthy", 1) {
+                localStorage.removeItem('kitpick-wishlist');
+            }
         }
     }));
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
@@ -130,6 +138,7 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
                 const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
                 const { data, error } = await supabase.from('wishlists').select('product_id').eq('user_id', userId);
                 if (!error && data) {
+                    // DB 데이터로 덮어씌워서 이전 유저 잔존 데이터 방지
                     set({
                         wishlist: data.map((w)=>w.product_id)
                     });
@@ -152,7 +161,6 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
                     productId
                 ]
             });
-            // 로그인 상태면 Supabase 동기화
             if (userId) {
                 try {
                     const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
@@ -178,6 +186,7 @@ const useWishlistStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$nod
             }
         },
         isWished: (id)=>get().wishlist.includes(id),
+        // 로그아웃 시 반드시 호출 — localStorage도 비워야 이전 유저 데이터 안 보임
         clear: ()=>set({
                 wishlist: []
             })
@@ -463,7 +472,7 @@ function AuthProvider({ children }) {
                     "AuthProvider.useEffect": ()=>{}
                 }["AuthProvider.useEffect"]);
             } else {
-                clearWishlist();
+                clearWishlist(); // 로그아웃 시 이전 유저 데이터 완전 제거
                 clearProfile();
             }
         }

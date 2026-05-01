@@ -72,7 +72,7 @@ export async function PATCH(request: Request) {
   // upsert — profiles 행이 없는 경우도 처리
   const { error } = await supabase
     .from('profiles')
-    .upsert({ id: user.id, username: username.trim(), updated_at: new Date().toISOString() }, { onConflict: 'id' });
+    .upsert({ id: user.id, username: username.trim() }, { onConflict: 'id' });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

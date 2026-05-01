@@ -102,12 +102,23 @@ async function GET(request) {
     const next = searchParams.get('next') ?? '/feed';
     if (code) {
         const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createClient"])();
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (!error) {
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+        if (!error && data.user) {
+            // OAuth 로그인(Google 등) 후 profiles 행 없으면 자동 생성
+            const user = data.user;
+            const username = user.user_metadata?.username ?? user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? '사용자';
+            const avatar_url = user.user_metadata?.avatar_url ?? null;
+            await supabase.from('profiles').upsert({
+                id: user.id,
+                username,
+                avatar_url
+            }, {
+                onConflict: 'id',
+                ignoreDuplicates: true
+            });
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].redirect(`${origin}${next}`);
         }
     }
-    // 에러 시 로그인 페이지로
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].redirect(`${origin}/login?error=auth_callback_failed`);
 }
 }}),
