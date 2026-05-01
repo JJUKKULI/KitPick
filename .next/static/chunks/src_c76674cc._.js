@@ -766,13 +766,21 @@ function ProfileContent() {
                         className: "flex items-center gap-3 p-4 bg-surface border border-surface-border rounded-xl hover:border-surface-border-light transition-colors",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "w-12 h-12 bg-surface-raised rounded-lg border border-surface-border shrink-0 flex items-center justify-center",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
+                                className: "w-12 h-12 bg-surface-raised rounded-lg border border-surface-border shrink-0 flex items-center justify-center overflow-hidden",
+                                children: item.gundams?.image_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                    src: item.gundams.image_url,
+                                    alt: item.gundams.name,
+                                    className: "w-full h-full object-contain p-1"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/(main)/profile/page.tsx",
+                                    lineNumber: 318,
+                                    columnNumber: 23
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
                                     className: "w-5 h-5 text-zinc-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 317,
-                                    columnNumber: 19
+                                    lineNumber: 319,
+                                    columnNumber: 23
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
@@ -784,50 +792,50 @@ function ProfileContent() {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "font-medium text-white text-sm truncate",
-                                        children: item.name
+                                        children: item.gundams?.name ?? '기체명 없음'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 320,
+                                        lineNumber: 322,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "text-xs text-zinc-500 mt-0.5",
                                         children: [
                                             item.grade,
-                                            " · ",
-                                            item.series
+                                            item.scale ? ` · ${item.scale}` : '',
+                                            item.gundams?.gundam_series?.short_name ? ` · ${(item.gundams?.gundam_series).short_name}` : ''
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 321,
+                                        lineNumber: 323,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 319,
+                                lineNumber: 321,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex items-center gap-3 shrink-0",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "font-bold text-white text-sm hidden sm:block",
+                                    item.current_price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "font-bold text-decision-buy text-sm hidden sm:block",
                                         children: [
-                                            "$",
-                                            item.price.toFixed(2)
+                                            item.current_price.toLocaleString('ko-KR'),
+                                            "원"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 324,
-                                        columnNumber: 19
+                                        lineNumber: 330,
+                                        columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$DecisionBadge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DecisionBadge"], {
                                         decision: item.decision,
                                         size: "sm"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 325,
+                                        lineNumber: 334,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -840,18 +848,18 @@ function ProfileContent() {
                                             className: "w-4 h-4 fill-current"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                            lineNumber: 328,
+                                            lineNumber: 337,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 326,
+                                        lineNumber: 335,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 323,
+                                lineNumber: 328,
                                 columnNumber: 17
                             }, this)
                         ]
@@ -871,7 +879,7 @@ function ProfileContent() {
                         className: "w-10 h-10 text-zinc-700 mx-auto mb-3"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 336,
+                        lineNumber: 345,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -879,7 +887,7 @@ function ProfileContent() {
                         children: "찜한 키트가 없습니다"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 337,
+                        lineNumber: 346,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -887,7 +895,7 @@ function ProfileContent() {
                         children: "피드에서 마음에 드는 키트를 찜해보세요"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 338,
+                        lineNumber: 347,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -896,13 +904,13 @@ function ProfileContent() {
                         children: "피드 보러가기"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 339,
+                        lineNumber: 348,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                lineNumber: 335,
+                lineNumber: 344,
                 columnNumber: 11
             }, this)),
             activeTab === 'settings' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -918,12 +926,12 @@ function ProfileContent() {
                                     children: "계정 설정"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 348,
+                                    lineNumber: 357,
                                     columnNumber: 71
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 348,
+                                lineNumber: 357,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -938,7 +946,7 @@ function ProfileContent() {
                                                     children: "이메일"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                    lineNumber: 351,
+                                                    lineNumber: 360,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -946,18 +954,18 @@ function ProfileContent() {
                                                     children: user.email
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                    lineNumber: 351,
+                                                    lineNumber: 360,
                                                     columnNumber: 63
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                            lineNumber: 351,
+                                            lineNumber: 360,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 350,
+                                        lineNumber: 359,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -970,7 +978,7 @@ function ProfileContent() {
                                                         children: "닉네임"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                        lineNumber: 354,
+                                                        lineNumber: 363,
                                                         columnNumber: 22
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -978,13 +986,13 @@ function ProfileContent() {
                                                         children: displayName
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                        lineNumber: 354,
+                                                        lineNumber: 363,
                                                         columnNumber: 63
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                lineNumber: 354,
+                                                lineNumber: 363,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -993,25 +1001,25 @@ function ProfileContent() {
                                                 children: "변경"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                lineNumber: 355,
+                                                lineNumber: 364,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 353,
+                                        lineNumber: 362,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 349,
+                                lineNumber: 358,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 347,
+                        lineNumber: 356,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1024,12 +1032,12 @@ function ProfileContent() {
                                     children: "앱 정보"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 360,
+                                    lineNumber: 369,
                                     columnNumber: 71
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 360,
+                                lineNumber: 369,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1043,7 +1051,7 @@ function ProfileContent() {
                                                 children: "버전"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                lineNumber: 362,
+                                                lineNumber: 371,
                                                 columnNumber: 78
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1051,13 +1059,13 @@ function ProfileContent() {
                                                 children: "v0.2.0"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                lineNumber: 362,
+                                                lineNumber: 371,
                                                 columnNumber: 121
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 362,
+                                        lineNumber: 371,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1068,7 +1076,7 @@ function ProfileContent() {
                                                 children: "문의하기"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                lineNumber: 363,
+                                                lineNumber: 372,
                                                 columnNumber: 78
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1076,25 +1084,25 @@ function ProfileContent() {
                                                 children: "kitpick@email.com"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                                lineNumber: 363,
+                                                lineNumber: 372,
                                                 columnNumber: 123
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 363,
+                                        lineNumber: 372,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 361,
+                                lineNumber: 370,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 359,
+                        lineNumber: 368,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1105,7 +1113,7 @@ function ProfileContent() {
                                 children: "위험 구역"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 367,
+                                lineNumber: 376,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1113,7 +1121,7 @@ function ProfileContent() {
                                 children: "계정을 삭제하면 모든 데이터가 영구적으로 제거됩니다."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 368,
+                                lineNumber: 377,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1122,19 +1130,19 @@ function ProfileContent() {
                                 children: "계정 삭제"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                lineNumber: 369,
+                                lineNumber: 378,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                        lineNumber: 366,
+                        lineNumber: 375,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                lineNumber: 346,
+                lineNumber: 355,
                 columnNumber: 9
             }, this),
             showDeleteModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1151,12 +1159,12 @@ function ProfileContent() {
                                         className: "w-5 h-5 text-brand-400"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 380,
+                                        lineNumber: 389,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 379,
+                                    lineNumber: 388,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1164,13 +1172,13 @@ function ProfileContent() {
                                     children: "정말 탈퇴하시겠어요?"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 382,
+                                    lineNumber: 391,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(main)/profile/page.tsx",
-                            lineNumber: 378,
+                            lineNumber: 387,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1178,7 +1186,7 @@ function ProfileContent() {
                             children: "찜 목록, 프로필 등 모든 데이터가 영구 삭제됩니다."
                         }, void 0, false, {
                             fileName: "[project]/src/app/(main)/profile/page.tsx",
-                            lineNumber: 384,
+                            lineNumber: 393,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1190,7 +1198,7 @@ function ProfileContent() {
                                     children: "취소"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 386,
+                                    lineNumber: 395,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1201,29 +1209,29 @@ function ProfileContent() {
                                         className: "w-4 h-4 animate-spin"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                        lineNumber: 388,
+                                        lineNumber: 397,
                                         columnNumber: 34
                                     }, this) : '탈퇴하기'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                                    lineNumber: 387,
+                                    lineNumber: 396,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/(main)/profile/page.tsx",
-                            lineNumber: 385,
+                            lineNumber: 394,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/(main)/profile/page.tsx",
-                    lineNumber: 377,
+                    lineNumber: 386,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                lineNumber: 376,
+                lineNumber: 385,
                 columnNumber: 9
             }, this)
         ]
@@ -1250,22 +1258,22 @@ function ProfilePage() {
                 className: "w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"
             }, void 0, false, {
                 fileName: "[project]/src/app/(main)/profile/page.tsx",
-                lineNumber: 402,
+                lineNumber: 411,
                 columnNumber: 9
             }, void 0)
         }, void 0, false, {
             fileName: "[project]/src/app/(main)/profile/page.tsx",
-            lineNumber: 401,
+            lineNumber: 410,
             columnNumber: 7
         }, void 0),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProfileContent, {}, void 0, false, {
             fileName: "[project]/src/app/(main)/profile/page.tsx",
-            lineNumber: 405,
+            lineNumber: 414,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/(main)/profile/page.tsx",
-        lineNumber: 400,
+        lineNumber: 409,
         columnNumber: 5
     }, this);
 }

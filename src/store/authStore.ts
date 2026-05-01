@@ -27,7 +27,17 @@ export const useAuthStore = create<AuthStore>((set) => ({
     const supabase = createClient();
     await supabase.auth.signOut();
     set({ user: null });
-    // 로그아웃 시 찜 목록은 localStorage에 유지 (선택사항)
-    // useWishlistStore.getState().clear();
+
+    // 로그아웃 시 모든 사용자 데이터 즉시 초기화
+    // (동적 import로 순환참조 방지)
+    const { useWishlistStore } = await import('./wishlistStore');
+    const { useProfileStore }  = await import('./profileStore');
+    useWishlistStore.getState().clear();
+    useProfileStore.getState().clear();
+
+    // localStorage의 persist 데이터도 제거
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('kitpick-wishlist');
+    }
   },
 }));

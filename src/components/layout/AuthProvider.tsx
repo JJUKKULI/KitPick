@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         })
         .catch(() => {});
     } else {
-      clearWishlist();
+      clearWishlist();   // 로그아웃 시 이전 유저 데이터 완전 제거
       clearProfile();
     }
   }, [user, fetchWishlist, clearWishlist, setProfile, clearProfile]);

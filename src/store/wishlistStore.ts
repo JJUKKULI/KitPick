@@ -26,6 +26,7 @@ export const useWishlistStore = create<WishlistStore>()(
             .select('product_id')
             .eq('user_id', userId);
           if (!error && data) {
+            // DB 데이터로 덮어씌워서 이전 유저 잔존 데이터 방지
             set({ wishlist: data.map((w: { product_id: string }) => w.product_id) });
           }
         } catch (e) {
@@ -46,7 +47,6 @@ export const useWishlistStore = create<WishlistStore>()(
             : [...wishlist, productId],
         });
 
-        // 로그인 상태면 Supabase 동기화
         if (userId) {
           try {
             const supabase = createClient();
@@ -74,6 +74,8 @@ export const useWishlistStore = create<WishlistStore>()(
       },
 
       isWished: (id) => get().wishlist.includes(id),
+
+      // 로그아웃 시 반드시 호출 — localStorage도 비워야 이전 유저 데이터 안 보임
       clear: () => set({ wishlist: [] }),
     }),
     {

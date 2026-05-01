@@ -1,16 +1,12 @@
 {
-  "/(main)/feed/[seriesId]/page": "app/(main)/feed/[seriesId]/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(main)/feed/page": "app/(main)/feed/page.js",
-  "/(main)/gundam/[gundamId]/[gradeId]/page": "app/(main)/gundam/[gundamId]/[gradeId]/page.js",
-  "/(main)/gundam/[gundamId]/page": "app/(main)/gundam/[gundamId]/page.js",
-  "/(main)/journal/page": "app/(main)/journal/page.js",
-  "/(main)/trends/page": "app/(main)/trends/page.js",
-  "/(main)/wishlist/page": "app/(main)/wishlist/page.js",
-  "/api/crawl/journal/route": "app/api/crawl/journal/route.js",
+  "/(main)/profile/page": "app/(main)/profile/page.js",
+  "/(main)/settings/page": "app/(main)/settings/page.js",
   "/api/gundam/route": "app/api/gundam/route.js",
-  "/api/price/route": "app/api/price/route.js",
-  "/api/products/route": "app/api/products/route.js",
+  "/api/profile/avatar/route": "app/api/profile/avatar/route.js",
   "/api/profile/route": "app/api/profile/route.js",
-  "/api/wishlist/grades/route": "app/api/wishlist/grades/route.js",
+  "/auth/callback/route": "app/auth/callback/route.js",
   "/page": "app/page.js"
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-// GET — 프로필 조회
+// GET — 프로필 조회 (없으면 자동 생성)
 export async function GET() {
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -10,14 +10,33 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { data: profile, error } = await supabase
+  // 프로필 조회 — 없으면 자동 upsert
+  let { data: profile, error } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single();
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error || !profile) {
+    // profiles 행이 없는 경우 자동 생성
+    const username =
+      user.user_metadata?.username ??
+      user.user_metadata?.full_name ??
+      user.email?.split('@')[0] ??
+      '사용자';
+
+    const avatar_url = user.user_metadata?.avatar_url ?? null;
+
+    const { data: newProfile, error: insertError } = await supabase
+      .from('profiles')
+      .upsert({ id: user.id, username, avatar_url }, { onConflict: 'id' })
+      .select()
+      .single();
+
+    if (insertError) {
+      return NextResponse.json({ error: insertError.message }, { status: 500 });
+    }
+    profile = newProfile;
   }
 
   return NextResponse.json({ profile, email: user.email });
@@ -44,16 +63,16 @@ export async function PATCH(request: Request) {
     .select('id')
     .eq('username', username.trim())
     .neq('id', user.id)
-    .single();
+    .maybeSingle();   // .single() → .maybeSingle() 으로 변경 (결과 없어도 에러 안 남)
 
   if (existing) {
     return NextResponse.json({ error: '이미 사용 중인 닉네임입니다.' }, { status: 409 });
   }
 
+  // upsert — profiles 행이 없는 경우도 처리
   const { error } = await supabase
     .from('profiles')
-    .update({ username: username.trim() })
-    .eq('id', user.id);
+    .upsert({ id: user.id, username: username.trim(), updated_at: new Date().toISOString() }, { onConflict: 'id' });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

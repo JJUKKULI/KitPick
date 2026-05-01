@@ -107,13 +107,27 @@ async function GET() {
             status: 401
         });
     }
-    const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-    if (error) {
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: error.message
+    // 프로필 조회 — 없으면 자동 upsert
+    let { data: profile, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+    if (error || !profile) {
+        // profiles 행이 없는 경우 자동 생성
+        const username = user.user_metadata?.username ?? user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? '사용자';
+        const avatar_url = user.user_metadata?.avatar_url ?? null;
+        const { data: newProfile, error: insertError } = await supabase.from('profiles').upsert({
+            id: user.id,
+            username,
+            avatar_url
         }, {
-            status: 500
-        });
+            onConflict: 'id'
+        }).select().single();
+        if (insertError) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: insertError.message
+            }, {
+                status: 500
+            });
+        }
+        profile = newProfile;
     }
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
         profile,
@@ -139,7 +153,7 @@ async function PATCH(request) {
         });
     }
     // 중복 체크
-    const { data: existing } = await supabase.from('profiles').select('id').eq('username', username.trim()).neq('id', user.id).single();
+    const { data: existing } = await supabase.from('profiles').select('id').eq('username', username.trim()).neq('id', user.id).maybeSingle(); // .single() → .maybeSingle() 으로 변경 (결과 없어도 에러 안 남)
     if (existing) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: '이미 사용 중인 닉네임입니다.'
@@ -147,9 +161,14 @@ async function PATCH(request) {
             status: 409
         });
     }
-    const { error } = await supabase.from('profiles').update({
-        username: username.trim()
-    }).eq('id', user.id);
+    // upsert — profiles 행이 없는 경우도 처리
+    const { error } = await supabase.from('profiles').upsert({
+        id: user.id,
+        username: username.trim(),
+        updated_at: new Date().toISOString()
+    }, {
+        onConflict: 'id'
+    });
     if (error) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: error.message
