@@ -53,7 +53,7 @@ export default function WishlistPage() {
 
   if (!user) {
     return (
-      <div className="p-6 lg:p-10 max-w-5xl mx-auto w-full">
+      <div className="p-6 lg:p-10 w-full pb-24 md:pb-10">
         <div className="flex flex-col items-center justify-center py-24 border border-dashed border-surface-border rounded-2xl">
           <Bookmark className="w-10 h-10 text-zinc-700 mx-auto mb-3" />
           <p className="text-sm font-medium text-zinc-400 mb-1">로그인이 필요합니다</p>
@@ -68,7 +68,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="p-6 lg:p-10 max-w-5xl mx-auto w-full pb-24 md:pb-10">
+    <div className="p-6 lg:p-10 w-full pb-24 md:pb-10">
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-1">
           <Bookmark className="w-5 h-5 text-brand-500" />

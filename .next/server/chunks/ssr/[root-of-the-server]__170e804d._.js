@@ -86,6 +86,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$layout$
 ;
 const metadata = {
     title: 'KitPick — 지금 사도 되는 프라모델',
+    icons: {
+        icon: '/favicon.svg',
+        shortcut: '/favicon.svg',
+        apple: '/favicon.svg'
+    },
     description: '리뷰, 가격, 커뮤니티 여론을 분석해 구매 결정을 도와드립니다.'
 };
 function RootLayout({ children }) {
@@ -97,17 +102,17 @@ function RootLayout({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/src/app/layout.tsx",
-                lineNumber: 17,
+                lineNumber: 22,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/layout.tsx",
-            lineNumber: 16,
+            lineNumber: 21,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/layout.tsx",
-        lineNumber: 15,
+        lineNumber: 20,
         columnNumber: 5
     }, this);
 }

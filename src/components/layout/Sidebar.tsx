@@ -17,9 +17,8 @@ const navItems = [
   { icon: Bookmark,      label: '관심 목록',  path: '/wishlist' },
 ];
 
-const bottomItems = [
+const accountItems = [
   { icon: LayoutDashboard, label: '프로필', path: '/profile' },
-  { icon: Settings,        label: '설정',   path: '/settings' },
 ];
 
 export function Sidebar() {
@@ -75,7 +74,7 @@ export function Sidebar() {
 
         {!collapsed && <div className="px-3 pt-5 pb-2 text-[10px] font-semibold text-zinc-600 uppercase tracking-wider">계정</div>}
         {collapsed && <div className="my-3 border-t border-surface-border" />}
-        {bottomItems.map((item) => (
+        {accountItems.map((item) => (
           <Link key={item.path} href={item.path} title={collapsed ? item.label : undefined}
             className={`flex items-center rounded-lg text-sm font-medium transition-colors ${collapsed ? 'justify-center p-2.5' : 'gap-3 px-3 py-2'} ${isActive(item.path) ? 'bg-brand-500/10 text-brand-500' : 'text-zinc-400 hover:text-zinc-100 hover:bg-surface-raised'}`}>
             <item.icon className="w-4 h-4 shrink-0" />
@@ -86,6 +85,12 @@ export function Sidebar() {
 
       {/* 하단 — 로그인/로그아웃만 심플하게 */}
       <div className="p-3 border-t border-surface-border">
+        {/* 설정 — 로그아웃 위 */}
+        <Link href="/settings" title={collapsed ? '설정' : undefined}
+          className={`flex items-center rounded-lg text-sm font-medium text-zinc-400 hover:text-zinc-100 hover:bg-surface-raised transition-colors w-full mb-1 ${collapsed ? 'justify-center p-2.5' : 'gap-3 px-3 py-2'} ${isActive('/settings') ? 'bg-brand-500/10 text-brand-500' : ''}`}>
+          <Settings className="w-4 h-4 shrink-0" />
+          {!collapsed && '설정'}
+        </Link>
         {user ? (
           <button onClick={handleSignOut} title={collapsed ? '로그아웃' : undefined}
             className={`flex items-center rounded-lg text-sm font-medium text-zinc-500 hover:text-brand-400 hover:bg-brand-500/5 transition-colors w-full ${collapsed ? 'justify-center p-2.5' : 'gap-3 px-3 py-2'}`}>

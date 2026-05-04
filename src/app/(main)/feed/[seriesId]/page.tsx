@@ -110,10 +110,20 @@ function GundamCard({ gundam, featured }: { gundam: Gundam; featured?: boolean }
     <Link href={`/gundam/${gundam.id}`}
       className={`group bg-surface border border-surface-border rounded-xl overflow-hidden hover:border-brand-500/40 transition-all ${featured ? 'flex gap-4 p-4' : 'block p-4'}`}>
       {/* 이미지 */}
-      <div className={`bg-surface-raised rounded-lg border border-surface-border flex items-center justify-center shrink-0 ${featured ? 'w-20 h-20' : 'w-full h-32 mb-3'}`}>
+      <div className={`bg-surface-raised rounded-lg border border-surface-border flex items-center justify-center shrink-0 overflow-hidden ${featured ? 'w-20 h-20' : 'w-full h-32 mb-3'}`}>
         {gundam.image_url
-          ? <img src={gundam.image_url} alt={gundam.name} className="w-full h-full object-contain p-2" />
-          : <User className="w-8 h-8 text-zinc-700" />}
+          ? <img
+              src={gundam.image_url}
+              alt={gundam.name}
+              className="w-full h-full object-contain p-2"
+              onError={(e) => { (e.target as HTMLImageElement).style.display='none'; (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden'); }}
+            />
+          : null}
+        <div className={`flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-brand-500/20 to-brand-900/30 ${gundam.image_url ? 'hidden' : ''}`}>
+          <span className="text-brand-400 font-black text-2xl leading-none">
+            {gundam.name.replace(/^(RX-|MS-|ZGMF-|GN-|ASW-|XVX-|OZ-|XXXG-)[\d\w-]+ /, '').charAt(0)}
+          </span>
+        </div>
       </div>
 
       {/* 정보 */}

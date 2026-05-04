@@ -78,6 +78,7 @@ export default function TrendsPage() {
       <div className="mb-8 flex items-center gap-3">
         <div>
           <div className="flex items-center gap-3 mb-2">
+            <TrendingUp className="w-6 h-6 text-brand-500" />
             <h1 className="text-3xl font-bold text-white">트렌드 대시보드</h1>
             {useReal && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-decision-buy/10 border border-decision-buy/20 text-decision-buy font-medium">

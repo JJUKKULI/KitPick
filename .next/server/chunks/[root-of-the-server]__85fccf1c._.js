@@ -164,8 +164,7 @@ async function PATCH(request) {
     // upsert — profiles 행이 없는 경우도 처리
     const { error } = await supabase.from('profiles').upsert({
         id: user.id,
-        username: username.trim(),
-        updated_at: new Date().toISOString()
+        username: username.trim()
     }, {
         onConflict: 'id'
     });

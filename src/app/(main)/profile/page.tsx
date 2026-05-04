@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
-  User, Bookmark, Heart, Settings, Pencil,
+  User, Bookmark, Heart, Settings, Pencil, UserCircle,
   Check, X, Loader2, AlertTriangle, Camera, Trash2,
 } from 'lucide-react';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
@@ -208,8 +208,8 @@ function ProfileContent() {
   const memberYear = profile?.created_at ? new Date(profile.created_at).getFullYear() : new Date().getFullYear();
 
   const tabs = [
-    { id: 'wishlist', label: '관심 목록', icon: Bookmark, count: wishGrades.length },
-    { id: 'settings', label: '설정',     icon: Settings,  count: null },
+    { id: 'wishlist', label: '관심 목록', icon: Bookmark,    count: wishGrades.length },
+    { id: 'settings', label: '계정설정',  icon: UserCircle,  count: null },
   ];
 
   if (!user) {

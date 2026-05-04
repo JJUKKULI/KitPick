@@ -154,8 +154,19 @@ export default function GundamDetailPage() {
       <div className="grid md:grid-cols-[1fr_2fr] gap-10 mb-12">
         <div className="aspect-square w-full bg-surface border border-surface-border rounded-2xl overflow-hidden flex items-center justify-center">
           {gundam.image_url
-            ? <img src={gundam.image_url} alt={gundam.name} className="w-full h-full object-contain p-6" />
-            : <User className="w-16 h-16 text-zinc-700" />}
+            ? <img
+                src={gundam.image_url}
+                alt={gundam.name}
+                className="w-full h-full object-contain p-6"
+                onError={(e) => { (e.target as HTMLImageElement).style.display='none'; (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden'); }}
+              />
+            : null}
+          <div className={`flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-brand-500/20 to-zinc-900 ${gundam.image_url ? 'hidden' : ''}`}>
+            <span className="text-brand-400 font-black text-6xl">
+              {gundam.name.replace(/^(RX-|MS-|ZGMF-|GN-|ASW-|XVX-|OZ-|XXXG-)[\d\w-]+ /, '').charAt(0)}
+            </span>
+            <span className="text-zinc-600 text-xs mt-2">이미지 준비 중</span>
+          </div>
         </div>
         <div>
           <p className="text-sm text-brand-400 uppercase tracking-wider font-medium mb-2">{seriesName}</p>

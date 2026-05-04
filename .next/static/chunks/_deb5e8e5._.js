@@ -14,7 +14,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navi
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-client] (ecmascript) <export default as ArrowLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$package$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Package$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/package.js [app-client] (ecmascript) <export default as Package>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/external-link.js [app-client] (ecmascript) <export default as ExternalLink>");
@@ -302,22 +301,47 @@ function GundamDetailPage() {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "aspect-square w-full bg-surface border border-surface-border rounded-2xl overflow-hidden flex items-center justify-center",
-                        children: gundam.image_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                            src: gundam.image_url,
-                            alt: gundam.name,
-                            className: "w-full h-full object-contain p-6"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                            lineNumber: 157,
-                            columnNumber: 15
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
-                            className: "w-16 h-16 text-zinc-700"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                            lineNumber: 158,
-                            columnNumber: 15
-                        }, this)
-                    }, void 0, false, {
+                        children: [
+                            gundam.image_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: gundam.image_url,
+                                alt: gundam.name,
+                                className: "w-full h-full object-contain p-6",
+                                onError: (e)=>{
+                                    e.target.style.display = 'none';
+                                    e.target.nextElementSibling?.classList.remove('hidden');
+                                }
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
+                                lineNumber: 157,
+                                columnNumber: 15
+                            }, this) : null,
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: `flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-brand-500/20 to-zinc-900 ${gundam.image_url ? 'hidden' : ''}`,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-brand-400 font-black text-6xl",
+                                        children: gundam.name.replace(/^(RX-|MS-|ZGMF-|GN-|ASW-|XVX-|OZ-|XXXG-)[\d\w-]+ /, '').charAt(0)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
+                                        lineNumber: 165,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-zinc-600 text-xs mt-2",
+                                        children: "이미지 준비 중"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
+                                        lineNumber: 168,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
+                                lineNumber: 164,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
                         lineNumber: 155,
                         columnNumber: 9
@@ -329,7 +353,7 @@ function GundamDetailPage() {
                                 children: seriesName
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 161,
+                                lineNumber: 172,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -337,7 +361,7 @@ function GundamDetailPage() {
                                 children: gundam.name
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 162,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this),
                             gundam.full_name && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -345,7 +369,7 @@ function GundamDetailPage() {
                                 children: gundam.full_name
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 163,
+                                lineNumber: 174,
                                 columnNumber: 32
                             }, this),
                             gundam.pilot && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -357,13 +381,13 @@ function GundamDetailPage() {
                                         children: gundam.pilot
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                        lineNumber: 164,
+                                        lineNumber: 175,
                                         columnNumber: 75
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 164,
+                                lineNumber: 175,
                                 columnNumber: 28
                             }, this),
                             gundam.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -371,13 +395,13 @@ function GundamDetailPage() {
                                 children: gundam.description
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 165,
+                                lineNumber: 176,
                                 columnNumber: 34
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                        lineNumber: 160,
+                        lineNumber: 171,
                         columnNumber: 9
                     }, this)
                 ]
@@ -395,14 +419,14 @@ function GundamDetailPage() {
                                 className: "w-5 h-5 text-brand-500"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 172,
+                                lineNumber: 183,
                                 columnNumber: 11
                             }, this),
                             "등급별 제품 & 최저가"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                        lineNumber: 171,
+                        lineNumber: 182,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -410,7 +434,7 @@ function GundamDetailPage() {
                         children: "네이버 쇼핑 실시간 조회 · 등급 클릭 시 AI 분석 페이지로 이동"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                        lineNumber: 175,
+                        lineNumber: 186,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -433,7 +457,7 @@ function GundamDetailPage() {
                                                     children: slot.label
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                    lineNumber: 193,
+                                                    lineNumber: 204,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -441,13 +465,13 @@ function GundamDetailPage() {
                                                     children: slot.scale
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                    lineNumber: 196,
+                                                    lineNumber: 207,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                            lineNumber: 192,
+                                            lineNumber: 203,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -462,7 +486,7 @@ function GundamDetailPage() {
                                                                 children: "반다이 정가"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                lineNumber: 205,
+                                                                lineNumber: 216,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -470,13 +494,13 @@ function GundamDetailPage() {
                                                                 children: priceLabel(officialPrice)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                lineNumber: 206,
+                                                                lineNumber: 217,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                        lineNumber: 204,
+                                                        lineNumber: 215,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -488,14 +512,14 @@ function GundamDetailPage() {
                                                                         className: "w-2.5 h-2.5 text-decision-buy"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                        lineNumber: 213,
+                                                                        lineNumber: 224,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     "네이버 최저가"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                lineNumber: 212,
+                                                                lineNumber: 223,
                                                                 columnNumber: 25
                                                             }, this),
                                                             !naver || naver.status === 'loading' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -505,7 +529,7 @@ function GundamDetailPage() {
                                                                         className: "w-3 h-3 animate-spin text-zinc-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                        lineNumber: 218,
+                                                                        lineNumber: 229,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -513,13 +537,13 @@ function GundamDetailPage() {
                                                                         children: "조회 중..."
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                        lineNumber: 219,
+                                                                        lineNumber: 230,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                lineNumber: 217,
+                                                                lineNumber: 228,
                                                                 columnNumber: 27
                                                             }, this) : naver.status === 'found' && naver.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                                 href: naver.link,
@@ -533,7 +557,7 @@ function GundamDetailPage() {
                                                                         children: priceLabel(naver.price)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                        lineNumber: 225,
+                                                                        lineNumber: 236,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -541,44 +565,44 @@ function GundamDetailPage() {
                                                                         children: naver.mallName
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                        lineNumber: 226,
+                                                                        lineNumber: 237,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$external$2d$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ExternalLink$3e$__["ExternalLink"], {
                                                                         className: "w-3 h-3 text-zinc-600"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                        lineNumber: 227,
+                                                                        lineNumber: 238,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                lineNumber: 222,
+                                                                lineNumber: 233,
                                                                 columnNumber: 27
                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-xs text-zinc-600",
                                                                 children: "조회 안됨"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                                lineNumber: 230,
+                                                                lineNumber: 241,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                        lineNumber: 211,
+                                                        lineNumber: 222,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                lineNumber: 201,
+                                                lineNumber: 212,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                            lineNumber: 200,
+                                            lineNumber: 211,
                                             columnNumber: 19
                                         }, this),
                                         dbGrade?.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -590,43 +614,43 @@ function GundamDetailPage() {
                                                     className: "w-3.5 h-3.5"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                                    lineNumber: 240,
+                                                    lineNumber: 251,
                                                     columnNumber: 29
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                            lineNumber: 238,
+                                            lineNumber: 249,
                                             columnNumber: 21
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "shrink-0 px-3 py-2 text-xs text-zinc-700 border border-zinc-800 rounded-lg",
                                             children: "DB 미등록"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                            lineNumber: 243,
+                                            lineNumber: 254,
                                             columnNumber: 21
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                    lineNumber: 189,
+                                    lineNumber: 200,
                                     columnNumber: 17
                                 }, this)
                             }, slot.id, false, {
                                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                                lineNumber: 187,
+                                lineNumber: 198,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                        lineNumber: 179,
+                        lineNumber: 190,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/gundam/[gundamId]/page.tsx",
-                lineNumber: 170,
+                lineNumber: 181,
                 columnNumber: 7
             }, this)
         ]

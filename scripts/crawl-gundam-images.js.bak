@@ -1,0 +1,276 @@
+#!/usr/bin/env node
+// ─────────────────────────────────────────────────────────────────────────────
+// KitPick 건담 이미지 수집기
+// Wikipedia REST API → 이미지 다운로드 → Supabase Storage → DB 저장
+// ─────────────────────────────────────────────────────────────────────────────
+
+require('dotenv').config({ path: '.env.local' });
+const { createClient } = require('@supabase/supabase-js');
+const https = require('https');
+const http  = require('http');
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+);
+
+// DB 기체명 → Wikipedia 영문 문서 제목 매핑
+const WIKI_MAP = {
+  'RX-78-2 건담':               'RX-78-2_Gundam',
+  '샤아 전용 자쿠':              'MS-06S_Zaku_II',
+  '건담 G3':                    'RX-78-3_G-3_Gundam',
+  'RGM-79 짐':                  'RGM-79_GM',
+  'RX-77-2 건캐논':              'RX-77-2_Guncannon',
+  'RX-75-4 건탱크':              'RX-75-4_Guntank',
+  'RB-79 볼':                   'RB-79_Ball',
+  '육전형 건담':                  'RX-79(G)_Gundam',
+  'MS-06F 자쿠II':               'MS-06_Zaku_II',
+  'MS-07B 구프':                 'MS-07_Gouf',
+  'MS-09R 릭돔':                 'MS-09_Dom',
+  'MS-14A 겔구그':               'MS-14_Gelgoog',
+  'MSM-07 제고크':               'MSM-07_Z%27Gok',
+  'MSN-02 지옹':                 'MSN-02_Zeong',
+  'MA-08 빅잠':                  'MA-08_Big_Zam',
+  'Z건담':                       'MSZ-006_Zeta_Gundam',
+  '건담 Mk-II':                  'RX-178_Gundam_Mk-II',
+  '백식':                        'MSN-00100_Hyaku_Shiki',
+  '더블 제타':                    'MSZ-010_ZZ_Gundam',
+  'RMS-099 릭디아스':            'RMS-099_Rick_Dias',
+  'MRX-009 사이코 건담':         'MRX-009_Psycho_Gundam',
+  'ν건담':                       'RX-93_%CE%BD_Gundam',
+  '사자비':                       'MSN-04_Sazabi',
+  '나이팅게일':                   'NightingaleGundam',
+  'AMS-119 기라 도가':           'AMS-119_Geara_Doga',
+  'F91':                         'Gundam_F91',
+  '크로스본 건담 X1':             'XM-X1_Crossbone_Gundam_X-1',
+  '크로스본 건담 X2':             'XM-X2_Crossbone_Gundam_X-2',
+  '유니콘 건담':                  'RX-0_Unicorn_Gundam',
+  '밴시':                        'RX-0N_Unicorn_Gundam_02_Banshee',
+  '페넥스':                       'Unicorn_Gundam_03_Phenex',
+  '풀 아머 유니콘':               'Full_Armor_Unicorn_Gundam',
+  'MSN-065 시넨주':              'MSN-06S_Sinanju',
+  'NZ-666 클시':                 'NZ-666_Kshatriya',
+  'RGZ-95 리제일':               'RGZ-95_ReZEL',
+  '프리덤 건담':                  'ZGMF-X10A_Freedom_Gundam',
+  '스트라이크 건담':              'GAT-X105_Strike_Gundam',
+  '저스티스 건담':                'ZGMF-X09A_Justice_Gundam',
+  'GAT-X303 이지스':             'GAT-X303_Aegis_Gundam',
+  'GAT-X102 듀얼':               'GAT-X102_Duel_Gundam',
+  'GAT-X103 버스터':             'GAT-X103_Buster_Gundam',
+  'GAT-X207 블리츠':             'GAT-X207_Blitz_Gundam',
+  'ZGMF-X13A 프로비던스':        'ZGMF-X13A_Providence_Gundam',
+  'ZGMF-1017 모빌 진':           'ZGMF-1017_GINN',
+  '데스티니 건담':                'ZGMF-X42S_Destiny_Gundam',
+  '스트라이크 프리덤':            'ZGMF-X20A_Strike_Freedom_Gundam',
+  '인피니트 저스티스':            'ZGMF-X19A_Infinite_Justice_Gundam',
+  '임펄스 건담':                  'ZGMF-X56S_Impulse_Gundam',
+  'ZGMF-X88S 가이아':            'ZGMF-X88S_Gaia_Gundam',
+  'ZGMF-1000 자쿠 워리어':       'ZGMF-1000_ZAKU_Warrior',
+  '윙 건담':                     'XXXG-01W_Wing_Gundam',
+  '윙 건담 EW':                  'Wing_Gundam_Zero',
+  '윙 건담 제로':                 'Wing_Gundam_Zero',
+  '건담 데스사이즈':              'XXXG-01D_Gundam_Deathscythe',
+  '건담 헤비암즈':                'XXXG-01H_Gundam_Heavyarms',
+  '건담 샌드록':                  'XXXG-01SR_Gundam_Sandrock',
+  '나타쿠(샌롱 건담)':            'XXXG-01S2_Altron_Gundam',
+  '툴기스':                       'OZ-00MS_Tallgeese',
+  '건담 X':                      'GX-9900_Gundam_X',
+  '건담 더블X':                   'GX-9901-DX_Gundam_Double_X',
+  '건담 엑시아':                  'GN-001_Gundam_Exia',
+  '더블오 건담':                  'GN-0000_00_Gundam',
+  '더블오 라이저':                '00_Raiser',
+  '건담 큐리오스':                'GN-003_Gundam_Kyrios',
+  '건담 바체':                    'GN-005_Gundam_Virtue',
+  '00 퀀타':                     'GNT-0000_00_Qan%5BT%5D',
+  'EB-06 그레이즈':               'EB-06_Graze',
+  'V08-1228 슈발베 그레이즈':     'Schwalbe_Graze',
+  '건담 바르바토스':              'ASW-G-08_Gundam_Barbatos',
+  '건담 바르바토스 루프스':       'ASW-G-08_Gundam_Barbatos_Lupus',
+  '건담 바르바토스 루프스 렉스':  'ASW-G-08_Gundam_Barbatos_Lupus_Rex',
+  '건담 킴바리스':                'ASW-G-66_Gundam_Kimaris',
+  '건담 구시온':                  'ASW-G-11_Gundam_Gusion',
+  '건담 플라우로스':              'ASW-G-64_Gundam_Flauros',
+  '건담 에어리얼':                'XVX-016_Gundam_Aerial',
+  '건담 에어리얼 개수형':         'XVX-016RN_Gundam_Aerial_Rebuild',
+  '건담 루브리스':                'Gundam_Lfrith',
+  '건담 캘리번':                  'Gundam_Calibarn',
+  '빌드 스트라이크 건담':         'Build_Strike_Gundam',
+  '스타 빌드 스트라이크':         'Star_Build_Strike_Gundam',
+  '건담 엑시아 다크 매터':        'Gundam_Exia_Dark_Matter',
+  'SVMS-01 유니온 플래그':        'SVMS-01_Union_Flag',
+  'AEU-09 에어리온':              'AEU-09_AEU_Enact',
+  'GNX-603T 지린':               'GNX-603T_GN-X',
+  'AMX-014 도벤울프':            'AMX-014_Doven_Wolf',
+  'NZ-333 알파 아지엘':          'NZ-333_Alpha_Azieru',
+  'YAMS-132 로아잔':             'YAMS-132_Rozen_Zulu',
+  'AMS-129 기라 즐루후':         'AMS-129_Geara_Zulu',
+  '리가지':                       'RGZ-91_Re-GZ',
+  'RGM-89 제간':                  'RGM-89_Jegan',
+};
+
+// ── Wikipedia REST API ────────────────────────────────────────────────────────
+function fetchWikiImage(wikiTitle) {
+  return new Promise((resolve) => {
+    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${wikiTitle}`;
+    const opts = {
+      headers: {
+        'User-Agent': 'KitPickBot/1.0 (graduation-project; contact@example.com)',
+        'Accept': 'application/json',
+      },
+      timeout: 10000,
+    };
+    https.get(url, opts, (res) => {
+      if (res.statusCode === 301 || res.statusCode === 302) {
+        // 리다이렉트 처리
+        const loc = res.headers.location?.replace('https://en.wikipedia.org/api/rest_v1/page/summary/', '');
+        if (loc) { fetchWikiImage(loc).then(resolve); return; }
+      }
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try {
+          const json = JSON.parse(data);
+          // thumbnail 또는 originalimage에서 URL 추출
+          const imgUrl = json.originalimage?.source || json.thumbnail?.source;
+          resolve(imgUrl || null);
+        } catch { resolve(null); }
+      });
+    }).on('error', () => resolve(null))
+      .on('timeout', () => resolve(null));
+  });
+}
+
+// ── 이미지 바이너리 다운로드 ─────────────────────────────────────────────────
+function downloadImage(url) {
+  return new Promise((resolve) => {
+    const proto = url.startsWith('https') ? https : http;
+    proto.get(url, {
+      headers: {
+        'User-Agent': 'KitPickBot/1.0',
+        'Referer': 'https://en.wikipedia.org/',
+      },
+      timeout: 15000,
+    }, (res) => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        downloadImage(res.headers.location).then(resolve);
+        return;
+      }
+      const chunks = [];
+      res.on('data', c => chunks.push(c));
+      res.on('end', () => resolve(Buffer.concat(chunks)));
+    }).on('error', () => resolve(null))
+      .on('timeout', () => resolve(null));
+  });
+}
+
+// ── Supabase Storage 업로드 ───────────────────────────────────────────────────
+async function uploadToStorage(imgBuffer, fileName, mimeType) {
+  const path = `gundams/${fileName}`;
+  const { error } = await supabase.storage
+    .from('gundam-images')
+    .upload(path, imgBuffer, { contentType: mimeType, upsert: true });
+
+  if (error) {
+    if (error.message?.includes('Bucket not found')) {
+      await supabase.storage.createBucket('gundam-images', { public: true });
+      const { error: e2 } = await supabase.storage
+        .from('gundam-images')
+        .upload(path, imgBuffer, { contentType: mimeType, upsert: true });
+      if (e2) return null;
+    } else {
+      return null;
+    }
+  }
+
+  const { data: { publicUrl } } = supabase.storage
+    .from('gundam-images')
+    .getPublicUrl(path);
+  return publicUrl;
+}
+
+// ── 메인 ─────────────────────────────────────────────────────────────────────
+async function main() {
+  console.log('🔍 건담 이미지 수집 (Wikipedia API → Supabase Storage)\n');
+
+  // 버킷 준비
+  const { error: bErr } = await supabase.storage
+    .createBucket('gundam-images', { public: true });
+  if (!bErr || bErr.message?.includes('already exists')) {
+    console.log('✅ 버킷 준비\n');
+  }
+
+  const { data: gundams } = await supabase
+    .from('gundams')
+    .select('id, name, image_url')
+    .is('image_url', null);   // image_url 없는 것만
+
+  if (!gundams?.length) {
+    console.log('업데이트할 기체 없음 (이미 모두 이미지 있음)');
+    return;
+  }
+
+  console.log(`총 ${gundams.length}개 기체 처리 시작\n`);
+  let ok = 0, skip = 0, fail = 0;
+
+  for (const g of gundams) {
+    const wikiTitle = WIKI_MAP[g.name];
+    if (!wikiTitle) {
+      console.log(`⚠️  매핑 없음: ${g.name}`);
+      skip++;
+      continue;
+    }
+
+    process.stdout.write(`⏳ ${g.name} ... `);
+
+    // 1. Wikipedia에서 이미지 URL 가져오기
+    const imgUrl = await fetchWikiImage(wikiTitle);
+    if (!imgUrl) {
+      console.log('이미지 없음');
+      fail++;
+      await new Promise(r => setTimeout(r, 500));
+      continue;
+    }
+
+    // 2. 이미지 다운로드
+    const buf = await downloadImage(imgUrl);
+    if (!buf || buf.length < 500) {
+      console.log('다운로드 실패');
+      fail++;
+      continue;
+    }
+
+    // 3. Supabase Storage 업로드
+    const ext = imgUrl.split('.').pop()?.split(/[?#]/)[0]?.toLowerCase() || 'jpg';
+    const safeExt = ['jpg','jpeg','png','webp','svg'].includes(ext) ? ext : 'jpg';
+    const fileName = `${g.name.replace(/[^a-zA-Z0-9가-힣]/g, '_')}.${safeExt}`;
+    const mime = safeExt === 'svg' ? 'image/svg+xml' : `image/${safeExt === 'jpg' ? 'jpeg' : safeExt}`;
+
+    const pubUrl = await uploadToStorage(buf, fileName, mime);
+    if (!pubUrl) {
+      console.log('업로드 실패');
+      fail++;
+      continue;
+    }
+
+    // 4. DB 업데이트
+    const { error } = await supabase
+      .from('gundams')
+      .update({ image_url: pubUrl })
+      .eq('id', g.id);
+
+    if (!error) {
+      console.log(`✅ (${(buf.length/1024).toFixed(0)}KB)`);
+      ok++;
+    } else {
+      console.log(`❌ DB 오류: ${error.message}`);
+      fail++;
+    }
+
+    await new Promise(r => setTimeout(r, 300)); // Wikipedia API 예의
+  }
+
+  console.log(`\n완료: ✅ ${ok}개 / ⚠️ ${skip}개 스킵 / ❌ ${fail}개 실패`);
+  console.log('Supabase Storage → gundam-images 버킷에서 확인하세요.');
+}
+
+main().catch(console.error);

@@ -1,14 +1,17 @@
 {
   "pages": {
     "/(main)/feed/[seriesId]/page": [
+      "static/chunks/node_modules_next_dist_1a6ee436._.js",
+      "static/chunks/src_app_icon_svg_mjs_78b784ff._.js",
       "static/chunks/[root-of-the-server]__9a168d68._.css",
-      "static/chunks/node_modules_f64cf48c._.js",
+      "static/chunks/src_store_f05aa53e._.js",
+      "static/chunks/node_modules_6143dea9._.js",
       "static/chunks/src_a88bce27._.js",
       "static/chunks/src_app_layout_tsx_007ca514._.js",
       "static/chunks/_07efe29d._.js",
-      "static/chunks/src_app_(main)_layout_tsx_11305a68._.js",
+      "static/chunks/src_app_(main)_layout_tsx_2462c13e._.js",
       "static/chunks/_3785685e._.js",
-      "static/chunks/src_app_(main)_feed_[seriesId]_page_tsx_60b35930._.js",
+      "static/chunks/src_app_(main)_feed_[seriesId]_page_tsx_82c8c331._.js",
       "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_17e42fcf._.js",
       "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
       "static/chunks/node_modules_next_dist_client_8f19e6fb._.js",

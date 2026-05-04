@@ -15,7 +15,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-ssr] (ecmascript) <export default as ArrowLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-ssr] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-ssr] (ecmascript) <export default as ChevronRight>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-ssr] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/star.js [app-ssr] (ecmascript) <export default as Star>");
 'use client';
 ;
@@ -222,23 +221,38 @@ function GundamCard({ gundam, featured }) {
         className: `group bg-surface border border-surface-border rounded-xl overflow-hidden hover:border-brand-500/40 transition-all ${featured ? 'flex gap-4 p-4' : 'block p-4'}`,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: `bg-surface-raised rounded-lg border border-surface-border flex items-center justify-center shrink-0 ${featured ? 'w-20 h-20' : 'w-full h-32 mb-3'}`,
-                children: gundam.image_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                    src: gundam.image_url,
-                    alt: gundam.name,
-                    className: "w-full h-full object-contain p-2"
-                }, void 0, false, {
-                    fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                    lineNumber: 115,
-                    columnNumber: 13
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
-                    className: "w-8 h-8 text-zinc-700"
-                }, void 0, false, {
-                    fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                    lineNumber: 116,
-                    columnNumber: 13
-                }, this)
-            }, void 0, false, {
+                className: `bg-surface-raised rounded-lg border border-surface-border flex items-center justify-center shrink-0 overflow-hidden ${featured ? 'w-20 h-20' : 'w-full h-32 mb-3'}`,
+                children: [
+                    gundam.image_url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                        src: gundam.image_url,
+                        alt: gundam.name,
+                        className: "w-full h-full object-contain p-2",
+                        onError: (e)=>{
+                            e.target.style.display = 'none';
+                            e.target.nextElementSibling?.classList.remove('hidden');
+                        }
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
+                        lineNumber: 115,
+                        columnNumber: 13
+                    }, this) : null,
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: `flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-brand-500/20 to-brand-900/30 ${gundam.image_url ? 'hidden' : ''}`,
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            className: "text-brand-400 font-black text-2xl leading-none",
+                            children: gundam.name.replace(/^(RX-|MS-|ZGMF-|GN-|ASW-|XVX-|OZ-|XXXG-)[\d\w-]+ /, '').charAt(0)
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
+                            lineNumber: 123,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
+                        lineNumber: 122,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
                 lineNumber: 113,
                 columnNumber: 7
@@ -251,7 +265,7 @@ function GundamCard({ gundam, featured }) {
                         children: "주역기"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                        lineNumber: 122,
+                        lineNumber: 132,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -259,7 +273,7 @@ function GundamCard({ gundam, featured }) {
                         children: gundam.name
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                        lineNumber: 124,
+                        lineNumber: 134,
                         columnNumber: 9
                     }, this),
                     gundam.pilot && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -270,7 +284,7 @@ function GundamCard({ gundam, featured }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                        lineNumber: 128,
+                        lineNumber: 138,
                         columnNumber: 11
                     }, this),
                     gundam.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -278,7 +292,7 @@ function GundamCard({ gundam, featured }) {
                         children: gundam.description
                     }, void 0, false, {
                         fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                        lineNumber: 131,
+                        lineNumber: 141,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -288,26 +302,26 @@ function GundamCard({ gundam, featured }) {
                                 children: "등급별 분석 보기"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                                lineNumber: 134,
+                                lineNumber: 144,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
                                 className: "w-3 h-3 ml-0.5"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                                lineNumber: 135,
+                                lineNumber: 145,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                        lineNumber: 133,
+                        lineNumber: 143,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(main)/feed/[seriesId]/page.tsx",
-                lineNumber: 120,
+                lineNumber: 130,
                 columnNumber: 7
             }, this)
         ]

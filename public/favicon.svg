@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 헥사곤 배경 -->
+  <polygon points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"
+    fill="#BE1F35" opacity="0.15"/>
+  <!-- 헥사곤 테두리 -->
+  <polygon points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"
+    fill="none" stroke="#BE1F35" stroke-width="5"/>
+  <!-- 중앙 K 텍스트 -->
+  <text x="50" y="68" text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="52" font-weight="900"
+    fill="#BE1F35">K</text>
+</svg>
