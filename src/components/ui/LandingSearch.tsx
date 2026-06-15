@@ -97,7 +97,7 @@ export function LandingSearch() {
           ))}
           <div className="px-4 py-2 text-right">
             <button onMouseDown={() => handleSearch(query)} className="text-xs text-brand-400 hover:text-brand-300">
-              "{query}" 전체 검색 →
+              &quot;{query}&quot; 전체 검색 →
             </button>
           </div>
         </div>

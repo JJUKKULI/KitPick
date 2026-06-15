@@ -132,5 +132,48 @@ export async function GET(request: Request) {
     return NextResponse.json({ gundams: data ?? [] });
   }
 
+  // 트렌드 대시보드용 — 전체 등급 목록 (popularity 포함)
+  if (type === 'grades') {
+    const limit = Number(searchParams.get('limit') ?? '100');
+    const { data, error } = await supabase
+      .from('gundam_grades')
+      .select(`
+        id, grade, decision, official_price, current_price,
+        popularity, release_date,
+        gundams (
+          id, name, image_url,
+          gundam_series ( short_name )
+        )
+      `)
+      .order('popularity', { ascending: false })
+      .limit(limit);
+
+    if (error) return NextResponse.json({ grades: [] });
+    return NextResponse.json({ grades: data ?? [] });
+  }
+
+  // 랜딩페이지용 featured 기체 (이미지 있는 것 + AI 분석 활성화된 것 우선)
+  if (type === 'featured') {
+    const limit = Number(searchParams.get('limit') ?? '6');
+    const { data, error } = await supabase
+      .from('gundams')
+      .select(`
+        id, name, image_url,
+        gundam_series(short_name),
+        gundam_grades(id, grade, decision, official_price, current_price)
+      `)
+      .not('image_url', 'is', null)
+      .limit(limit * 3); // 여유있게 가져와서 필터
+
+    if (error) return NextResponse.json({ gundams: [] });
+
+    // AI 분석 있는 것 우선, 최대 limit개
+    const filtered = (data ?? [])
+      .filter((g: any) => g.gundam_grades?.length > 0)
+      .slice(0, limit);
+
+    return NextResponse.json({ gundams: filtered });
+  }
+
   return NextResponse.json({ error: 'type 파라미터 필요' }, { status: 400 });
 }

@@ -247,7 +247,7 @@ function NaverProductPage() {
           <div className="space-y-6">
             <div>
               <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">{gundamBaseName}</h1>
-              <p className="text-sm text-zinc-500 mb-4">"{query}" 검색 기준 분석</p>
+              <p className="text-sm text-zinc-500 mb-4">&quot;{query}&quot; 검색 기준 분석</p>
               {aiResult ? (
                 <div className="flex items-center gap-3 flex-wrap">
                   <DecisionBadge decision={aiResult.decision} size="lg" />

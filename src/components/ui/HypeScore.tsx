@@ -2,6 +2,7 @@ interface HypeScoreProps {
   score: number;
   label?: string;
   className?: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
 function getColor(score: number) {

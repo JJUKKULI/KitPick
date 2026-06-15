@@ -209,7 +209,7 @@ function SearchContent() {
         <>
           <div className="flex items-center justify-between mb-5">
             <p className="text-sm text-zinc-400">
-              <span className="text-white font-semibold">"{query}"</span> 검색 결과
+              <span className="text-white font-semibold">&quot;{query}&quot;</span> 검색 결과
               {results.length > 0 && <span className="ml-2 text-zinc-600">{results.length}개</span>}
             </p>
           </div>
@@ -229,7 +229,7 @@ function SearchContent() {
           ) : (
             <div className="text-center py-24 border border-dashed border-surface-border rounded-2xl">
               <Search className="w-10 h-10 text-zinc-700 mx-auto mb-3" />
-              <p className="text-zinc-400 text-sm">"{query}"에 대한 검색 결과가 없어요</p>
+              <p className="text-zinc-400 text-sm">&quot;{query}&quot;에 대한 검색 결과가 없어요</p>
               <p className="text-zinc-600 text-xs mt-1">다른 키워드로 검색해보세요</p>
             </div>
           )}

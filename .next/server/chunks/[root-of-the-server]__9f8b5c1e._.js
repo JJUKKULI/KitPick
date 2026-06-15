@@ -208,8 +208,21 @@ function isPlasticModelKit(item) {
         }
         if (title.includes(kw)) return false;
     }
-    // 가격 0원 제거
-    if (!item.lprice || Number(item.lprice) === 0) return false;
+    // 가격 필터: 0원 또는 이상치 제거 (1,000원 미만 / 2,000,000원 초과)
+    const price = Number(item.lprice);
+    if (!price || price < 1000 || price > 2000000) return false;
+    // 브랜드가 명시된 경우 반다이 계열만 허용
+    const brand = (item.brand ?? '').toLowerCase();
+    if (brand && ![
+        'bandai',
+        'バンダイ',
+        '반다이',
+        'bandai spirits',
+        ''
+    ].some((b)=>brand.includes(b))) {
+        // 브랜드가 있지만 반다이가 아닌 경우 → 카테고리로 재판단
+        if (!categoryOk) return false;
+    }
     // 2순위: 카테고리 OK이거나 등급 키워드 있으면 통과
     if (categoryOk) return true;
     if (GRADE_KEYWORDS.some((k)=>title.includes(k))) return true;
@@ -221,6 +234,9 @@ function buildSearchQuery(raw) {
     const lower = raw.toLowerCase();
     const hasGrade = GRADE_KEYWORDS.some((k)=>lower.includes(k.trim()));
     const hasModelKeyword = lower.includes('건프라') || lower.includes('프라모델') || lower.includes('반다이');
+    const hasBandai = lower.includes('반다이') || lower.includes('bandai');
+    // 등급 키워드 있고 반다이 없으면 반다이 추가
+    if (hasGrade && !hasBandai) return `${raw} 반다이`;
     if (hasGrade || hasModelKeyword) return raw;
     // 키워드 없으면 "건프라 반다이" 추가로 카테고리 좁히기
     return `${raw} 건프라 반다이`;
@@ -318,6 +334,20 @@ async function GET(request) {
     }
     // 그래도 없으면 가격 있는 것만
     const finalItems = filtered.length > 0 ? filtered : rawItems.filter((i)=>Number(i.lprice) > 0).slice(0, 5);
+    // 반다이 공식 판매처 우선 정렬 (공식몰 > 반다이남코 > 일반 쇼핑몰)
+    const PRIORITY_MALLS = [
+        '반다이남코',
+        '건담베이스',
+        'bandai',
+        '반다이 공식'
+    ];
+    finalItems.sort((a, b)=>{
+        const aIsPriority = PRIORITY_MALLS.some((m)=>(a.mallName ?? '').toLowerCase().includes(m));
+        const bIsPriority = PRIORITY_MALLS.some((m)=>(b.mallName ?? '').toLowerCase().includes(m));
+        if (aIsPriority && !bIsPriority) return -1;
+        if (!aIsPriority && bIsPriority) return 1;
+        return Number(a.lprice) - Number(b.lprice); // 같은 우선순위면 가격순
+    });
     const results = finalItems.slice(0, 10).map(mapItem);
     // 가격 히스토리 (product_id 있을 때)
     let priceHistory = [];

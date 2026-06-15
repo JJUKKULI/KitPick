@@ -42,7 +42,10 @@ interface GradeData {
     sentiment_positive: number;
     sentiment_neutral: number;
     sentiment_negative: number;
-    top_comments: Array<{ title: string; recommend: number; views: number; url: string }>;
+    top_comments: Array<{
+      comment?: string; sentiment?: string;
+      title?: string; recommend?: number; views?: number; url?: string;
+    }>;
     collected_at: string;
   } | null;
   gundams: {
@@ -58,6 +61,15 @@ interface GradeData {
 
 interface NaverItem { title: string; price: number; mallName: string; link: string; image: string; }
 interface AnalyzeResult { decision: DecisionType; reasoning: string; aiInsight: string; confidence: number; buyTarget: string; keyRisks: string[]; }
+interface CommunityResult {
+  sentiment: { positive: number; neutral: number; negative: number };
+  mentionCount: number;
+  popularity: number;
+  decision: DecisionType;
+  topComments: Array<{ comment: string; sentiment: 'positive' | 'neutral' | 'negative'; source?: string }>;
+  collectedAt: string;
+  cached: boolean;
+}
 interface GradeResult { grade: { id: string; label: string; scale: string; badge?: string }; found: boolean; price: number | null; mallName: string; link: string; }
 
 const STOCK_LABEL: Record<string, { label: string; color: string }> = {
@@ -89,6 +101,8 @@ export default function GradeDetailPage() {
   const [aiResult,   setAiResult]   = useState<AnalyzeResult | null>(null);
   const [analyzing,  setAnalyzing]  = useState(false);
   const [mounted,    setMounted]    = useState(false);
+  const [community,  setCommunity]  = useState<CommunityResult | null>(null);
+  const [commLoading, setCommLoading] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -104,14 +118,32 @@ export default function GradeDetailPage() {
   useEffect(() => {
     if (!gradeData) return;
     const q = gradeData.naver_query ?? `${gradeData.grade} ${gradeData.gundams?.name} 건프라`;
-    fetch(`/api/price?query=${encodeURIComponent(q)}&mode=search`)
+    const official = gradeData.official_price ?? 0;
+    fetch(`/api/price?query=${encodeURIComponent(q)}&mode=search&official=${official}`)
       .then(r => r.ok ? r.json() : null)
       .then(data => { if (data?.results) setNaverItems(data.results.slice(0, 5)); })
       .catch(() => {});
   }, [gradeData?.id]);
 
+  // 커뮤니티 여론 로드 (네이버 카페·블로그 + GPT) — 비차단, 실패해도 페이지 영향 없음
+  useEffect(() => {
+    if (!gradeData?.id) return;
+    let cancelled = false;
+    setCommLoading(true);
+    const name = gradeData.gundams?.name ?? '';
+    fetch(`/api/community?gradeId=${gradeData.id}&gundamName=${encodeURIComponent(name)}`)
+      .then(r => r.ok ? r.json() : null)
+      .then((data: (CommunityResult & { error?: string }) | null) => {
+        if (cancelled || !data || data.error) return;
+        if (data.sentiment) setCommunity(data);
+      })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setCommLoading(false); });
+    return () => { cancelled = true; };
+  }, [gradeData?.id]);
+
   const wished = mounted && gradeData ? isWished(gradeData.id) : false;
-  const currentDecision  = aiResult?.decision  ?? gradeData?.decision  ?? 'watch';
+  const currentDecision  = aiResult?.decision  ?? community?.decision ?? gradeData?.decision  ?? 'watch';
   const currentReasoning = aiResult?.reasoning ?? gradeData?.reasoning ?? '';
   const currentInsight   = aiResult?.aiInsight ?? gradeData?.ai_insight ?? '';
 
@@ -131,9 +163,10 @@ export default function GradeDetailPage() {
           previousPrice: gradeData.official_price ?? 0,
           officialPrice: gradeData.official_price,
           priceHistory:  gradeData.price_history ?? [],
-          sentiment:     { positive: gradeData.sentiment_positive, neutral: gradeData.sentiment_neutral, negative: gradeData.sentiment_negative },
+          sentiment:     community?.sentiment ?? { positive: gradeData.sentiment_positive, neutral: gradeData.sentiment_neutral, negative: gradeData.sentiment_negative },
           popularity:    gradeData.popularity,
-          communityComments: [],
+          communityComments: (community?.topComments ?? []).map(c => ({ comment: c.comment, sentiment: c.sentiment })),
+          mentionCount:  community?.mentionCount,
           releaseDate:   gradeData.release_date,
           stockStatus:   gradeData.stock_status,
           reprintHistory: gradeData.reprint_history ?? [],
@@ -159,6 +192,21 @@ export default function GradeDetailPage() {
   const isDiscount    = premiumRate !== null && Number(premiumRate) < -3;
   const stock         = STOCK_LABEL[gradeData.stock_status] ?? STOCK_LABEL.unknown;
   const displayImage  = gradeData.image_url ?? gundam?.image_url;
+
+  // 커뮤니티 실데이터 우선 (없으면 DB 캐시값 폴백)
+  const liveSentiment = community?.sentiment ?? {
+    positive: gradeData.sentiment_positive,
+    neutral:  gradeData.sentiment_neutral,
+    negative: gradeData.sentiment_negative,
+  };
+  const liveComments = (community?.topComments?.length
+    ? community.topComments
+    : (gradeData.community_stats?.top_comments ?? [])) as Array<{
+      comment?: string; sentiment?: string; title?: string;
+      recommend?: number; views?: number; url?: string;
+    }>;
+  const liveMentions = community?.mentionCount ?? gradeData.community_stats?.mention_count ?? 0;
+  const livePopularity = community?.popularity ?? gradeData.popularity;
 
   return (
     <div className="p-6 lg:p-10 max-w-6xl mx-auto w-full">
@@ -234,34 +282,51 @@ export default function GradeDetailPage() {
             </div>
           )}
 
-          {/* 커뮤니티 주요 의견 — 루리웹 실데이터 */}
+          {/* 커뮤니티 주요 의견 — 네이버 카페·블로그 실데이터 */}
           <div className="bg-surface border border-surface-border rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-zinc-400" />루리웹 주요 의견
+                <MessageSquare className="w-4 h-4 text-zinc-400" />네이버 카페·블로그 여론
               </h3>
-              {gradeData.community_stats?.mention_count && (
-                <span className="text-[10px] text-zinc-600">언급 {gradeData.community_stats.mention_count}건</span>
-              )}
+              {commLoading
+                ? <Loader2 className="w-3.5 h-3.5 animate-spin text-zinc-600" />
+                : liveMentions > 0 && <span className="text-[10px] text-zinc-600">언급 {liveMentions}건</span>}
             </div>
-            {gradeData.community_stats?.top_comments?.length ? (
+            {liveComments.length ? (
               <div className="space-y-2">
-                {gradeData.community_stats.top_comments.map((c, i) => (
-                  <a key={i} href={c.url} target="_blank" rel="noopener noreferrer"
-                    className="block p-3 rounded-lg bg-surface-raised border border-surface-border hover:border-brand-500/30 transition-colors group">
-                    <p className="text-xs text-zinc-200 line-clamp-2 group-hover:text-white">{c.title}</p>
-                    <div className="flex gap-3 mt-1.5 text-[10px] text-zinc-600">
-                      <span>추천 {c.recommend}</span>
-                      <span>조회 {c.views.toLocaleString()}</span>
+                {liveComments.map((c, i) => {
+                  const text = c.comment || c.title || '';
+                  const sentimentColor =
+                    c.sentiment === 'positive' ? 'text-decision-buy' :
+                    c.sentiment === 'negative' ? 'text-red-400' : 'text-zinc-400';
+                  const sentimentLabel =
+                    c.sentiment === 'positive' ? '긍정' :
+                    c.sentiment === 'negative' ? '부정' : '중립';
+                  return c.url ? (
+                    <a key={i} href={c.url} target="_blank" rel="noopener noreferrer"
+                      className="block p-3 rounded-lg bg-surface-raised border border-surface-border hover:border-brand-500/30 transition-colors group">
+                      <p className="text-xs text-zinc-200 line-clamp-2 group-hover:text-white">{text}</p>
+                      <div className="flex gap-3 mt-1.5 text-[10px] text-zinc-600">
+                        {c.recommend != null && <span>추천 {c.recommend}</span>}
+                        {c.views != null && <span>조회 {c.views.toLocaleString()}</span>}
+                      </div>
+                    </a>
+                  ) : (
+                    <div key={i} className="flex items-start gap-2 p-3 rounded-lg bg-surface-raised border border-surface-border">
+                      <span className={`text-[10px] font-bold shrink-0 mt-0.5 ${sentimentColor}`}>{sentimentLabel}</span>
+                      <p className="text-xs text-zinc-300 line-clamp-2">{text}</p>
                     </div>
-                  </a>
-                ))}
+                  );
+                })}
+              </div>
+            ) : commLoading ? (
+              <div className="flex items-center gap-2 py-4 justify-center text-zinc-600">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span className="text-xs">네이버 카페·블로그 여론 수집 중...</span>
               </div>
             ) : (
               <p className="text-sm text-zinc-600 italic text-center py-4">
                 수집된 커뮤니티 데이터가 없습니다
-                <br />
-                <span className="text-[10px]">Cron 작업 실행 후 자동 수집됩니다</span>
               </p>
             )}
           </div>
@@ -304,18 +369,21 @@ export default function GradeDetailPage() {
             </div>
             <div className="bg-surface border border-surface-border rounded-xl p-4 col-span-2 md:col-span-1">
               <div className="text-xs text-zinc-500 mb-2 font-medium">커뮤니티 관심도</div>
-              <HypeScore score={gradeData.popularity} label="" />
+              <HypeScore score={livePopularity} label="" />
             </div>
           </div>
 
           {/* 여론 */}
           <div className="bg-surface border border-surface-border rounded-xl p-5">
-            <div className="text-xs text-zinc-500 mb-3 font-medium">커뮤니티 여론 분포</div>
-            <SentimentBar positive={gradeData.sentiment_positive} neutral={gradeData.sentiment_neutral} negative={gradeData.sentiment_negative} />
+            <div className="flex items-center justify-between mb-3">
+              <div className="text-xs text-zinc-500 font-medium">커뮤니티 여론 분포</div>
+              {community && <span className="text-[10px] text-zinc-600">네이버 실데이터{community.cached ? ' · 캐시' : ''}</span>}
+            </div>
+            <SentimentBar positive={liveSentiment.positive} neutral={liveSentiment.neutral} negative={liveSentiment.negative} />
             <div className="flex justify-between mt-2 text-xs text-zinc-600">
-              <span>긍정 {gradeData.sentiment_positive}%</span>
-              <span>중립 {gradeData.sentiment_neutral}%</span>
-              <span>부정 {gradeData.sentiment_negative}%</span>
+              <span>긍정 {liveSentiment.positive}%</span>
+              <span>중립 {liveSentiment.neutral}%</span>
+              <span>부정 {liveSentiment.negative}%</span>
             </div>
           </div>
 

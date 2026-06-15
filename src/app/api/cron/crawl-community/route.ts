@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { crawlRuliwebPosts, analyzeSentimentSimple } from '@/lib/crawler/ruliwebCrawler';
+import { crawlDCPosts, analyzeSentimentDC } from '@/lib/crawler/dcinsideCrawler';
 
 // ═══════════════════════════════════════════════════════════════════
-// Vercel Cron: 매주 월/목 04:00 KST — 커뮤니티 여론 자동 수집
-// Featured(주역) 기체만 수집 → API 부하 최소화
+// Vercel Cron: 매주 월/목 04:00 KST — DCInside 커뮤니티 여론 수집
 // ═══════════════════════════════════════════════════════════════════
 
 export const maxDuration = 300;
@@ -17,88 +16,72 @@ export async function GET(request: Request) {
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
 
-  // Featured 기체 + 최근 미수집 기체 우선
-  const { data: gundams, error } = await supabase
-    .from('gundams')
-    .select('id, name, is_featured')
-    .or('is_featured.eq.true')
-    .limit(40);
+  // 이미지 있고 인기도 높은 기체 우선 (API 절약)
+  const { data: grades } = await supabase
+    .from('gundam_grades')
+    .select('id, gundams(id, name, image_url)')
+    .order('popularity', { ascending: false })
+    .limit(30);
 
-  if (error || !gundams) {
-    return NextResponse.json({ error: 'Failed to fetch gundams', detail: error?.message }, { status: 500 });
+  if (!grades?.length) {
+    return NextResponse.json({ message: '처리할 기체 없음', updated: 0 });
   }
 
-  const results = { crawled: 0, stored: 0, errors: 0, total: gundams.length };
+  let updated = 0;
+  const errors: string[] = [];
 
-  for (let i = 0; i < gundams.length; i++) {
-    const gundam = gundams[i];
+  for (const grade of grades) {
+    const g = grade.gundams as unknown;
+    const gundam = (Array.isArray(g) ? g[0] : g) as { id: string; name: string } | null;
+    if (!gundam) continue;
+
     try {
-      const posts = await crawlRuliwebPosts(gundam.name, 20);
-      if (posts.length === 0) { results.errors++; continue; }
+      // 1. DCInside 크롤링
+      const posts = await crawlDCPosts(gundam.name, 20);
+      if (posts.length === 0) continue;
 
-      results.crawled++;
+      // 2. GPT 감성 분석
+      const sentiment = await analyzeSentimentDC(posts, gundam.name);
 
-      const sentiment = analyzeSentimentSimple(posts);
-
-      // 상위 3개 게시물 (추천 수 기준)
-      const topComments = posts
-        .sort((a, b) => b.recommend - a.recommend)
-        .slice(0, 3)
-        .map(p => ({
-          title: p.title,
-          recommend: p.recommend,
-          views: p.views,
-          url: p.url,
-        }));
-
-      // community_stats 저장 (upsert)
-      const today = new Date().toISOString().slice(0, 10);
-      const { error: insertErr } = await supabase
+      // 3. community_stats 테이블에 저장
+      const { error } = await supabase
         .from('community_stats')
         .upsert({
-          gundam_id:          gundam.id,
-          source:             'ruliweb',
+          product_id:         grade.id,
+          source:             'dcinside',
           mention_count:      sentiment.mentionCount,
           sentiment_positive: sentiment.positive,
           sentiment_neutral:  sentiment.neutral,
           sentiment_negative: sentiment.negative,
-          top_comments:       topComments,
-          collected_at:       new Date().toISOString(),
-        }, {
-          onConflict: 'gundam_id,source',
-          ignoreDuplicates: false,
-        });
+          top_comments:       sentiment.topComments,
+          crawled_at:         new Date().toISOString(),
+        }, { onConflict: 'product_id,source' });
 
-      if (!insertErr) results.stored++;
-      else results.errors++;
+      if (error) { errors.push(`${gundam.name}: ${error.message}`); continue; }
 
-      // 건담별 HG 등급 대표로 gundam_grades의 감성 데이터도 갱신
+      // 4. gundam_grades 테이블 sentiment 직접 업데이트
       await supabase
         .from('gundam_grades')
         .update({
           sentiment_positive: sentiment.positive,
           sentiment_neutral:  sentiment.neutral,
           sentiment_negative: sentiment.negative,
-          popularity:         Math.min(100, 50 + sentiment.mentionCount * 2),
         })
-        .eq('gundam_id', gundam.id);
+        .eq('id', grade.id);
 
-    } catch {
-      results.errors++;
-    }
-
-    // Rate limit
-    if (i < gundams.length - 1) {
-      await new Promise(r => setTimeout(r, 800));
+      updated++;
+      await new Promise(r => setTimeout(r, 1500)); // API 부하 방지
+    } catch (e) {
+      errors.push(`${gundam.name}: ${String(e)}`);
     }
   }
 
   return NextResponse.json({
-    success:   true,
-    timestamp: new Date().toISOString(),
-    ...results,
+    message: `커뮤니티 여론 업데이트 완료`,
+    updated,
+    errors: errors.length > 0 ? errors.slice(0, 5) : undefined,
   });
 }

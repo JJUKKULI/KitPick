@@ -2,28 +2,34 @@ import type { CrawledArticle } from '@/lib/crawler/types';
 import { parseRSSItems, safeFetch, classifyCategory, extractTags, extractProductName, formatPubDate, isRecent } from '@/lib/crawler/utils';
 
 const JOURNAL_RSS = [
-  // 아카라이브 스케일모델 채널 (Google News 경유)
+  // 건담 신제품/재판 발표
   {
-    url: 'https://news.google.com/rss/search?q=프라모델+arca.live+scalemodel&hl=ko&gl=KR&ceid=KR:ko',
-    name: '아카라이브',
+    url: 'https://news.google.com/rss/search?q=건담+건프라+신제품+발매+발표&hl=ko&gl=KR&ceid=KR:ko',
+    name: '건프라 신제품',
     defaultCat: 'release' as const,
   },
-  // 건프라 전문 리뷰/저널
+  // 건프라 재판
   {
-    url: 'https://news.google.com/rss/search?q=건프라+리뷰+2025+조립+완성&hl=ko&gl=KR&ceid=KR:ko',
-    name: '건프라 저널',
+    url: 'https://news.google.com/rss/search?q=건프라+재판+예약+발매+반다이&hl=ko&gl=KR&ceid=KR:ko',
+    name: '건프라 재판',
+    defaultCat: 'reprint' as const,
+  },
+  // 건프라 리뷰
+  {
+    url: 'https://news.google.com/rss/search?q=건프라+리뷰+조립+완성&hl=ko&gl=KR&ceid=KR:ko',
+    name: '건프라 리뷰',
     defaultCat: 'review' as const,
   },
-  // 피규어 관련 저널
+  // 반다이 공식 발표
   {
-    url: 'https://news.google.com/rss/search?q=피규어+리뷰+굿스마일+코토부키야+2025&hl=ko&gl=KR&ceid=KR:ko',
-    name: '피규어 저널',
-    defaultCat: 'review' as const,
+    url: 'https://news.google.com/rss/search?q=반다이+건담+공식+발표+HG+MG+PG&hl=ko&gl=KR&ceid=KR:ko',
+    name: '반다이 공식',
+    defaultCat: 'release' as const,
   },
-  // 스케일모델 / 프라모델 전반
+  // 해외 영문 건담 뉴스
   {
-    url: 'https://news.google.com/rss/search?q=프라모델+스케일모델+신제품+한국&hl=ko&gl=KR&ceid=KR:ko',
-    name: '프라모델 저널',
+    url: 'https://news.google.com/rss/search?q=gundam+gunpla+bandai+new+release&hl=en&gl=US&ceid=US:en',
+    name: 'Gunpla Global',
     defaultCat: 'release' as const,
   },
 ];
@@ -43,6 +49,14 @@ export async function crawlJournal(recentDays = 30): Promise<CrawledArticle[]> {
       );
       if (!relevant) continue;
 
+      // HTML 태그 제거 + 공백 정제
+      const cleanSummary = (item.description || `${rss.name}: ${item.title}`)
+        .replace(/<[^>]+>/g, '')
+        .replace(/&[a-z]+;/gi, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 300);
+
       results.push({
         source:        'journal',
         source_name:   item.sourceName || rss.name,
@@ -51,7 +65,7 @@ export async function crawlJournal(recentDays = 30): Promise<CrawledArticle[]> {
         product:       extractProductName(item.title),
         release_date:  null,
         price:         null,
-        summary:       item.description || `${rss.name}: ${item.title}`,
+        summary:       cleanSummary,
         source_url:    item.link,
         tags:          extractTags(item.title),
         posted_at:     formatPubDate(item.pubDate),

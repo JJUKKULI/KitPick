@@ -7,6 +7,7 @@ import {
   Check, X, Loader2, AlertTriangle, Camera, Trash2,
 } from 'lucide-react';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
+import type { DecisionType } from '@/types';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useAuthStore } from '@/store/authStore';
 import { useProfileStore } from '@/store/profileStore';
@@ -121,7 +122,7 @@ interface WishGrade {
   scale: string | null;
   official_price: number | null;
   current_price: number | null;
-  decision: import('@/types').DecisionType;
+  decision: DecisionType;
   gundams: { id: string; name: string; image_url: string | null; gundam_series: { short_name: string } | null } | null;
 }
 

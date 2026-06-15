@@ -11,11 +11,12 @@ export async function GET() {
   }
 
   // 프로필 조회 — 없으면 자동 upsert
-  let { data: profile, error } = await supabase
+  const { data, error } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single();
+  let profile = data;
 
   if (error || !profile) {
     // profiles 행이 없는 경우 자동 생성
