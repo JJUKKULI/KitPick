@@ -13,7 +13,7 @@ export interface WebPriceItem {
   image: string;
 }
 
-const MODEL = process.env.OPENAI_PRICE_MODEL || 'gpt-4o-mini';
+const MODEL = process.env.OPENAI_PRICE_MODEL || 'gpt-4.1-mini';
 
 function extractText(data: any): string {
   if (typeof data?.output_text === 'string') return data.output_text;
@@ -114,15 +114,12 @@ export async function searchWebPricesDetailed(
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey || !productName) return { items: [], candidates: [], rawText: '', error: 'OPENAI_API_KEY 또는 검색어 없음' };
 
-  const prompt = `웹검색으로 대한민국 온라인 쇼핑몰에서 판매 중인 "${productName}" (반다이 건프라, 새 제품)의 현재 판매가를 찾아줘.
-규칙:
-- 반다이남코코리아몰(bandainamcomall), 건담베이스 등 공식 판매처 페이지를 가장 먼저 확인하고, 그다음 쿠팡, 11번가, G마켓, 옥션, 하비 전문몰 순
-- 실제 상품 판매 페이지만 (검색 결과·블로그·커뮤니티 글 제외)
-- 상품명에 등급과 형식번호(또는 기체명)가 정확히 일치하는 제품만. 버전(Ver.Ka, 2.0, 언리쉬드, 리바이브 등)도 대상과 같아야 하고, 별개 기체(예: 유니콘 ↔ 밴시/페넥스/풀아머), MGSD 등 다른 등급, 클리어·한정판·프리미엄반다이·메탈릭, 파츠·데칼·스탠드 등 부속품은 제외
-- 중고, 해외 직구 엔화/달러 가격, 묶음·세트 상품은 제외
-- title 에는 쇼핑몰에 표시된 상품명을 그대로 적을 것
-- 가격은 원화 정수 (품절이면 제외)
-반드시 JSON 배열만 출력 (최대 5개, 없으면 []):
+  const prompt = `웹검색으로 대한민국 온라인 쇼핑몰에서 "${productName}" (반다이 건프라 프라모델) 판매 페이지를 찾아 판매가를 알려줘.
+- 반다이남코코리아몰, 건담베이스 등 공식 판매처를 먼저 찾고, 쿠팡·11번가·G마켓·옥션·하비 전문몰도 찾아봐
+- 상품명 표기가 조금 달라도 같은 제품으로 보이면 후보에 포함 (예: 자쿠 ↔ 자쿠Ⅱ/자쿠2, 띄어쓰기·한영 표기 차이)
+- 확실하지 않아도 후보로 넣어도 됨 (최종 판별은 우리가 함). 단 블로그·커뮤니티·검색결과 페이지와 중고는 제외
+- title 은 판매 페이지에 표시된 상품명 그대로, price 는 원화 정수 판매가
+JSON 배열만 출력 (최대 8개, 정말 없을 때만 []):
 [{"mallName":"쇼핑몰 이름","price":12345,"title":"상품명","link":"https://상품페이지"}]`;
 
   try {
