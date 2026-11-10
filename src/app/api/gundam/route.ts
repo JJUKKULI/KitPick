@@ -139,7 +139,7 @@ export async function GET(request: Request) {
       .from('gundam_grades')
       .select(`
         id, grade, decision, official_price, current_price,
-        popularity, release_date,
+        popularity, release_date, reprint_history,
         gundams (
           id, name, image_url,
           gundam_series ( short_name )

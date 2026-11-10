@@ -14,6 +14,7 @@ interface GradeItem {
   current_price: number | null;
   popularity: number;
   release_date: string | null;
+  reprint_history?: { date: string; note: string }[] | null;
   gundams: {
     id: string;
     name: string;
@@ -38,7 +39,7 @@ export default function TrendsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch('/api/gundam?type=grades&limit=100');
+        const res = await fetch('/api/gundam?type=grades&limit=500');
         if (res.ok) {
           const { grades: data } = await res.json() as { grades: GradeItem[] };
           if (data && data.length > 0) {
@@ -48,7 +49,7 @@ export default function TrendsPage() {
               totalTracked:     data.length,
               buySignals:       data.filter(g => g.decision === 'buy').length,
               avgHypeScore:     Math.round(data.reduce((s, g) => s + (g.popularity ?? 0), 0) / data.length),
-              reprintsDetected: data.filter(g => g.decision === 'wait' || g.decision === 'trending').length,
+              reprintsDetected: data.filter(g => (g.reprint_history?.length ?? 0) > 1).length,
             });
             return;
           }
@@ -60,6 +61,14 @@ export default function TrendsPage() {
     }
     load().finally(() => setLoading(false));
   }, []);
+
+  // 상대 관심도: 전체 등급 중 순위 백분위(0~100) — 로그 스케일 원점수가 70~80대로 몰리는 문제 보정
+  const sortedPop = grades.map(g => g.popularity ?? 0).sort((a, b) => a - b);
+  const relScore = (p: number) => {
+    if (sortedPop.length < 2) return p;
+    let lo = 0; while (lo < sortedPop.length && sortedPop[lo] < p) lo++;
+    return Math.round((lo / (sortedPop.length - 1)) * 100);
+  };
 
   // 출시 레이더: buy + watch 등급
   const releaseRadar = grades
@@ -82,7 +91,7 @@ export default function TrendsPage() {
     { label: '추적 중인 등급',   value: stats.totalTracked,     icon: Activity,   color: 'text-blue-400'         },
     { label: '구매 신호',        value: stats.buySignals,       icon: TrendingUp, color: 'text-decision-buy'    },
     { label: '평균 관심도',      value: stats.avgHypeScore,     icon: Zap,        color: 'text-brand-400'        },
-    { label: '재판 감지',        value: stats.reprintsDetected, icon: Radar,      color: 'text-purple-400'       },
+    { label: '재판 이력 보유',        value: stats.reprintsDetected, icon: Radar,      color: 'text-purple-400'       },
   ];
 
   return (
@@ -127,6 +136,7 @@ export default function TrendsPage() {
             <div className="flex items-center gap-2 mb-4">
               <TrendingUp className="w-4 h-4 text-brand-500" />
               <h2 className="text-lg font-bold text-white">관심도 TOP 8</h2>
+              <span className="text-xs text-zinc-600">— 점수는 전체 등급 중 상대 순위(0~100)</span>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {trending.map((g, i) => (
@@ -141,7 +151,7 @@ export default function TrendsPage() {
                     <span className="text-xs font-bold text-zinc-600 shrink-0">#{i + 1}</span>
                   </div>
                   <div className="flex items-center justify-between mt-3">
-                    <HypeScore score={g.popularity ?? 0} size="sm" />
+                    <HypeScore score={relScore(g.popularity ?? 0)} size="sm" />
                     <DecisionBadge decision={g.decision} size="sm" />
                   </div>
                 </a>
@@ -172,7 +182,7 @@ export default function TrendsPage() {
                       {g.current_price && <span className="text-decision-buy font-medium">{g.current_price.toLocaleString()}원</span>}
                     </div>
                     <div className="mt-2">
-                      <HypeScore score={g.popularity ?? 0} size="sm" />
+                      <HypeScore score={relScore(g.popularity ?? 0)} size="sm" />
                     </div>
                   </a>
                 ))}
@@ -184,8 +194,8 @@ export default function TrendsPage() {
           <section>
             <div className="flex items-center gap-2 mb-4">
               <RefreshCw className="w-4 h-4 text-decision-wait" />
-              <h2 className="text-lg font-bold text-white">재판 신호</h2>
-              <span className="text-xs text-zinc-600">— 재판 임박·트렌딩 등급</span>
+              <h2 className="text-lg font-bold text-white">주의 신호</h2>
+              <span className="text-xs text-zinc-600">— 기다리세요·트렌딩 등급</span>
             </div>
             {reprintSignals.length === 0 ? (
               <p className="text-zinc-600 text-sm">데이터 수집 중...</p>
@@ -201,11 +211,11 @@ export default function TrendsPage() {
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-zinc-500">{(g.gundams?.gundam_series as any)?.short_name ?? ''}</span>
                       <span className={`font-medium ${g.decision === 'trending' ? 'text-decision-trending' : 'text-decision-wait'}`}>
-                        {g.decision === 'trending' ? '관심 급상승' : '재판 임박'}
+                        {g.decision === 'trending' ? '관심 급상승' : '프리미엄 높음'}
                       </span>
                     </div>
                     <div className="mt-2">
-                      <HypeScore score={g.popularity ?? 0} size="sm" />
+                      <HypeScore score={relScore(g.popularity ?? 0)} size="sm" />
                     </div>
                   </a>
                 ))}
