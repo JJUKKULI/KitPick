@@ -1,10 +1,5 @@
 {
-  "/(main)/feed/[seriesId]/page": "app/(main)/feed/[seriesId]/page.js",
-  "/(main)/feed/page": "app/(main)/feed/page.js",
-  "/(main)/gundam/[gundamId]/page": "app/(main)/gundam/[gundamId]/page.js",
-  "/(main)/settings/page": "app/(main)/settings/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
   "/api/gundam/route": "app/api/gundam/route.js",
-  "/api/price/route": "app/api/price/route.js",
   "/page": "app/page.js"
 }

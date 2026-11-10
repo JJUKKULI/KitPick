@@ -12,6 +12,7 @@ import { ProfileButton } from '@/components/layout/ProfileButton';
 import { DecisionBadge } from '@/components/ui/DecisionBadge';
 import { useAuthStore } from '@/store/authStore';
 import { ScrollToTop } from '@/components/ui/ScrollToTop';
+import { ParallaxIntro } from '@/components/landing/ParallaxIntro';
 import type { DecisionType } from '@/types';
 
 // ── 서비스 특징 ─────────────────────────────────────────────────────────────
@@ -19,7 +20,7 @@ const FEATURES = [
   {
     icon: Activity,
     title: '가격 추이 추적',
-    desc: '네이버 쇼핑 기반 등급별 실시간 최저가 조회 및 30일 가격 변동 차트 제공.',
+    desc: 'AI 웹검색 기반 등급별 최저가 조회 및 가격 변동 차트 제공.',
   },
   {
     icon: BrainCircuit,
@@ -97,8 +98,9 @@ export default function HomePage() {
       </header>
 
       <main className="flex-grow">
+        <ParallaxIntro />
         {/* ── 히어로 ──────────────────────────────────────────────────────── */}
-        <section className="relative pt-24 pb-20 px-6 lg:px-12 overflow-hidden">
+        <section id="home-hero" className="relative pt-24 pb-20 px-6 lg:px-12 overflow-hidden scroll-mt-16">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/8 rounded-full blur-[120px] pointer-events-none" />
           <div className="max-w-4xl mx-auto text-center relative z-10">
             {/* 뱃지 */}
