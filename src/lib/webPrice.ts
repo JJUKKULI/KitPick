@@ -39,7 +39,7 @@ async function callResponses(apiKey: string, prompt: string, toolType: string): 
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: MODEL,
-      tools: [{ type: toolType, search_context_size: 'low', user_location: { type: 'approximate', country: 'KR' } }],
+      tools: [{ type: toolType, search_context_size: 'medium', user_location: { type: 'approximate', country: 'KR' } }],
       input: prompt,
     }),
     signal: AbortSignal.timeout(45000),
@@ -102,21 +102,26 @@ export function isSameProduct(title: string, grade: string, gundamName: string):
   return true;
 }
 
-export async function searchWebPrices(
+export interface PriceCandidate extends WebPriceItem { accepted: boolean; reason: string }
+export interface PriceSearchResult { items: WebPriceItem[]; candidates: PriceCandidate[]; rawText: string; error?: string }
+
+/** 진단용: 후보 전체와 제외 사유까지 반환 */
+export async function searchWebPricesDetailed(
   productName: string,
   officialPrice?: number | null,
   match?: { grade: string; gundamName: string },
-): Promise<WebPriceItem[] | null> {
+): Promise<PriceSearchResult> {
   const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey || !productName) return null;
+  if (!apiKey || !productName) return { items: [], candidates: [], rawText: '', error: 'OPENAI_API_KEY 또는 검색어 없음' };
 
   const prompt = `웹검색으로 대한민국 온라인 쇼핑몰에서 판매 중인 "${productName}" (반다이 건프라, 새 제품)의 현재 판매가를 찾아줘.
 규칙:
-- 실제 상품 판매 페이지만 (쿠팡, 11번가, G마켓, 옥션, 건담베이스, 반다이남코코리아몰, 하비 전문몰 등)
+- 반다이남코코리아몰(bandainamcomall), 건담베이스 등 공식 판매처 페이지를 가장 먼저 확인하고, 그다음 쿠팡, 11번가, G마켓, 옥션, 하비 전문몰 순
+- 실제 상품 판매 페이지만 (검색 결과·블로그·커뮤니티 글 제외)
 - 상품명에 등급과 형식번호(또는 기체명)가 정확히 일치하는 제품만. 버전(Ver.Ka, 2.0, 언리쉬드, 리바이브 등)도 대상과 같아야 하고, 별개 기체(예: 유니콘 ↔ 밴시/페넥스/풀아머), MGSD 등 다른 등급, 클리어·한정판·프리미엄반다이·메탈릭, 파츠·데칼·스탠드 등 부속품은 제외
-- 중고, 해외 직구 엔화/달러 가격, 묶음·세트, 다른 등급(HG/RG/MG/PG 구분) 상품은 제외
+- 중고, 해외 직구 엔화/달러 가격, 묶음·세트 상품은 제외
 - title 에는 쇼핑몰에 표시된 상품명을 그대로 적을 것
-- 가격은 원화 정수
+- 가격은 원화 정수 (품절이면 제외)
 반드시 JSON 배열만 출력 (최대 5개, 없으면 []):
 [{"mallName":"쇼핑몰 이름","price":12345,"title":"상품명","link":"https://상품페이지"}]`;
 
@@ -124,32 +129,48 @@ export async function searchWebPrices(
     let res = await callResponses(apiKey, prompt, 'web_search');
     if (res.status === 400) res = await callResponses(apiKey, prompt, 'web_search_preview');
     if (!res.ok) {
-      console.error('[webPrice] OpenAI error', res.status, (await res.text()).slice(0, 300));
-      return null;
+      const body = (await res.text()).slice(0, 300);
+      console.error('[webPrice] OpenAI error', res.status, body);
+      return { items: [], candidates: [], rawText: '', error: `OpenAI ${res.status}: ${body}` };
     }
     const data = await res.json();
-    const raw = parseJsonArray(extractText(data));
+    const rawText = extractText(data);
+    const raw = parseJsonArray(rawText);
 
     const official = Number(officialPrice) || 0;
     const seen = new Set<string>();
-    const items: WebPriceItem[] = raw
-      .map((r: any) => ({
+    const candidates: PriceCandidate[] = raw.map((r: any) => {
+      const i: WebPriceItem = {
         title:    String(r?.title ?? productName).slice(0, 120),
         price:    Math.round(Number(String(r?.price ?? '').replace(/[^\d.]/g, ''))),
         mallName: String(r?.mallName ?? '').slice(0, 40) || '온라인 쇼핑몰',
         link:     String(r?.link ?? ''),
         image:    '',
-      }))
-      .filter(i => /^https?:\/\//.test(i.link) && i.price >= 1000 && i.price <= 2000000)
-      .filter(i => !official || (i.price >= official * 0.5 && i.price <= official * 4))
-      .filter(i => !match || isSameProduct(i.title, match.grade, match.gundamName))
-      .filter(i => { const k = `${i.mallName}|${i.price}`; if (seen.has(k)) return false; seen.add(k); return true; })
+      };
+      let reason = '';
+      if (!/^https?:\/\//.test(i.link)) reason = '링크 없음';
+      else if (!(i.price >= 1000 && i.price <= 2000000)) reason = '가격 형식 오류';
+      else if (official && !(i.price >= official * 0.5 && i.price <= official * 4)) reason = `정가(${official}) 0.5~4배 범위 밖`;
+      else if (match && !isSameProduct(i.title, match.grade, match.gundamName)) reason = '상품명 불일치 (등급·기체·버전·한정판 필터)';
+      else { const k = `${i.mallName}|${i.price}`; if (seen.has(k)) reason = '중복'; else seen.add(k); }
+      return { ...i, accepted: !reason, reason: reason || '통과' };
+    });
+    const items = candidates.filter(c => c.accepted)
+      .map(({ accepted: _a, reason: _r, ...rest }) => rest)
       .sort((a, b) => a.price - b.price)
       .slice(0, 5);
-
-    return items;
+    return { items, candidates, rawText };
   } catch (e) {
     console.error('[webPrice] failed', e);
-    return null;
+    return { items: [], candidates: [], rawText: '', error: String(e) };
   }
+}
+
+export async function searchWebPrices(
+  productName: string,
+  officialPrice?: number | null,
+  match?: { grade: string; gundamName: string },
+): Promise<WebPriceItem[] | null> {
+  const r = await searchWebPricesDetailed(productName, officialPrice, match);
+  return r.error ? null : r.items;
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
-import { searchWebPrices } from '@/lib/webPrice';
+import { searchWebPrices, searchWebPricesDetailed } from '@/lib/webPrice';
 
 export const maxDuration = 60;
 
@@ -188,6 +188,14 @@ export async function GET(request: Request) {
     lastPrice: grade?.current_price ?? null, lastUpdated: grade?.last_price_updated ?? null,
   });
   if (!grade) return fallback();
+
+  // 진단 모드: &debug=1 → 캐시 무시, 후보 전체와 제외 사유 반환 (저장 안 함)
+  if (searchParams.get('debug') === '1') {
+    const gName = ((grade as any).gundams?.name as string | undefined) ?? '';
+    const q = gName ? `${grade.grade} ${gName}` : rawQuery;
+    const r = await searchWebPricesDetailed(q, official, gName ? { grade: grade.grade, gundamName: gName } : undefined);
+    return NextResponse.json({ debug: true, query: q, official, dbCurrentPrice: grade.current_price, ...r });
+  }
 
   const { data: cached } = await db
     .from('community_stats')
