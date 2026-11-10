@@ -48,9 +48,35 @@ async function callResponses(apiKey: string, prompt: string, toolType: string): 
 
 // ── 검색 정확도 필터 ───────────────────────────────────────────────────
 const GRADE_TOKENS = ['RE/100', 'HGUC', 'HGCE', 'HGBF', 'HGAC', 'HG', 'RG', 'MGEX', 'MGSD', 'MG', 'PG', 'EG', 'SDCS', 'SDEX', 'SD', 'BB'];
-// 다른 기체·바리에이션을 가리키는 단어: 대상 이름에 없는데 상품명에 있으면 다른 제품
-const VARIANT_WORDS = ['밴시', '페넥스', '풀아머', '풀 아머', '노른', '개수형', '루프스', '렉스', 'EW', '제로', '다크', '퀀타', '라이저',
-  '인피니트', '스트라이크 프리덤', '마이티', '에일', '퍼펙트', '어썰트', '슈라우드', 'Ver.Ka', '버카', '3.0', '2.0', '리바이브', '클리어', '메탈릭', '코팅'];
+// 버전·바리에이션 그룹: 대상(등급+기체명)과 상품명이 같은 그룹을 "둘 다 가지거나 둘 다 없어야" 같은 제품
+//   예) 대상 'MG Ver.Ka' ↔ 상품명에도 Ver.Ka 필요 / 대상 'MG' ↔ Ver.Ka·2.0·언리쉬드 붙은 상품은 제외
+const VARIANT_GROUPS: string[][] = [
+  ['VER.KA', 'VERKA', 'VER KA', '버카', '카토키'],
+  ['VER.2.0', 'VER 2.0', 'VER2.0', '2.0'],
+  ['VER.3.0', 'VER 3.0', '3.0'],
+  ['UNLEASHED', '언리쉬드', '언리시드'],
+  ['REVIVE', '리바이브'], ['REBUILD', '리빌드'], ['ORIGIN', '오리진'], ['THUNDERBOLT', '썬더볼트'],
+  // 별개 기체(같은 계열이지만 다른 키트)
+  ['BANSHEE', '밴시'], ['PHENEX', '페넥스'], ['FULL ARMOR', '풀아머', '풀 아머'], ['NORN', '노른'],
+  ['개수형'], ['LUPUS', '루프스'], ['REX', '렉스'], ['EW'], ['ZERO', '제로'], ['DARK MATTER', '다크'],
+  ['QAN', '퀀타'], ['RAISER', '라이저'], ['INFINITE', '인피니트'], ['MIGHTY', '마이티'], ['PERFECT', '퍼펙트'],
+  ['ASSAULT', '어썰트'], ['SHROUD', '슈라우드'], ['AILE', '에일'],
+  // 한정·특수판 (대상에 없으면 항상 제외)
+  ['CLEAR', '클리어'], ['LIMITED', '한정'], ['P-BANDAI', 'PREMIUM BANDAI', '프리미엄 반다이', '프반'],
+  ['EXPO', '엑스포', '이벤트'], ['METALLIC', '메탈릭', '코팅', 'COATING', '도금'], ['컬러', 'COLOR'],
+  // 본품이 아닌 것
+  ['PARTS', '파츠', '확장', '디테일업'], ['DECAL', '데칼', '디칼', '스티커'], ['LED', '유닛'], ['액션베이스', 'ACTION BASE', '스탠드'],
+];
+
+function hasAlias(textUpper: string, alias: string): boolean {
+  const a = alias.toUpperCase();
+  if (/^[A-Z0-9.\- ]{1,4}$/.test(a)) {
+    const esc = a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`(^|[^A-Z0-9])${esc}([^A-Z0-9]|$)`).test(textUpper);
+  }
+  return textUpper.includes(a);
+}
+const hasGroup = (textUpper: string, g: string[]) => g.some(a => hasAlias(textUpper, a));
 
 const norm = (t: string) => t.toUpperCase().replace(/[\s\-_.·:()]/g, '');
 const gradeOf = (g: string) => (g.toUpperCase().match(/RE\/100|MGEX|MGSD|HGUC|HGCE|HGBF|HGAC|HG|RG|MG|PG|EG|SDCS|SDEX|SD|BB/) ?? [''])[0];
@@ -70,8 +96,9 @@ export function isSameProduct(title: string, grade: string, gundamName: string):
   const hasModel = mn ? T.includes(norm(mn)) : false;
   const hasCore = core ? T.includes(norm(core)) : false;
   if (!hasModel && !hasCore) return false;
-  // 3) 다른 바리에이션 단어 배제
-  if (VARIANT_WORDS.some(w => title.includes(w) && !gundamName.includes(w))) return false;
+  // 3) 버전·바리에이션·한정판 그룹 일치 (대상과 상품명이 같아야 함)
+  const TU = title.toUpperCase(), GU = `${grade} ${gundamName}`.toUpperCase();
+  if (VARIANT_GROUPS.some(g => hasGroup(TU, g) !== hasGroup(GU, g))) return false;
   return true;
 }
 
@@ -86,7 +113,7 @@ export async function searchWebPrices(
   const prompt = `웹검색으로 대한민국 온라인 쇼핑몰에서 판매 중인 "${productName}" (반다이 건프라, 새 제품)의 현재 판매가를 찾아줘.
 규칙:
 - 실제 상품 판매 페이지만 (쿠팡, 11번가, G마켓, 옥션, 건담베이스, 반다이남코코리아몰, 하비 전문몰 등)
-- 상품명에 등급과 형식번호(또는 기체명)가 정확히 일치하는 제품만. 같은 계열의 다른 기체·바리에이션(예: 유니콘 ↔ 밴시/페넥스/풀아머, Ver.Ka, 2.0, 클리어·한정 컬러)은 제외
+- 상품명에 등급과 형식번호(또는 기체명)가 정확히 일치하는 제품만. 버전(Ver.Ka, 2.0, 언리쉬드, 리바이브 등)도 대상과 같아야 하고, 별개 기체(예: 유니콘 ↔ 밴시/페넥스/풀아머), MGSD 등 다른 등급, 클리어·한정판·프리미엄반다이·메탈릭, 파츠·데칼·스탠드 등 부속품은 제외
 - 중고, 해외 직구 엔화/달러 가격, 묶음·세트, 다른 등급(HG/RG/MG/PG 구분) 상품은 제외
 - title 에는 쇼핑몰에 표시된 상품명을 그대로 적을 것
 - 가격은 원화 정수
