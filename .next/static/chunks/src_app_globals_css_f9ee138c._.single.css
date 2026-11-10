@@ -730,6 +730,10 @@
     margin-left: calc(var(--spacing) * 2);
   }
 
+  .ml-11 {
+    margin-left: calc(var(--spacing) * 11);
+  }
+
   .ml-auto {
     margin-left: auto;
   }
@@ -2708,6 +2712,10 @@
 
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+
+  .whitespace-pre-line {
+    white-space: pre-line;
   }
 
   .text-blue-400 {

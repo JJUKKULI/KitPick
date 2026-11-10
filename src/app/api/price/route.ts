@@ -180,7 +180,7 @@ export async function GET(request: Request) {
 
   const { data: grade } = await db
     .from('gundam_grades')
-    .select('id, gundam_id, current_price, last_price_updated')
+    .select('id, gundam_id, grade, current_price, last_price_updated, gundams(name)')
     .eq('id', gradeId)
     .maybeSingle();
   const fallback = () => NextResponse.json({
@@ -202,8 +202,12 @@ export async function GET(request: Request) {
     if (results.length) return NextResponse.json({ results, source: 'web', checkedAt: cached.collected_at, total: results.length });
   }
 
-  const name = rawQuery.replace(/건프라|반다이/g, ' ').replace(/\s+/g, ' ').trim();
-  const results = await searchWebPrices(name, official);
+  // 검색어: DB 기준 '등급 형식번호 기체명' (URL의 query보다 우선)
+  const gundamName = ((grade as any).gundams?.name as string | undefined) ?? '';
+  const name = gundamName
+    ? `${grade.grade} ${gundamName}`
+    : rawQuery.replace(/건프라|반다이/g, ' ').replace(/\s+/g, ' ').trim();
+  const results = await searchWebPrices(name, official, gundamName ? { grade: grade.grade, gundamName } : undefined);
   if (!results || results.length === 0) return fallback();
 
   const now = new Date().toISOString();
