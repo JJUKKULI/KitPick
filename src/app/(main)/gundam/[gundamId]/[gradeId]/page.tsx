@@ -23,6 +23,7 @@ interface GradeData {
   scale: string | null;
   official_price: number | null;
   current_price: number | null;
+  last_price_updated?: string | null;
   naver_query: string | null;
   release_date: string | null;
   decision: DecisionType;
@@ -97,6 +98,7 @@ export default function GradeDetailPage() {
 
   const [gradeData,  setGradeData]  = useState<GradeData | null>(null);
   const [naverItems, setNaverItems] = useState<NaverItem[]>([]);
+  const [priceMeta, setPriceMeta] = useState<{ loading: boolean; source?: string; checkedAt?: string; lastPrice?: number | null; lastUpdated?: string | null }>({ loading: true });
   const [loading,    setLoading]    = useState(true);
   const [aiResult,   setAiResult]   = useState<AnalyzeResult | null>(null);
   const [analyzing,  setAnalyzing]  = useState(false);
@@ -119,10 +121,14 @@ export default function GradeDetailPage() {
     if (!gradeData) return;
     const q = gradeData.naver_query ?? `${gradeData.grade} ${gradeData.gundams?.name} 건프라`;
     const official = gradeData.official_price ?? 0;
-    fetch(`/api/price?query=${encodeURIComponent(q)}&mode=search&official=${official}`)
+    setPriceMeta({ loading: true });
+    fetch(`/api/price?query=${encodeURIComponent(q)}&mode=search&official=${official}&gradeId=${gradeData.id}`)
       .then(r => r.ok ? r.json() : null)
-      .then(data => { if (data?.results) setNaverItems(data.results.slice(0, 5)); })
-      .catch(() => {});
+      .then(data => {
+        if (data?.results?.length) setNaverItems(data.results.slice(0, 5));
+        setPriceMeta({ loading: false, source: data?.source, checkedAt: data?.checkedAt, lastPrice: data?.lastPrice, lastUpdated: data?.lastUpdated });
+      })
+      .catch(() => setPriceMeta({ loading: false, source: 'fallback' }));
   }, [gradeData?.id]);
 
   // 커뮤니티 여론 로드 (네이버 카페·블로그 + GPT) — 비차단, 실패해도 페이지 영향 없음
@@ -159,7 +165,7 @@ export default function GradeDetailPage() {
           name:          `${gradeData.grade} ${gradeData.gundams?.name}`,
           grade:         gradeData.grade,
           series:        (gradeData.gundams?.gundam_series as any)?.short_name ?? '건담',
-          price:         gradeData.current_price ?? gradeData.official_price ?? 0,
+          price:         naverItems[0]?.price ?? gradeData.current_price ?? gradeData.official_price ?? 0,
           previousPrice: gradeData.official_price ?? 0,
           officialPrice: gradeData.official_price,
           priceHistory:  gradeData.price_history ?? [],
@@ -186,7 +192,9 @@ export default function GradeDetailPage() {
   const gundam       = gradeData.gundams;
   const seriesName   = (gundam?.gundam_series as any)?.short_name ?? '건담';
   const officialPrice = gradeData.official_price ?? 0;
-  const currentPrice  = gradeData.current_price ?? officialPrice;
+  const currentPrice  = naverItems[0]?.price ?? gradeData.current_price ?? officialPrice;
+  const fmtDate = (d?: string | null) => d ? new Date(d).toLocaleDateString('ko-KR', { month: 'numeric', day: 'numeric' }) : '';
+  const priceBasis = naverItems.length ? `AI 웹검색 기준 · ${fmtDate(priceMeta.checkedAt)}` : (gradeData.last_price_updated ? `${fmtDate(gradeData.last_price_updated)} 수집 기준` : '');
   const premiumRate   = officialPrice > 0 ? (((currentPrice - officialPrice) / officialPrice) * 100).toFixed(1) : null;
   const isPremium     = premiumRate !== null && Number(premiumRate) > 5;
   const isDiscount    = premiumRate !== null && Number(premiumRate) < -3;
@@ -241,7 +249,7 @@ export default function GradeDetailPage() {
               <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <ShoppingCart className="w-4 h-4 text-zinc-400" />{gradeData.grade} {gundam?.name} 최저가
               </h3>
-              {naverItems.length > 0 && <span className="text-xs text-zinc-600">{naverItems.length}개 쇼핑몰</span>}
+              {naverItems.length > 0 && <span className="text-xs text-zinc-600">AI 웹검색 · {naverItems.length}개 쇼핑몰</span>}
             </div>
             {naverItems.length > 0 ? (
               <div className="divide-y divide-surface-border">
@@ -261,8 +269,14 @@ export default function GradeDetailPage() {
               </div>
             ) : (
               <div className="px-4 py-5 text-center">
-                <p className="text-sm text-zinc-600">네이버 쇼핑 연동 중...</p>
-                <p className="text-xs text-zinc-700 mt-1">잠시 후 자동으로 최저가가 표시됩니다</p>
+                {priceMeta.loading ? (
+                  <p className="text-sm text-zinc-600 flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />AI 웹검색으로 최저가 조회 중...</p>
+                ) : (
+                  <>
+                    <p className="text-sm text-zinc-500">{gradeData.current_price ? `최근 수집가 ${priceLabel(gradeData.current_price)}` : '판매처 정보를 찾지 못했습니다'}</p>
+                    <p className="text-xs text-zinc-700 mt-1">{gradeData.last_price_updated ? `${fmtDate(gradeData.last_price_updated)} 기준 · ` : ''}실시간 판매처 조회 결과 없음</p>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -355,6 +369,7 @@ export default function GradeDetailPage() {
             <div className="bg-surface border border-surface-border rounded-xl p-4">
               <div className="text-xs text-zinc-500 mb-1 font-medium flex items-center gap-1"><ShoppingCart className="w-3 h-3" />현재 최저가</div>
               <div className="text-2xl font-bold text-white mb-1">{priceLabel(currentPrice)}</div>
+              {priceBasis && <div className="text-[10px] text-zinc-600 mb-1">{priceBasis}</div>}
               {premiumRate !== null && (
                 <div className={`text-xs font-medium flex items-center gap-1 ${isPremium ? 'text-brand-400' : isDiscount ? 'text-decision-buy' : 'text-zinc-500'}`}>
                   {isPremium ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
@@ -446,6 +461,7 @@ export default function GradeDetailPage() {
                   </div>
                 </div>
                 <PriceTrendChart data={chartData} />
+                <p className="text-[10px] text-zinc-600 mt-2">네이버 쇼핑 검색 API 종료(2026.7.31) 이후 AI 웹검색 최저가를 조회 시점 기준으로 기록합니다</p>
               </div>
             );
           })()}

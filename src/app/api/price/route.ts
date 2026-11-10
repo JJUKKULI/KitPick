@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
+import { searchWebPrices } from '@/lib/webPrice';
+
+export const maxDuration = 60;
 
 const NAVER_CLIENT_ID     = process.env.NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
@@ -145,10 +149,6 @@ export async function GET(request: Request) {
   if (!rawQuery && !product_id) {
     return NextResponse.json({ error: 'query 파라미터 필요' }, { status: 400 });
   }
-  if (!NAVER_CLIENT_ID) {
-    return NextResponse.json({ error: 'NAVER_CLIENT_ID 미설정' }, { status: 500 });
-  }
-
   // 가격 히스토리 전용
   if (mode === 'history' && product_id) {
     const supabase = await createClient();
@@ -166,64 +166,62 @@ export async function GET(request: Request) {
     });
   }
 
-  const searchQuery = buildSearchQuery(rawQuery);
-  const rawItems    = await searchNaver(searchQuery, 30); // 30개 가져와서 필터
-  if (!rawItems) return NextResponse.json({ error: '네이버 검색 실패' }, { status: 502 });
+  // ── 네이버 쇼핑 검색 API는 2026-07-31 종료 → AI 웹검색 최저가로 대체 ──
+  //    gradeId 기준 24시간 캐시(community_stats, source='webprice:<gradeId>')
+  //    실패해도 502 대신 200 + fallback(DB 마지막 가격)으로 응답해 페이지가 깨지지 않게 함
+  const gradeId  = searchParams.get('gradeId');
+  const official = Number(searchParams.get('official') ?? '0');
+  if (!gradeId) return NextResponse.json({ results: [], source: 'none', total: 0 });
 
-  // 카테고리 + 키워드 기반 필터
-  let filtered = rawItems.filter(isPlasticModelKit);
+  const db = process.env.SUPABASE_SERVICE_ROLE_KEY
+    ? createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY)
+    : await createClient();
+  const cacheSource = `webprice:${gradeId}`;
 
-  // 필터 결과가 없으면 쿼리를 더 구체화해서 재시도
-  if (filtered.length === 0) {
-    const retryQuery = `${rawQuery} 프라모델 1/144 OR 1/100`;
-    const retryItems = await searchNaver(retryQuery, 20);
-    if (retryItems) {
-      filtered = retryItems.filter(isPlasticModelKit);
-    }
-  }
-
-  // 그래도 없으면 가격 있는 것만
-  let finalItems = filtered.length > 0
-    ? filtered
-    : rawItems.filter(i => Number(i.lprice) > 0).slice(0, 5);
-
-  // 정가 기반 이상치 가드: 정가의 4배 초과 = 묶음/한정판/오매칭 가능성 → 제외
-  // (단, 전부 제외되면 원본 유지)
-  const officialPrice = Number(searchParams.get('official') ?? '0');
-  if (officialPrice > 0) {
-    const cap = officialPrice * 4;
-    const within = finalItems.filter(i => Number(i.lprice) > 0 && Number(i.lprice) <= cap);
-    if (within.length > 0) finalItems = within;
-  }
-
-  // 반다이 공식 판매처 우선 정렬 (공식몰 > 반다이남코 > 일반 쇼핑몰)
-  const PRIORITY_MALLS = ['반다이남코', '건담베이스', 'bandai', '반다이 공식'];
-  finalItems.sort((a: any, b: any) => {
-    const aIsPriority = PRIORITY_MALLS.some(m => (a.mallName ?? '').toLowerCase().includes(m));
-    const bIsPriority = PRIORITY_MALLS.some(m => (b.mallName ?? '').toLowerCase().includes(m));
-    if (aIsPriority && !bIsPriority) return -1;
-    if (!aIsPriority && bIsPriority) return 1;
-    return Number(a.lprice) - Number(b.lprice); // 같은 우선순위면 가격순
+  const { data: grade } = await db
+    .from('gundam_grades')
+    .select('id, gundam_id, current_price, last_price_updated')
+    .eq('id', gradeId)
+    .maybeSingle();
+  const fallback = () => NextResponse.json({
+    results: [], source: 'fallback', total: 0,
+    lastPrice: grade?.current_price ?? null, lastUpdated: grade?.last_price_updated ?? null,
   });
-  const results = finalItems.slice(0, 10).map(mapItem);
+  if (!grade) return fallback();
 
-  // 가격 히스토리 (product_id 있을 때)
-  let priceHistory: { date: string; price: number }[] = [];
-  if (product_id) {
-    const supabase = await createClient();
-    const { data } = await supabase
-      .from('price_history_daily')
-      .select('recorded_at, price')
-      .eq('product_id', product_id)
-      .order('recorded_at', { ascending: true })
-      .limit(30);
-    priceHistory = (data ?? []).map(row => ({
-      date:  new Date(row.recorded_at).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' }),
-      price: row.price,
-    }));
+  const { data: cached } = await db
+    .from('community_stats')
+    .select('top_comments, collected_at')
+    .eq('gundam_id', grade.gundam_id)
+    .eq('source', cacheSource)
+    .order('collected_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (cached?.collected_at && Date.now() - new Date(cached.collected_at).getTime() < 24 * 3600 * 1000) {
+    const results = (cached.top_comments as any[]) ?? [];
+    if (results.length) return NextResponse.json({ results, source: 'web', checkedAt: cached.collected_at, total: results.length });
   }
 
-  return NextResponse.json({ results, priceHistory, total: results.length });
+  const name = rawQuery.replace(/건프라|반다이/g, ' ').replace(/\s+/g, ' ').trim();
+  const results = await searchWebPrices(name, official);
+  if (!results || results.length === 0) return fallback();
+
+  const now = new Date().toISOString();
+  try {
+    await db.from('community_stats').delete().eq('gundam_id', grade.gundam_id).eq('source', cacheSource);
+    await db.from('community_stats').insert({
+      gundam_id: grade.gundam_id, grade_id: gradeId, source: cacheSource,
+      mention_count: results.length, top_comments: results, collected_at: now,
+    });
+    await db.from('gundam_grades').update({ current_price: results[0].price, last_price_updated: now }).eq('id', gradeId);
+    await db.from('price_history_daily').upsert(
+      { grade_id: gradeId, price: results[0].price, mall_name: results[0].mallName, recorded_at: now.slice(0, 10) },
+      { onConflict: 'grade_id,recorded_at' },
+    );
+  } catch (e) {
+    console.error('[/api/price] 캐시 저장 실패', e);
+  }
+  return NextResponse.json({ results, source: 'web', checkedAt: now, total: results.length });
 }
 
 // ── POST: 시드 제품 가격 일괄 업데이트 ───────────────────────────────────

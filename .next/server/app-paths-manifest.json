@@ -1,5 +1,13 @@
 {
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(main)/feed/[seriesId]/page": "app/(main)/feed/[seriesId]/page.js",
   "/(main)/feed/page": "app/(main)/feed/page.js",
+  "/(main)/gundam/[gundamId]/[gradeId]/page": "app/(main)/gundam/[gundamId]/[gradeId]/page.js",
+  "/(main)/gundam/[gundamId]/page": "app/(main)/gundam/[gundamId]/page.js",
   "/(main)/trends/page": "app/(main)/trends/page.js",
-  "/api/gundam/route": "app/api/gundam/route.js"
+  "/api/analyze/route": "app/api/analyze/route.js",
+  "/api/community/route": "app/api/community/route.js",
+  "/api/gundam/route": "app/api/gundam/route.js",
+  "/api/price/route": "app/api/price/route.js",
+  "/page": "app/page.js"
 }

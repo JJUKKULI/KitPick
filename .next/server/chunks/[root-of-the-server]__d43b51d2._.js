@@ -227,10 +227,21 @@ ${DECISION_GUIDE}
             result.decision = 'watch';
         }
         result.confidence = Math.min(100, Math.max(0, Number(result.confidence) || 70));
-        // 분석 결과 DB 저장 (products 테이블 업데이트)
+        // 분석 결과 DB 저장
         if (body.productId && result.decision) {
             const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createClient"])();
+            // 레거시 products 테이블 (존재 시)
             await supabase.from('products').update({
+                decision: result.decision,
+                reasoning: result.reasoning,
+                ai_insight: result.aiInsight,
+                popularity: popularity,
+                sentiment_positive: sentiment.positive,
+                sentiment_neutral: sentiment.neutral,
+                sentiment_negative: sentiment.negative
+            }).eq('id', body.productId);
+            // 실제 사용 테이블 gundam_grades (productId = grade id)
+            await supabase.from('gundam_grades').update({
                 decision: result.decision,
                 reasoning: result.reasoning,
                 ai_insight: result.aiInsight,

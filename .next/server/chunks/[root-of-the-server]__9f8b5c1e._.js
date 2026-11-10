@@ -333,7 +333,15 @@ async function GET(request) {
         }
     }
     // 그래도 없으면 가격 있는 것만
-    const finalItems = filtered.length > 0 ? filtered : rawItems.filter((i)=>Number(i.lprice) > 0).slice(0, 5);
+    let finalItems = filtered.length > 0 ? filtered : rawItems.filter((i)=>Number(i.lprice) > 0).slice(0, 5);
+    // 정가 기반 이상치 가드: 정가의 4배 초과 = 묶음/한정판/오매칭 가능성 → 제외
+    // (단, 전부 제외되면 원본 유지)
+    const officialPrice = Number(searchParams.get('official') ?? '0');
+    if (officialPrice > 0) {
+        const cap = officialPrice * 4;
+        const within = finalItems.filter((i)=>Number(i.lprice) > 0 && Number(i.lprice) <= cap);
+        if (within.length > 0) finalItems = within;
+    }
     // 반다이 공식 판매처 우선 정렬 (공식몰 > 반다이남코 > 일반 쇼핑몰)
     const PRIORITY_MALLS = [
         '반다이남코',

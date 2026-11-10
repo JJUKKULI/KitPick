@@ -115,9 +115,14 @@ export default function GundamDetailPage() {
       const query = matched?.naver_query
         ?? buildQuery(slot.id, gundamName);
 
+      // 네이버 쇼핑 API 종료 → DB 등록 등급만 AI 웹검색(등급별 24h 캐시) 조회
+      if (!matched) {
+        setNaverMap(prev => ({ ...prev, [slot.id]: { price: null, mallName: '', link: '', status: 'not_found' } }));
+        return;
+      }
       setTimeout(async () => {
         try {
-          const res = await fetch(`/api/price?query=${encodeURIComponent(query)}&mode=search`);
+          const res = await fetch(`/api/price?query=${encodeURIComponent(query)}&mode=search&gradeId=${matched.id}&official=${matched.official_price ?? 0}`);
           if (!res.ok) throw new Error();
           const data = await res.json();
           const top  = (data.results ?? [])[0];
@@ -126,7 +131,9 @@ export default function GundamDetailPage() {
             ...prev,
             [slot.id]: top?.price
               ? { price: top.price, mallName: top.mallName, link: top.link, status: 'found' }
-              : { price: null, mallName: '', link: '', status: 'not_found' },
+              : matched.current_price
+                ? { price: matched.current_price, mallName: '최근 수집가', link: '', status: 'found' }
+                : { price: null, mallName: '', link: '', status: 'not_found' },
           }));
         } catch {
           setNaverMap(prev => ({ ...prev, [slot.id]: { price: null, mallName: '', link: '', status: 'error' } }));
@@ -222,12 +229,17 @@ export default function GundamDetailPage() {
                       <div>
                         <p className="text-[10px] text-zinc-600 flex items-center gap-1">
                           <TrendingDown className="w-2.5 h-2.5 text-decision-buy" />
-                          네이버 최저가
+                          최저가
                         </p>
                         {!naver || naver.status === 'loading' ? (
                           <div className="flex items-center gap-1.5 mt-0.5">
                             <Loader2 className="w-3 h-3 animate-spin text-zinc-600" />
                             <span className="text-xs text-zinc-600">조회 중...</span>
+                          </div>
+                        ) : naver.status === 'found' && naver.price && !naver.link ? (
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm font-bold text-zinc-300">{priceLabel(naver.price)}</span>
+                            <span className="text-[10px] text-zinc-500">{naver.mallName}</span>
                           </div>
                         ) : naver.status === 'found' && naver.price ? (
                           <a href={naver.link} target="_blank" rel="noopener noreferrer"
