@@ -281,6 +281,12 @@ export default function GradeDetailPage() {
             )}
           </div>
 
+          <a href={`https://www.google.com/search?tbm=shop&q=${encodeURIComponent(`${gradeData.grade} ${gundam?.name ?? ''}`)}`}
+            target="_blank" rel="noopener noreferrer"
+            className="-mt-3 flex items-center justify-center gap-1.5 text-xs text-zinc-500 hover:text-brand-400 transition-colors py-2">
+            공식몰 · 전체 판매처 구글에서 보기 <ExternalLink className="w-3 h-3" />
+          </a>
+
           {/* 재판 이력 */}
           {gradeData.reprint_history?.length > 0 && (
             <div className="bg-surface border border-surface-border rounded-xl p-5">

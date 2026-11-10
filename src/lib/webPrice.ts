@@ -27,6 +27,25 @@ function extractText(data: any): string {
   return parts.join('\n');
 }
 
+// 모델이 JSON 대신 마크다운 표로 답한 경우 대비: | 쇼핑몰 | 가격 | 상품명 | 링크 | 행 파싱
+export function parseMarkdownTable(text: string): any[] {
+  const rows: any[] = [];
+  for (const line of text.split('\n')) {
+    if (!line.trim().startsWith('|') || /^\|\s*-/.test(line.trim())) continue;
+    const cells = line.split('|').slice(1, -1).map(c => c.trim());
+    if (cells.length < 3) continue;
+    const link = (line.match(/\((https?:\/\/[^)\s]+)\)/) ?? line.match(/https?:\/\/[^\s|)]+/) ?? [])[1] ?? (line.match(/https?:\/\/[^\s|)]+/) ?? [])[0];
+    const priceCell = cells.find(c => /^[\d,]+\s*원?$/.test(c.replace(/\s/g, '')));
+    if (!link || !priceCell) continue;
+    const textCells = cells.filter(c => c !== priceCell && !c.includes('http'));
+    rows.push({ mallName: textCells[0] ?? '', title: textCells.slice(1).join(' ') || textCells[0] || '', price: priceCell, link });
+  }
+  return rows;
+}
+
+// 중고·개인 거래 플랫폼 제외
+const USED_MARKETS = ['번개장터', 'bunjang', '당근', 'daangn', '중고나라', 'joongna', '헬로마켓', '중고', '미개봉)'];
+
 function parseJsonArray(text: string): any[] {
   const m = text.match(/\[[\s\S]*\]/);
   if (!m) return [];
@@ -119,7 +138,8 @@ export async function searchWebPricesDetailed(
 - 상품명 표기가 조금 달라도 같은 제품으로 보이면 후보에 포함 (예: 자쿠 ↔ 자쿠Ⅱ/자쿠2, 띄어쓰기·한영 표기 차이)
 - 확실하지 않아도 후보로 넣어도 됨 (최종 판별은 우리가 함). 단 블로그·커뮤니티·검색결과 페이지와 중고는 제외
 - title 은 판매 페이지에 표시된 상품명 그대로, price 는 원화 정수 판매가
-JSON 배열만 출력 (최대 8개, 정말 없을 때만 []):
+- 중고 거래 플랫폼(번개장터·당근·중고나라 등)은 제외
+표나 설명 없이, 코드블록도 없이 JSON 배열만 출력 (최대 8개, 정말 없을 때만 []):
 [{"mallName":"쇼핑몰 이름","price":12345,"title":"상품명","link":"https://상품페이지"}]`;
 
   try {
@@ -132,7 +152,8 @@ JSON 배열만 출력 (최대 8개, 정말 없을 때만 []):
     }
     const data = await res.json();
     const rawText = extractText(data);
-    const raw = parseJsonArray(rawText);
+    const json = parseJsonArray(rawText);
+    const raw = json.length ? json : parseMarkdownTable(rawText);
 
     const official = Number(officialPrice) || 0;
     const seen = new Set<string>();
@@ -146,6 +167,7 @@ JSON 배열만 출력 (최대 8개, 정말 없을 때만 []):
       };
       let reason = '';
       if (!/^https?:\/\//.test(i.link)) reason = '링크 없음';
+      else if (USED_MARKETS.some(w => `${i.mallName} ${i.title} ${i.link}`.toLowerCase().includes(w.toLowerCase()))) reason = '중고·개인 거래';
       else if (!(i.price >= 1000 && i.price <= 2000000)) reason = '가격 형식 오류';
       else if (official && !(i.price >= official * 0.5 && i.price <= official * 4)) reason = `정가(${official}) 0.5~4배 범위 밖`;
       else if (match && !isSameProduct(i.title, match.grade, match.gundamName)) reason = '상품명 불일치 (등급·기체·버전·한정판 필터)';
